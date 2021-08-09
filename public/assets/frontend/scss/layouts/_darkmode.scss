@@ -1,0 +1,171 @@
+body {
+    &.active-dark-mode {
+        background-color: var(--c-black);
+        color: var(--c-text-dark-mode);
+
+        .btn {
+            color: var(--c-white);
+            &.btn-line {
+                &.white {
+                    &:hover {
+                        border-color: transparent;
+                    }
+                }
+            }
+        }
+
+        .title-heading {
+             * {
+                color: var(--c-white);
+            }
+        }
+
+        .switcher {
+            .list-sw {
+                .item-sw {
+                    a {
+                        span {
+                            color: var(--c-text-dark-mode);
+                        }
+                    }
+                }
+            }
+        }
+
+        header {
+           
+            .lg-f0 {
+                fill: var(--c-white);
+            }
+
+            .main-header {
+                .mh-flex {
+                    .mh-center {
+                        .main-nav {
+                            .list-mv {
+                                > li {
+                                    .dropdown {
+                                        background-color: var(--c-black_12);
+
+                                        li {
+                                            &::after {
+                                                border-color: #666;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                
+                            }
+                        }
+                    }
+                }
+
+                &.pinned {
+                    background-color: var(--c-black_12);
+                    box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.5); 
+                }
+            }
+
+            @media screen and(min-width: $breakpoint-xl) {
+                .main-header {
+                    .mh-flex {
+                        .mh-center {
+                            .main-nav {
+                                .list-mv {
+                                    > li {
+                                        .dropdown {
+                                            background-color: var(--c-black_12);
+                                            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+    
+                                            li {
+                                                &::after {
+                                                    border-color: #666;
+                                                }
+                                            }
+                                        }
+                                    }
+    
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            
+        }
+
+        main {
+            .box-intro {
+                .swiper-intro {
+                    background-color: #262626;
+                }
+            }
+
+            .box-wrap {
+                &.bg-grey {
+                    background-color: var(--c-black_12);
+                }
+            }
+
+            .item-sv {
+                .icon-sv {
+    
+                    .icon-box::after {
+                        display: none;
+                        
+                    }
+    
+                    svg {
+                        fill: var(--c-white);
+                    }
+                    
+                    .pattern-box {
+                        .st1{
+                            fill:#4c4c4c;
+                        }
+                    }
+    
+                }
+    
+                .desc-sv {
+                    h5 {
+                        color: var(--c-white);
+                    }
+                }
+            }
+
+            .item-prd {
+                .logo-prd {
+                    img {
+                        filter: invert(0);
+                        opacity: 1;
+                    }
+                    
+                    svg {
+                        fill: var(--c-white);
+                    }
+                }
+            }
+
+            .list-clients {
+                border-color: #333;
+
+                .item-client {
+                    border-color: #333;
+                    img {
+                        filter: invert(0);
+                        opacity: 1;
+                    }
+                }
+            }
+
+
+        }
+        
+    }
+
+    
+}

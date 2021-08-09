@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+    
+    --f-default: 'Roboto', sans-serif;
+
+
+    --c-main: #251606;
+    --c-white: #fff;
+    --c-grey_15: #e1e1e1;
+
+
+    --c-main-text : #1f1f25;
+    --c-text-primary : #333;
+    --c-text-secondary: #777;
+    --c-text-third : #999;
+    --c-text-muted : #d1d1d1;
+    --c-text-dark-mode: #c6c9d8;
+
+    --c-black: #151515;
+    --c-black_12: #191919;
+    --c-black_14: #222;
+
+    --c-blue: rgb(8, 106, 216);
+    --c-blue_12: #0467c4;
+    --c-blue_14: #e8f4ff;
+    
+    
+
+    --easing: cubic-bezier(.6,.2,.0,1);
+    --gradient: linear-gradient( 135deg, #0eb3e9 0%, #4979fd 50%, #4254f7 100%);
+    --box-shadow : 0 10px 35px -10px rgba(72, 70, 88, 0.25);
+    --box-shadow_2 : -5px 0 30px rgba(72, 70, 88, 0.2);
+
+    // Brakepoints
+    
+
+    
+}
+
+@media screen and (max-width: 575.98px) {
+    :root {
+        --box-shadow : 0 5px 15px rgba(95, 119, 112, 0.1);
+        --easing: ease-in-out;
+
+    }
+}
+
+$breakpoint-xl: 1199.98px;
+$breakpoint-lg: 991.98px;
+$breakpoint-md: 767.98px;
+$breakpoint-sm: 575.98px;
+
