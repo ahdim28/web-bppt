@@ -92,6 +92,11 @@ class Page extends Model
             ->orderBy('position', 'ASC');
     }
 
+    public function getParent()
+    {
+        return Page::where('id', $this->parent)->first();
+    }
+
     public function fieldLang($field, $lang = null)
     {
         if ($lang == null) {
@@ -157,5 +162,31 @@ class Page extends Model
         ];
 
         return $config;
+    }
+
+    public function colorBidang()
+    {
+        if ($this->position == 1) {
+            $color = 'btk';
+        } elseif ($this->position == 2) {
+            $color = 'brk';
+        } elseif ($this->position == 3) {
+            $color = 'bk';
+        } elseif ($this->position == 4) {
+            $color = 'bt';
+        } elseif ($this->position == 5) {
+            $color = 'bkp';
+        } elseif ($this->position == 6) {
+            $color = 'be';
+        } elseif ($this->position == 7) {
+            $color = 'bpk';
+        } elseif ($this->position == 8) {
+            $color = 'btie';
+        } else {
+            $color = 'btk';
+        }
+
+        return $color;
+        
     }
 }

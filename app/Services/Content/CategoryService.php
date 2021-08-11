@@ -44,7 +44,7 @@ class CategoryService
             $limit = $request->l;
         }
 
-        $result = $query->orderBy('position', 'ASC')->paginate($limit);
+        $result = $query->where('parent', 0)->orderBy('position', 'ASC')->paginate($limit);
 
         return $result;
     }
@@ -128,10 +128,14 @@ class CategoryService
 
     public function store($request, int $sectionId)
     {
+        $parent = $request->parent ?? 0;
+        
         $category = new Category;
         $category->section_id = $sectionId;
+        $category->parent = $parent;
         $this->setField($request, $category);
         $category->position = $this->model->where('section_id', $sectionId)
+            ->where('parent', (int)$parent)
             ->max('position') + 1;
         $category->created_by = Auth::user()->id;
         $category->save();
@@ -190,15 +194,24 @@ class CategoryService
         return $category;
     }
 
-    public function position(int $id, int $position)
+    public function position(int $id, int $position, int $parent = null)
     {
         if ($position >= 1) {
 
             $category = $this->find($id);
-            $this->model->where('section_id', $category->section_id)
-                ->where('position', $position)->update([
-                'position' => $category->position,
-            ]);
+
+            if ($parent != null) {
+                $this->model->where('section_id', $category->section_id)
+                    ->where('position', $position)->where('parent', $parent)->update([
+                    'position' => $category->position,
+                ]);
+            } else {
+                $this->model->where('section_id', $category->section_id)
+                    ->where('position', $position)->where('parent', 0)->update([
+                    'position' => $category->position,
+                ]);
+            }
+
             $category->position = $position;
             $category->updated_by = Auth::user()->id;
             $category->save();
@@ -220,10 +233,21 @@ class CategoryService
     {
         $category = $this->find($id);
 
+        $parent = $this->model->where('parent', $id)->count();
         $post = $category->posts->count();
         $menu = $category->menu()->count();
 
-        if ($post == 0 && $menu == 0) {
+        if ($parent == 0 && $post == 0 && $menu == 0) {
+
+            foreach ($this->model->where('parent', $id)->get() as $valueA) {
+
+                $valueA->delete();
+
+                foreach ($this->model->where('parent', $valueA->id)->get() as $valueB) {
+
+                    $valueB->delete();
+                }
+            }
 
             $category->delete();
             return true;

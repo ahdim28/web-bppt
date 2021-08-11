@@ -84,7 +84,7 @@
                         <img src="{{ $item->coverSrc() }}" style="width: 80px;">
                     </td>
                     <td><strong>{!! Str::limit($item->fieldLang('title'), 50) !!}</strong></td>
-                    <td><a href="{{ $item->url }}" target="_blank"><i>{{ $item->url }}</i></a></td>
+                    <td><a href="{{ $item->url }}" target="_blank"><i>{{ Str::limit($item->url, 30)}}</i></a></td>
                     <td>
                         {{ $item->created_at->format('d F Y (H:i A)') }}
                         @if (!empty($item->created_by))

@@ -16,6 +16,7 @@ use App\Services\Link\LinkService;
 use App\Services\NotificationService;
 use App\Services\Page\PageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -64,16 +65,22 @@ class HomeController extends Controller
 
     public function home(Request $request)
     {
-        $data['data'] = '';
+        $data['news_selected'] = $this->post->getPost(null, null, 4, null, null)
+            ->where('selection', 1);
+        $data['pengantar'] = $this->page->getPage(null, null, null)->where('id', 8)->first();
+        $data['kecerdasan'] = $this->page->getPage(null, null, null)->where('id', 5)->first();
+        $data['p3dn'] = $this->page->getPage(null, null, null)->where('id', 6)->first();
+        $data['digital'] = $this->page->getPage(null, null, null)->where('id', 7)->first();
+        $data['link'] = $this->links->getLink(null, null, null)->where('id', 1)->first();
 
         return view('frontend.index', compact('data'));
     }
 
     public function search(Request $request)
     {
-        if ($request->get('keyword') == '') {
-            return redirect()->route('home');
-        }
+        // if ($request->get('keyword') == '') {
+        //     return redirect()->route('home');
+        // }
 
         $data['pages'] = $this->page->getPage($request);
         $data['sections'] = $this->section->getSection($request);
@@ -88,6 +95,15 @@ class HomeController extends Controller
 
             ],
         ]);
+    }
+
+    public function downloadPanduan()
+    {
+        $panduan = $this->config->getValue('panduan_identitas');
+
+        $file = storage_path('app/public/config/'.$panduan);
+
+        return response()->download($file);
     }
 
     public function sitemap(Request $request)

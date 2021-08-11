@@ -1,5 +1,5 @@
 <div class="share-box">
-    <h6>@lang('common.share') :</h6>
+    <h6>@lang('common.share_caption') :</h6>
     <ul>
         <li>
             <a href="{!! $data['share_facebook'] !!}" title="Share Facebook" target="_blank">

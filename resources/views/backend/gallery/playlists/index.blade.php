@@ -51,8 +51,9 @@
 
 <div class="text-left mb-2">
     @can ('playlist_create')
-    <a href="{{ route('gallery.playlist.create') }}" class="btn btn-success rounded-pill" title="Add New Playlist"><i class="las la-plus"></i>Playlist</a>
+    <a href="{{ route('gallery.playlist.create') }}" class="btn btn-success rounded-pill mr-2" title="Add New Playlist"><i class="las la-plus"></i>Playlist</a>
     @endcan
+    <a href="{{ route('gallery.playlist.category.index') }}" class="btn btn-warning rounded-pill" title="Category List"><i class="las la-list"></i>Category</a>
 </div>
 
 <div class="card mb-4">

@@ -40,6 +40,6 @@ return [
         'title33' => 'Maintenance',
     ],
     'frontend' => [
-        'title1' => 'Beranda'
+        'title1' => 'Home'
     ],
 ];

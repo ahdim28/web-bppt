@@ -17,6 +17,7 @@ class MenuSeeder extends Seeder
     {
         $category = [
             'Header',
+            'Quick Links',
         ];
 
         foreach ($category as $val) {

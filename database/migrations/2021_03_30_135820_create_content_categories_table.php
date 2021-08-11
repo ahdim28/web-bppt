@@ -16,6 +16,7 @@ class CreateContentCategoriesTable extends Migration
         Schema::create('content_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('section_id');
+            $table->integer('parent')->default(0);
             $table->json('name');
             $table->string('slug');
             $table->json('description')->nullable();

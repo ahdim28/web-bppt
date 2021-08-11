@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\Gallery\AlbumCategoryController;
 use App\Http\Controllers\Admin\Gallery\AlbumController;
 use App\Http\Controllers\Admin\Gallery\PhotoController;
+use App\Http\Controllers\Admin\Gallery\PlaylistCategoryController;
 use App\Http\Controllers\Admin\Gallery\PlaylistController;
 use App\Http\Controllers\Admin\Gallery\VideoController;
 use App\Http\Controllers\GalleryViewController;
@@ -15,6 +17,33 @@ Route::middleware(['auth'])->prefix('admin/gallery')->name('gallery.')
 
     //album
     Route::prefix('album')->name('album.')->group(function () {
+
+        //category
+        Route::prefix('category')->name('category.')->group(function () {
+            
+            Route::get('/', [AlbumCategoryController::class, 'index'])
+                ->name('index')
+                ->middleware('permission:albums');
+            Route::get('/create', [AlbumCategoryController::class, 'create'])
+                ->name('create')
+                ->middleware('permission:album_create');
+            Route::post('/', [AlbumCategoryController::class, 'store'])
+                ->name('store')
+                ->middleware('permission:album_create');
+            Route::get('/{id}/edit', [AlbumCategoryController::class, 'edit'])
+                ->name('edit')
+                ->middleware('permission:album_update');
+            Route::put('/{id}', [AlbumCategoryController::class, 'update'])
+                ->name('update')
+                ->middleware('permission:album_update');
+            Route::put('/{id}/position/{position}', [AlbumCategoryController::class, 'position'])
+                ->name('position')
+                ->middleware('permission:album_update');
+            Route::delete('/{id}', [AlbumCategoryController::class, 'destroy'])
+                ->name('destroy')
+                ->middleware('permission:album_delete');
+
+        });
 
         Route::get('/', [AlbumController::class, 'index'])
             ->name('index')
@@ -71,6 +100,33 @@ Route::middleware(['auth'])->prefix('admin/gallery')->name('gallery.')
 
     //playlist
     Route::prefix('playlist')->name('playlist.')->group(function () {
+
+         //category
+         Route::prefix('category')->name('category.')->group(function () {
+            
+            Route::get('/', [PlaylistCategoryController::class, 'index'])
+                ->name('index')
+                ->middleware('permission:playlists');
+            Route::get('/create', [PlaylistCategoryController::class, 'create'])
+                ->name('create')
+                ->middleware('permission:playlist_create');
+            Route::post('/', [PlaylistCategoryController::class, 'store'])
+                ->name('store')
+                ->middleware('permission:playlist_create');
+            Route::get('/{id}/edit', [PlaylistCategoryController::class, 'edit'])
+                ->name('edit')
+                ->middleware('permission:playlist_update');
+            Route::put('/{id}', [PlaylistCategoryController::class, 'update'])
+                ->name('update')
+                ->middleware('permission:playlist_update');
+            Route::put('/{id}/position/{position}', [PlaylistCategoryController::class, 'position'])
+                ->name('position')
+                ->middleware('permission:playlist_update');
+            Route::delete('/{id}', [PlaylistCategoryController::class, 'destroy'])
+                ->name('destroy')
+                ->middleware('permission:playlist_delete');
+
+        });
 
         Route::get('/', [PlaylistController::class, 'index'])
             ->name('index')

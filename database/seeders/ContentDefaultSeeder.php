@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Deputi\StructureOrganization;
 use App\Models\Inquiry\Inquiry;
 use App\Models\Inquiry\InquiryField;
 use Illuminate\Database\Seeder;
@@ -15,6 +16,123 @@ class ContentDefaultSeeder extends Seeder
      */
     public function run()
     {
+        //-- structure --//
+        $structures = [
+            0 => [
+                'sidadu_id' => null,
+                'unit_code' => null,
+                'name' => [
+                    'id' => 'Kepala BPPT',
+                    'en' => 'Kepala BPPT',
+                ],
+                'slug' => 'kepala-bppt',
+                'description' => [
+                    'id' => null,
+                    'en' => null,
+                ],
+                'position' => 1,
+            ],
+            1 => [
+                'sidadu_id' => null,
+                'unit_code' => null,
+                'name' => [
+                    'id' => 'Sekretariat Utama',
+                    'en' => 'Sekretariat Utama',
+                ],
+                'slug' => 'sekretariat-utama',
+                'description' => [
+                    'id' => null,
+                    'en' => null,
+                ],
+                'position' => 2,
+            ],
+            2 => [
+                'sidadu_id' => null,
+                'unit_code' => null,
+                'name' => [
+                    'id' => 'Bidang Pengkajian Kebijakan Teknologi',
+                    'en' => 'Bidang Pengkajian Kebijakan Teknologi',
+                ],
+                'slug' => 'bidang-pengkajian-kebijakan-teknologi',
+                'description' => [
+                    'id' => null,
+                    'en' => null,
+                ],
+                'position' => 3,
+            ],
+            3 => [
+                'sidadu_id' => null,
+                'unit_code' => null,
+                'name' => [
+                    'id' => 'Bidang Teknologi Pengembangan Sumber Daya Alam',
+                    'en' => 'Bidang Teknologi Pengembangan Sumber Daya Alam',
+                ],
+                'slug' => 'bidang-teknologi-pengembangan-sumber-daya-alam',
+                'description' => [
+                    'id' => null,
+                    'en' => null,
+                ],
+                'position' => 4,
+            ],
+            4 => [
+                'sidadu_id' => null,
+                'unit_code' => null,
+                'name' => [
+                    'id' => 'Bidang Teknologi Agroindustri dan Bioteknologi',
+                    'en' => 'Bidang Teknologi Agroindustri dan Bioteknologi',
+                ],
+                'slug' => 'bidang-teknologi-agroindustri-dan-bioteknologi',
+                'description' => [
+                    'id' => null,
+                    'en' => null,
+                ],
+                'position' => 5,
+            ],
+            5 => [
+                'sidadu_id' => null,
+                'unit_code' => null,
+                'name' => [
+                    'id' => 'Bidang Teknologi Informasi, Energi, dan Material',
+                    'en' => 'Bidang Teknologi Informasi, Energi, dan Material',
+                ],
+                'slug' => 'bidang-teknologi-informasi-energi-dan-material',
+                'description' => [
+                    'id' => null,
+                    'en' => null,
+                ],
+                'position' => 6,
+            ],
+            6 => [
+                'sidadu_id' => null,
+                'unit_code' => null,
+                'name' => [
+                    'id' => 'Bidang Teknologi Industri Rancang Bangun dan Rekayasa',
+                    'en' => 'Bidang Teknologi Industri Rancang Bangun dan Rekayasa',
+                ],
+                'slug' => 'bidang-teknologi-industri-rancang-bangun-dan-rekayasa',
+                'description' => [
+                    'id' => null,
+                    'en' => null,
+                ],
+                'position' => 7,
+            ],
+        ];
+
+        foreach ($structures as $val) {
+
+            StructureOrganization::create([
+                'sidadu_id' => $val['sidadu_id'],
+                'unit_code' => $val['unit_code'],
+                'name' => $val['name'],
+                'slug' => $val['slug'],
+                'description' => $val['description'],
+                'position' => $val['position'],
+                'created_by' => 1,
+                'updated_by' => 1,
+            ]);
+
+        }
+
         //-- inquiry --//
         $inquiries = [
             0 => [

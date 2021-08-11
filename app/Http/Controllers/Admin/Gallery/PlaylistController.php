@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Gallery;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\PlaylistRequest;
+use App\Services\Gallery\PlaylistCategoryService;
 use App\Services\Gallery\PlaylistService;
 use App\Services\LanguageService;
 use App\Services\Master\Field\FieldCategoryService;
@@ -12,16 +13,18 @@ use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
 {
-    private $service, $serviceLang, $serviceTemplate, $serviceField;
+    private $service, $serviceCat, $serviceLang, $serviceTemplate, $serviceField;
 
     public function __construct(
         PlaylistService $service,
+        PlaylistCategoryService $serviceCat,
         LanguageService $serviceLang,
         TemplateService $serviceTemplate,
         FieldCategoryService $serviceField
     )
     {
         $this->service = $service;
+        $this->serviceCat = $serviceCat;
         $this->serviceLang = $serviceLang;
         $this->serviceTemplate = $serviceTemplate;
         $this->serviceField = $serviceField;
@@ -49,8 +52,8 @@ class PlaylistController extends Controller
 
     public function create()
     {
-        $lang = config('custom.language.multiple');
-        $data['languages'] = $this->serviceLang->getLang(true, $lang);
+        $data['categories'] = $this->serviceCat->getPlaylistCategory(null, false, false);
+        $data['languages'] = $this->serviceLang->getLang(true, $this->lang);
         $data['template'] = $this->serviceTemplate->getTemplate(7);
         $data['fields'] = $this->serviceField->getFieldCategory();
 
@@ -75,9 +78,9 @@ class PlaylistController extends Controller
 
     public function edit($id)
     {
-        $lang = config('custom.language.multiple');
         $data['playlist'] = $this->service->find($id);
-        $data['languages'] = $this->serviceLang->getLang(true, $lang);
+        $data['categories'] = $this->serviceCat->getPlaylistCategory(null, false, false);
+        $data['languages'] = $this->serviceLang->getLang(true, $this->lang);
         $data['template'] = $this->serviceTemplate->getTemplate(7);
         $data['fields'] = $this->serviceField->getFieldCategory();
 

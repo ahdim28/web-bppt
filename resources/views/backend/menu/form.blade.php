@@ -157,6 +157,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-form-label col-sm-2 text-sm-right">Icon</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control mb-1" name="icon" value="{{ old('icon') }}" placeholder="Enter icon...">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <div class="col-md-2 text-md-right">
                                         <label class="col-form-label text-sm-right">@lang('mod/menu.label.field8')</label>
                                         </div>

@@ -51,8 +51,9 @@
 
 <div class="text-left mb-2">
     @can ('album_create')
-    <a href="{{ route('gallery.album.create') }}" class="btn btn-success rounded-pill" title="Add New Album"><i class="las la-plus"></i>Album</a>
+    <a href="{{ route('gallery.album.create') }}" class="btn btn-success rounded-pill mr-2" title="Add New Album"><i class="las la-plus"></i>Album</a>
     @endcan
+    <a href="{{ route('gallery.album.category.index') }}" class="btn btn-warning rounded-pill" title="Category List"><i class="las la-list"></i>Category</a>
 </div>
 
 <div class="card mb-4">

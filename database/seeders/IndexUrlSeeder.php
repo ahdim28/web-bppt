@@ -136,6 +136,11 @@ class IndexUrlSeeder extends Seeder
                 'id' => 1,
                 'type' => 'App\Models\Inquiry\Inquiry',
             ],
+            24 => [
+                'slug' => 'structure-organization',
+                'id' => null,
+                'type' => null,
+            ],
         ];
 
         foreach ($indexing as $value) {

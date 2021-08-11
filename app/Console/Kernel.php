@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\Backup;
+use App\Console\Commands\MigrationDB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Backup::class
+        Backup::class,
+        MigrationDB::class
     ];
 
     /**
@@ -27,6 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('database:backup')->daily();
+        $schedule->command('data:migration')->daily();
     }
 
     /**

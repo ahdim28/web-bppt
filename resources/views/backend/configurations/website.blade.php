@@ -28,6 +28,10 @@
                     title="@lang('mod/setting.config.tabs.4')">
                     @lang('mod/setting.config.tabs.4')
                 </a>
+                <a class="list-group-item list-group-item-action {{ (Request::get('tab') == 'custom') ? 'active' : '' }}" href="{{ route('configuration.website', ['tab' => 'custom']) }}"
+                    title="Custom">
+                    Custom
+                </a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -37,12 +41,12 @@
                     <div class="tab-pane fade {{ (Request::get('tab') == 'upload') ? 'show active' : '' }}">
                         @foreach ($data['upload'] as $upload)
                         <div class="card-body media align-items-center">
-                            @if ($upload->name != 'google_analytics_api')
+                            @if ($upload->name != 'google_analytics_api' && $upload->name != 'panduan_identitas')
                                 <a href="{{ $upload->file($upload->name) }}" data-fancybox="gallery" title="Click to view image">
                                     <img src="{{ $upload->file($upload->name) }}" alt="" class="d-block ui-w-80">
                                 </a>
                             @else
-                                <i class="lab la-gripfire display-4 text-primary mr-4"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="las la-file display-4 text-primary mr-4"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             @endif
                             <div class="media-body ml-4" title="Click to change image / file">
                                 <form id="upload-{{ $upload->name }}" action="{{ route('configuration.website.upload', ['name' => $upload->name]) }}" 
@@ -136,6 +140,27 @@
                         </div>
                     </div>
 
+                    {{-- custom --}}
+                    <div class="tab-pane fade {{ (Request::get('tab') == 'custom') ? 'show active' : '' }}">
+                        <form action="{{ route('configuration.website.update') }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="card-body">
+                            @foreach ($data['custom'] as $custom)
+                            <div class="form-group">
+                                <label class="form-label">{{ $custom->label }}</label>
+                                <textarea class="form-control mb-1" name="name[{{ $custom->name }}]" placeholder="Enter value...">{!! old($custom->name, $custom->value) !!}</textarea>
+                            </div>
+                            @endforeach
+                            <hr>
+                            <div class="text-center mt-3">
+                                <button type="submit" class="btn btn-primary" title="@lang('lang.save_change')">
+                                    <i class="las la-save"></i> @lang('lang.save_change')
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -174,6 +199,9 @@
     });
     $('#google_analytics_api').change(function() {
         $('#upload-google_analytics_api').submit();
+    });
+    $('#panduan_identitas').change(function() {
+        $('#upload-panduan_identitas').submit();
     });
 </script>
 @endsection

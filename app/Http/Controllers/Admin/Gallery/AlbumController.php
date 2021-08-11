@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Gallery;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\AlbumRequest;
+use App\Services\Gallery\AlbumCategoryService;
 use App\Services\Gallery\AlbumService;
 use App\Services\LanguageService;
 use App\Services\Master\Field\FieldCategoryService;
@@ -12,16 +13,18 @@ use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
-    private $service, $serviceLang, $serviceTemplate, $serviceField;
+    private $service, $serviceCat, $serviceLang, $serviceTemplate, $serviceField;
 
     public function __construct(
         AlbumService $service,
+        AlbumCategoryService $serviceCat,
         LanguageService $serviceLang,
         TemplateService $serviceTemplate,
         FieldCategoryService $serviceField
     )
     {
         $this->service = $service;
+        $this->serviceCat = $serviceCat;
         $this->serviceLang = $serviceLang;
         $this->serviceTemplate = $serviceTemplate;
         $this->serviceField = $serviceField;
@@ -49,6 +52,7 @@ class AlbumController extends Controller
 
     public function create()
     {
+        $data['categories'] = $this->serviceCat->getAlbumCategory(null, false, false);
         $data['languages'] = $this->serviceLang->getLang(true, $this->lang);
         $data['template'] = $this->serviceTemplate->getTemplate(6);
         $data['fields'] = $this->serviceField->getFieldCategory();
@@ -75,6 +79,7 @@ class AlbumController extends Controller
     public function edit($id)
     {
         $data['album'] = $this->service->find($id);
+        $data['categories'] = $this->serviceCat->getAlbumCategory(null, false, false);
         $data['languages'] = $this->serviceLang->getLang(true, $this->lang);
         $data['template'] = $this->serviceTemplate->getTemplate(6);
         $data['fields'] = $this->serviceField->getFieldCategory();

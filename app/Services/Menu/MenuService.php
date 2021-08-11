@@ -103,6 +103,7 @@ class MenuService
             'not_from_module' => (bool)$request->not_from_module,
             'url' => $request->url ?? null,
             'target_blank' => (bool)$request->target_blank,
+            'icon' => $request->icon ?? null,
         ];
 
         if ((bool)$request->not_from_module == 0) {

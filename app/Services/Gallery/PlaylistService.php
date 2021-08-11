@@ -134,6 +134,7 @@ class PlaylistService
                 $request->input('description_'.config('custom.language.default')) : $request->input('description_'.$value->iso_codes);
         }
 
+        $playlist->category_id = $request->category_id;
         $playlist->slug = Str::limit(Str::slug($request->slug, '-'), 50);
         $playlist->name = $name;
         $playlist->description = $description;

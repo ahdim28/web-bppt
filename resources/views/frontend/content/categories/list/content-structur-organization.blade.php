@@ -7,13 +7,20 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="box-breadcrumb">
+                <div class="box-breadcrumb bc-center">
+                    <ul class="list-breadcrumb">
+                        <li class="item-breadcrumb">
+                            <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
+                                <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
+                            </a>
+                        </li>
+                        <li class="item-breadcrumb">
+                            <span>{!! $data['read']->fieldLang('name') !!}</span>
+                        </li>
+                    </ul>
                     <div class="title-heading text-center">
                         <h1>{!! $data['read']->fieldLang('name') !!}</h1>
                     </div>
-                    <a href="{{ route('home') }}" class="btn-back" title="@lang('common.back_home')">
-                        <i class="las la-home"></i><span>@lang('common.back_home')</span>
-                    </a>
                 </div>
             </div>
         </div>
@@ -42,7 +49,6 @@
                     </div>
                 </div>
                 @endforeach
-
             </div>
         </div>
     </div>

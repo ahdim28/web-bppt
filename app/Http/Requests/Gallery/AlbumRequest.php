@@ -25,6 +25,7 @@ class AlbumRequest extends FormRequest
     public function rules()
     {
         return [
+            'category_id' => 'required',
             'name_'.config('custom.language.default') => 'required',
             'slug' => $this->method() == 'POST' ? 'required|max:50|unique:gallery_albums,slug' : 
                 'required|max:50|unique:gallery_albums,slug,'.$this->id,
@@ -34,6 +35,7 @@ class AlbumRequest extends FormRequest
     public function attributes()
     {
         return [
+            'category_id' => 'Category',
             'name_'.config('custom.language.default') => 'Name',
             'slug' => 'Slug',
         ];

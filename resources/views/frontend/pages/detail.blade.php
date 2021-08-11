@@ -10,12 +10,22 @@
                 <div class="box-breadcrumb bc-center">
                     <ul class="list-breadcrumb">
                         <li class="item-breadcrumb">
-                            <a href="{{ route('home') }}" title="@lang('common.home')">
-                                <i class="las la-home"></i><span>@lang('common.home')</span>
+                            <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
+                                <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
                             </a>
                         </li>
+                        @if ($data['read']->parent != 0)
+                        @if ($data['read']->getParent()->parent != 0)
                         <li class="item-breadcrumb">
-                            <span>{!! $data['read']->fieldLang('title') !!}</span>
+                            <span>{!! Str::limit($data['read']->getParent()->getParent()->fieldLang('title'), 30) !!}</span>
+                        </li>   
+                        @endif
+                        <li class="item-breadcrumb">
+                            <span>{!! Str::limit($data['read']->getParent()->fieldLang('title'), 30) !!}</span>
+                        </li>    
+                        @endif
+                        <li class="item-breadcrumb">
+                            <span>{!! Str::limit($data['read']->fieldLang('title'), 30) !!}</span>
                         </li>
                     </ul>
                     <div class="title-heading text-center">

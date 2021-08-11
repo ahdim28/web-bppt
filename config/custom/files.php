@@ -66,10 +66,10 @@ return [
         ],
     ],
     'cover_album' => [
-        'file' => 'assets/dummy/cover/album.jpg'
+        'file' => 'assets/dummy/cover/no-image.jpg'
     ],
     'cover_playlist' => [
-        'file' => 'assets/dummy/cover/playlist.jpg'
+        'file' => 'assets/dummy/cover/no-image.jpg'
     ],
     'config' => [
         'path' => 'public/config/',
@@ -112,6 +112,11 @@ return [
         'banner_default' => [
             'file' => 'assets/dummy/banner_default.jpg',
             'mimes' => 'jpg,jpeg,png,svg',
+            'pixel' => '500 x 500',
+            'size' => '2000',
+        ],
+        'panduan_identitas' => [
+            'mimes' => 'doc,docx,pdf',
             'pixel' => '500 x 500',
             'size' => '2000',
         ],

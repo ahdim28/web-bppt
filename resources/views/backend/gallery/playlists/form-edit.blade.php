@@ -66,6 +66,20 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-2 text-sm-right">Category</label>
+                                            <div class="col-sm-10">
+                                                <select class="selectpicker custom-select" name="category_id" data-style="btn-default">
+                                                    {{-- <option value=" " selected disabled>Select</option> --}}
+                                                    @foreach ($data['categories'] as $category)
+                                                        <option value="{{ $category->id }}" {{ old('category_id', $data['playlist']->category_id) == $category->id ? 'selected' : '' }}>{!! $category->fieldLang('name') !!}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('category_id')
+                                                <label class="error jquery-validation-error small form-text invalid-feedback" style="display: inline-block;color:red;">{!! $message !!}</label>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         @endif
                                         <div class="form-group row">
                                             <label class="col-form-label col-sm-2 text-sm-right">Description</label>

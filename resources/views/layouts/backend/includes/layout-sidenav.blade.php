@@ -129,6 +129,15 @@
         </li>
         @endcan
 
+        @can('structures')
+        <!-- Links -->
+        <li class="sidenav-item {{ Request::is('admin/structure*') ? 'active' : '' }}">
+          <a href="{{ route('structure.index') }}" class="sidenav-link" title="Structure Organization">
+            <i class="sidenav-icon las la-user-tie"></i> <div>Structure Organization</div>
+          </a>
+        </li>
+        @endcan
+
         @can ('content_sections')
         <!-- Content -->
         <li class="sidenav-item {{ (Request::is('admin/section*') || Request::segment(4) == 'post') ? 'active' : '' }}">

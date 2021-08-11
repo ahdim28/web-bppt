@@ -3,6 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Models\Configuration;
+use App\Models\Content\Section;
+use App\Models\Deputi\StructureOrganization;
+use App\Models\Gallery\AlbumPhoto;
 use App\Models\Inquiry\InquiryForm;
 use App\Models\Language;
 use App\Models\Menu\MenuCategory;
@@ -68,13 +71,19 @@ class PassingDataToView
                 'youtube_id' => Configuration::value('youtube_id'),
                 'website' => Configuration::value('website'),
                 'google_play_store' => Configuration::value('google_play_store'),
+                //group 5
+                'kepala_bppt' => Configuration::value('kepala_bppt'),
+                'layanan_bppt' => Configuration::value('layanan_bppt'),
             ],
             'languages' => Language::active()->get(),
             'menu' => [
                 'header' => MenuCategory::find(1),
+                'quick_link' => MenuCategory::find(2),
             ],
             'linkModule' => [
-                'bidang' => Page::where('id', 3)->publish()->first(),
+                'fields' => Page::where('id', 4)->publish()->first(),
+                'deputys' => StructureOrganization::orderBy('position', 'ASC')->get(),
+                'photos' => AlbumPhoto::limit(12)->orderBy('position', 'ASC')->get(),
             ],
         ]);
 

@@ -15,6 +15,7 @@ class CreateGalleryPlaylistsTable extends Migration
     {
         Schema::create('gallery_playlists', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
             $table->json('name');
             $table->string('slug')->unique();
             $table->json('description')->nullable();
@@ -33,6 +34,8 @@ class CreateGalleryPlaylistsTable extends Migration
             $table->timestamps();
             $table->softDeletesTz('deleted_at', 0);
 
+            $table->foreign('category_id')->references('id')->on('gallery_playlist_categories')
+                ->cascadeOnDelete();
             $table->foreign('custom_view_id')->references('id')->on('templates')
                 ->onDelete('SET NULL');
             $table->foreign('field_category_id')->references('id')->on('field_categories')

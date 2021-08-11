@@ -60,7 +60,7 @@
             @endcan
         </div>
     </div>
-    <div class="table-responsive table-mobile-responsive">
+    <div class="table-responsive">
         <table id="user-list" class="table card-table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -72,7 +72,7 @@
                     <th style="width: 230px;">@lang('lang.created')</th>
                     <th style="width: 230px;">@lang('lang.updated')</th>
                     <th class="text-center" style="width: 110px;">@lang('lang.position')</th>
-                    <th class="text-center" style="width: 140px;">@lang('lang.action')</th>
+                    <th class="text-center" style="width: 180px;">@lang('lang.action')</th>
                 </tr>
             </thead>
             <tbody>
@@ -148,6 +148,11 @@
                         <a href="{{ route('category.read.'.$item->section->slug, ['slugCategory' => $item->slug]) }}" class="btn icon-btn btn-sm btn-info" title="View Detail" target="_blank">
                             <i class="las la-external-link-alt"></i>
                         </a>
+                        @can ('content_category_create')
+                        <a href="{{ route('category.create', ['sectionId' => $data['section']->id, 'parent' => $item->id]) }}" class="btn icon-btn btn-sm btn-success" title="Add New Child Category">
+                            <i class="las la-plus"></i>
+                        </a>
+                        @endcan
                         @can('content_category_update')
                         <a href="{{ route('category.edit', ['sectionId' => $item->section_id, 'id' => $item->id]) }}" class="btn icon-btn btn-sm btn-primary" title="Edit Category">
                             <i class="las la-pen"></i>
@@ -160,120 +165,9 @@
                         @endcan
                     </td>
                 </tr>
-                @endforeach
-            </tbody>
-            <tbody class="tbody-responsive">
-                @if ($data['categories']->total() == 0)
-                    <tr>
-                        <td colspan="8" align="center">
-                            <i>
-                                <strong style="color:red;">
-                                    @if (count(Request::query()) > 0)
-                                    ! @lang('lang.data_attr_not_found', [
-                                        'attribute' => 'Category'
-                                    ]) !
-                                    @else
-                                    ! @lang('lang.data_attr_empty', [
-                                        'attribute' => 'Category'
-                                    ]) !
-                                    @endif
-                                </strong>
-                            </i>
-                        </td>
-                    </tr>
+                @if (count($item->childs))
+                    @include('backend.content.categories.child', ['childs' => $item->childs, 'level' => 1])
                 @endif
-                @foreach ($data['categories'] as $item)
-                <tr>
-                    <td>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="item-table">
-                                    <div class="data-table">Name</div>
-                                    <div class="desc-table">
-                                        <strong>{!! Str::limit($item->fieldLang('name'), 50) !!}</strong>
-                                    </div>
-                                </div>
-                                <div class="item-table">
-                                    <div class="data-table">Viewer</div>
-                                    <div class="desc-table">
-                                        <span class="badge badge-info">{{ $item->viewer }}</span>
-                                    </div>
-                                </div>
-                                <div class="item-table">
-                                    <div class="data-table">Limit</div>
-                                    <div class="desc-table">
-                                        <span class="badge badge-primary">{{ $item->list_limit ?? 'Default Config' }}</span>
-                                    </div>
-                                </div>
-                                <div class="item-table">
-                                    <div class="data-table">Public</div>
-                                    <div class="desc-table">
-                                        <span class="badge badge-{{ $item->customConfig()['public']['color'] }}">{{ __($item->customConfig()['public']['title']) }}</span>
-                                    </div>
-                                </div>
-                                <div class="item-table">
-                                    <div class="data-table">@lang('lang.created')</div>
-                                    <div class="desc-table">
-                                        {{ $item->created_at->format('d F Y (H:i A)') }}
-                                        @if (!empty($item->created_by))
-                                        <br>
-                                        <span class="text-muted">@lang('lang.by') : {{ $item->createBy->name }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="item-table">
-                                    <div class="data-table">@lang('lang.updated')</div>
-                                    <div class="desc-table">
-                                        {{ $item->updated_at->format('d F Y (H:i A)') }}
-                                        @if (!empty($item->updated_by))
-                                        <br>
-                                        <span class="text-muted">@lang('lang.by') : {{ $item->updateBy->name }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="item-table m-0">
-                                    <div class="desc-table text-right">
-                                        @if (auth()->user()->can('content_category_update') && $item->where('section_id', $item->section_id)->min('position') != $item->position)
-                                        <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="btn icon-btn btn-sm btn-dark" data-toggle="tooltip" data-original-title="@lang('lang.position') Up">
-                                            <i class="las la-arrow-up"></i>
-                                            <form action="{{ route('category.position', ['sectionId' => $item->section_id, 'id' => $item->id, 'position' => ($item->position - 1)]) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                            </form>
-                                        </a>
-                                        @else
-                                        <button type="button" class="btn icon-btn btn-sm btn-default" title="you are not allowed to take this action" disabled><i class="las la-arrow-up"></i></button>
-                                        @endif
-                                        @if (auth()->user()->can('content_category_update') && $item->where('section_id', $item->section_id)->max('position') != $item->position)
-                                        <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="btn icon-btn btn-sm btn-dark" data-toggle="tooltip" data-original-title="@lang('lang.position') Down">
-                                            <i class="las la-arrow-down"></i>
-                                            <form action="{{ route('category.position', ['sectionId' => $item->section_id, 'id' => $item->id, 'position' => ($item->position + 1)]) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                            </form>
-                                        </a>
-                                        @else
-                                        <button type="button" class="btn icon-btn btn-sm btn-default" title="you are not allowed to take this action" disabled><i class="las la-arrow-down"></i></button>
-                                        @endif
-                                        <a href="{{ route('category.read.'.$item->section->slug, ['slugCategory' => $item->slug]) }}" class="btn icon-btn btn-sm btn-info" title="View Detail" target="_blank">
-                                            <i class="las la-external-link-alt"></i>
-                                        </a>
-                                        @can('content_category_update')
-                                        <a href="{{ route('category.edit', ['sectionId' => $item->section_id, 'id' => $item->id]) }}" class="btn icon-btn btn-sm btn-primary" title="Edit Category">
-                                            <i class="las la-pen"></i>
-                                        </a>
-                                        @endcan
-                                        @can('content_category_delete')
-                                        <a href="javascript:;" data-section-id="{{ $item->section_id }}" data-id="{{ $item->id }}" class="btn icon-btn btn-sm btn-danger swal-delete" title="Delete Category">
-                                            <i class="las la-trash"></i>
-                                        </a>
-                                        @endcan
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -302,7 +196,7 @@
     $(document).ready(function () {
         $('.swal-delete').on('click', function () {
             var id = $(this).attr('data-id');
-            var section_id = $(this).attr('data-sectionid');
+            var section_id = $(this).attr('data-section-id');
             Swal.fire({
                 title: "@lang('alert.delete_confirm_title')",
                 text: "@lang('alert.delete_confirm_text')",

@@ -12,6 +12,17 @@
 @endsection
 
 @section('content')
+
+@if (isset($data['parent']))
+<div class="row">
+    <div class="col-md-10">
+      <div class="alert alert-primary alert-dismissible fade show text-muted">
+        <i class="las la-thumbtack"></i> Under <strong>" {!! $data['parent']->fieldLang('name') !!} "</strong>
+      </div>
+    </div>
+</div>
+@endif
+
 <div class="card">
     <div class="list-group list-group-flush account-settings-links flex-row">
         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#content">CONTENT</a>
@@ -20,7 +31,7 @@
         <a class="list-group-item list-group-item-action" data-toggle="list" href="#field">CUSTOM FIELD</a>
         @endif
     </div>
-    <form action="{{ route('category.store', ['sectionId' => $data['section']->id]) }}" method="POST">
+    <form action="{{ route('category.store', ['sectionId' => $data['section']->id, 'parent' => Request::get('parent')]) }}" method="POST">
         @csrf
         <div class="tab-content">
 

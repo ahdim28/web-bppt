@@ -51,9 +51,13 @@ class GalleryViewController extends Controller
      */
     public function listAlbum(Request $request)
     {
+        $url = $request->url();
+        $param = Str::replace($url, '', $request->fullUrl());
+
         $data['banner'] = $this->config->getFile('banner_default');
         $limit = $this->config->getValue('content_limit');
         $data['album'] = $this->serviceAlbum->getAlbum($request, 'paginate', $limit);
+        $data['album']->withPath(url()->current().$param);
         $data['photo'] = $this->servicePhoto->getPhoto($request, 'paginate', $limit);
 
         return view('frontend.gallery.albums.list', compact('data'), [
@@ -120,10 +124,14 @@ class GalleryViewController extends Controller
      */
     public function listPlaylist(Request $request)
     {
+        $url = $request->url();
+        $param = Str::replace($url, '', $request->fullUrl());
+
         $data['banner'] = $this->config->getFile('banner_default');
         $limit = $this->config->getValue('content_limit');
         $data['playlist'] = $this->servicePlaylist->getPlaylist($request, 'paginate', $limit);
         $data['video'] = $this->serviceVideo->getVideo($request, 'paginate', $limit);
+        $data['video']->withPath(url()->current().$param);
 
         return view('frontend.gallery.playlists.list', compact('data'), [
             'title' => 'Gallery - Playlists',

@@ -54,13 +54,17 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function create($sectionId)
+    public function create(Request $request, $sectionId)
     {
         $data['section'] = $this->serviceSection->find($sectionId);
         $data['languages'] = $this->serviceLang->getLang(true, $this->lang);
         $data['template_list'] = $this->serviceTemplate->getTemplate(2, 1);
         $data['template_detail'] = $this->serviceTemplate->getTemplate(2, 2);
         $data['fields'] = $this->serviceField->getFieldCategory();
+
+        if (isset($request->parent)) {
+            $data['parent'] = $this->service->find($request->parent);
+        }
 
         return view('backend.content.categories.form', compact('data'), [
             'title' => __('lang.add_attr_new', [
@@ -119,9 +123,9 @@ class CategoryController extends Controller
         ]));
     }
 
-    public function position($sectionId, $id, $position)
+    public function position(Request $request, $sectionId, $id, $position)
     {
-        $this->service->position($id, $position);
+        $this->service->position($id, $position, $request->get('parent'));
 
         return back()->with('success', __('alert.update_success', [
             'attribute' => 'Category'

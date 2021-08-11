@@ -82,14 +82,14 @@ class ConfigurationSeeder extends Seeder
                 'group' => 2,
                 'name' => 'banner_limit',
                 'label' => 'Banner Limit',
-                'value' => 3,
+                'value' => 4,
                 'is_upload' => false,
             ],
             10 => [
                 'group' => 2,
                 'name' => 'content_limit',
                 'label' => 'Content Limit',
-                'value' => 9,
+                'value' => 12,
                 'is_upload' => false,
             ],
             11 => [
@@ -280,6 +280,27 @@ class ConfigurationSeeder extends Seeder
                 'label' => 'Website URL',
                 'value' => 'https://www.bppt.go.id/',
                 'is_upload' => false,
+            ],
+            38 => [
+                'group' => 5,
+                'name' => 'kepala_bppt',
+                'label' => 'Kepala BPPT',
+                'value' => 'Dr. Ir. Hammam Riza, M.sc.',
+                'is_upload' => false,
+            ],
+            39 => [
+                'group' => 5,
+                'name' => 'layanan_bppt',
+                'label' => 'Layanan BPPT',
+                'value' => 'https://layanan.bppt.go.id/',
+                'is_upload' => false,
+            ],
+            40 => [
+                'group' => 1,
+                'name' => 'panduan_identitas',
+                'label' => 'Panduan Identitas',
+                'value' => 'Panduan-Identitas-BPPT.pdf',
+                'is_upload' => true,
             ],
         ];
 

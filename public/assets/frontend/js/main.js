@@ -77,13 +77,23 @@ jQuery(document).ready(function($){
 
 	//Landing-nav
     $('#bidang-toggle, .close-toggle-bidang').click(function() {
-        ctToggle();
+        bidangToggle();
     });
 
-    function ctToggle() {
+    function bidangToggle() {
 		$('.float-bidang').toggleClass('is-opened');
 		$('body').toggleClass('scroll-lock');
 	}
+
+	//BURGER-MENU
+    $('#deputi-toggle, .close-toggle-deputi i').click(function() {
+        deputiToggle();
+    });
+
+    function deputiToggle() {
+		$('body').toggleClass('scroll-lock hidden');
+        $('.float-deputi').toggleClass('is-opened');
+    }
 
 
     
@@ -100,6 +110,8 @@ jQuery(document).ready(function($){
         $('.dropdown').removeClass('moves-out');
         $('.list-mv').removeClass('moves-out');
     }
+
+
 	
 
 
@@ -135,9 +147,9 @@ jQuery(document).ready(function($){
 			searchToggle();
 		}
 		
-		var var_account = $(".ct-toggle");//ubah ke class button nya
-		if (!var_account.is(e.target) && $('.th-right').hasClass('is-opened')&& ( !$(".th-ctbox, .th-ctbox *").is(e.target)) ) {
-			ctToggle();
+		var var_deputi = $("#deputi-toggle, .close-toggle-deputi i");//ubah ke class button nya
+		if (!var_deputi.is(e.target) && $('.float-deputi').hasClass('is-opened')&& ( !$(".list-deputi, .list-deputi *").is(e.target)) ) {
+			deputiToggle();
 		}
 		
 

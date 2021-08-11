@@ -134,6 +134,7 @@ class AlbumService
                 $request->input('description_'.config('custom.language.default')) : $request->input('description_'.$value->iso_codes);
         }
 
+        $album->category_id = $request->category_id;
         $album->slug = Str::limit(Str::slug($request->slug, '-'), 50);
         $album->name = $name;
         $album->description = $description;

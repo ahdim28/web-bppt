@@ -194,6 +194,7 @@ class ConfigurationController extends Controller
         $data['general'] = $this->service->getConfig(2);
         $data['meta_data'] = $this->service->getConfig(3);
         $data['social_media'] = $this->service->getConfig(4);
+        $data['custom'] = $this->service->getConfig(5);
 
         return view('backend.configurations.website', compact('data'), [
             'title' => __('mod/setting.config.caption').' - '.__('mod/setting.config.caption_web'),

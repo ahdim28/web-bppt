@@ -17,22 +17,28 @@ class MasterSeeder extends Seeder
         //--template--//
         $templates = [
             0 => [
-                'name' => 'Content With Cover',
+                'name' => 'Pengantar',
                 'module' => 0,
                 'type' => 0,
-                'file_path' => 'views/frontend/pages/custom/content-with-cover',
+                'file_path' => 'views/frontend/pages/custom/pengantar',
             ],
             1 => [
-                'name' => 'Content With Media',
+                'name' => 'Sejarah',
                 'module' => 0,
                 'type' => 0,
-                'file_path' => 'views/frontend/pages/custom/content-with-media',
+                'file_path' => 'views/frontend/pages/custom/sejarah',
             ],
             2 => [
-                'name' => 'Content Structure Organization',
-                'module' => 2,
+                'name' => 'List Siaran Pers',
+                'module' => 1,
                 'type' => 1,
-                'file_path' => 'views/frontend/content/categories/list/content-structur-organization',
+                'file_path' => 'views/frontend/content/sections/list/siaran-pers',
+            ],
+            3 => [
+                'name' => 'Detail Siaran Pers',
+                'module' => 1,
+                'type' => 2,
+                'file_path' => 'views/frontend/content/sections/detail/siaran-pers',
             ],
         ];
 

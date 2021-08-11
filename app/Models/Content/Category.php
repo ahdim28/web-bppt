@@ -6,6 +6,7 @@ use App\Models\Configuration;
 use App\Models\Content\Post\Post;
 use App\Models\Master\Field\FieldCategory;
 use App\Models\Master\Template;
+use App\Models\Menu\Menu;
 use App\Models\User;
 use App\Observers\LogObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -77,6 +78,19 @@ class Category extends Model
     public function deleteBy()
     {
         return $this->belongsTo(User::class, 'deleted_by');
+    }
+
+    public function childs()
+    {
+        $query = $this->hasMany(Category::class, 'parent', 'id');
+
+        return $query->orderBy('position', 'ASC');
+    }
+
+    public function childPublish()
+    {
+        return $this->hasMany(Category::class, 'parent', 'id')->publish()
+            ->orderBy('position', 'ASC');
     }
 
     public function fieldLang($field, $lang = null)

@@ -34,6 +34,11 @@ class Playlist extends Model
         Playlist::observe(LogObserver::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(PlaylistCategory::class, 'category_id');
+    }
+
     public function videos()
     {
         return $this->hasMany(PlaylistVideo::class, 'playlist_id');

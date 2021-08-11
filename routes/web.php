@@ -122,4 +122,7 @@ Route::group($group, function () {
     Route::get('/search', [HomeController::class, 'search'])
         ->name('home.search');
 
+    //download panduan
+    Route::get('/download/panduan-identitas-bppt', [HomeController::class, 'downloadPanduan']);
+
 });

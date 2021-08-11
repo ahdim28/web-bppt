@@ -75,7 +75,7 @@
         <!-- / Filters -->
         <div class="card mb-4">
             <div class="card-header with-elements">
-                <h5 class="card-header-title mt-1 mb-0">@lang('mod/users.user.caption') @lang('lang.trash')</h5>
+                <h5 class="card-header-title mt-1 mb-0">@lang('mod/users.user.caption') @lang('mod/users.user.log.caption')</h5>
             </div>
             <div class="table-responsive table-mobile-responsive">
                 <table id="user-list" class="table card-table table-striped table-bordered table-hover">

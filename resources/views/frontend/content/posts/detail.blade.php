@@ -10,37 +10,37 @@
         <div class="box-breadcrumb">
             <ul class="list-breadcrumb">
                 <li class="item-breadcrumb">
-                    <a href="index.html">
-                        <i class="las la-home"></i><span>Home</span>
+                    <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
+                        <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
                     </a>
                 </li>
                 <li class="item-breadcrumb">
-                    <a href="list-news.html">
-                        <span>Berita</span>
+                    <a href="{{ route('section.read.'.$data['read']->section->slug) }}">
+                        <span>{!! $data['read']->section->fieldLang('name') !!}</span>
                     </a>
                 </li>
                 <li class="item-breadcrumb">
-                    <span>Secara Daring, BPPT Luncuran InaTEWS Buoy di Perairan Gunung Anak Krakatau </span>
+                    <span>{!! $data['read']->fieldLang('title') !!}</span>
                 </li>
             </ul>
         </div>
         <div class="box-post">
            <div class="post-hits">
-                <div class="box-hits">146</div>
+                <div class="box-hits">{{ $data['read']->viewer }}</div>
                 <span>Hits</span>
             </div>
             <div class="post-title">
                 <div class="title-heading">
-                    <h2>Secara Daring, BPPT Luncuran InaTEWS Buoy di Perairan Gunung Anak Krakatau </h2>
+                    <h2>{!! $data['read']->fieldLang('title') !!}</h2>
                 </div>
                 <div class="box-info">
                     <div class="item-info">
                         <i class="las la-user"></i>
-                        <span>Admin</span>
+                        <span>{{ $data['read']->createBy->name }}</span>
                     </div>
                     <a href="" class="item-info">
                         <i class="las la-tag"></i>
-                        <span>Berita Layanan Info Publik</span>
+                        <span>{{ $data['read']->category->fieldLang('name') }}</span>
                     </a>
                     <div class="item-info">
                         <i class="las la-print"></i>
@@ -52,200 +52,73 @@
         </div>
         <div class="box-content pt-4">
             <div class="box-post-img">
-                <img src="images/tsunami.jpg" alt="">
+                @if (!empty($data['read']->cover['file_path']))
+                <img src="{{ $data['read']->coverSrc() }}" alt="">
+                @endif
             </div>
             <article>
-                <p>Sebagaimana diketahui bahwa BPPT, BMKG, BIG, PVMBG-Badan Geologi, Kementerian ESDM mendapat penugasan nasional melalui Perpres No. 93 Tahun 2019 untuk Memperkuat dan Mengembangkan Sistem Informasi Gempa Bumi dan Tsunami di Indonesia.</p>
-                <p>Secara sejak tahun 2019-2024 dengan target kinerja yaitu terpasang dan beroperasinya: Inabuoy di 13 lokasi, InaCBT di 7 lokasi, InaCAT/Tomografi di tiga lokasi dan satu Kecerdasan Artifical (AI-Tsunami) di Indonesia, kata Kepala BPPT Hammam Riza di acara Peluncuran Ina TEWS Gunung Anak Krakatau (GAK) secara daring (28/07).</p>
-                <p>Ditambahkan Hammam, peluncuran InaTEWS Buoy ini merupakan inovasi kegiatan BPPT yang dimulai dari proses desain, konstruksi, pengujian, pemasangan, dan operasional. Keunggulan dari INATEWS Buoy hasil inovasi BPPT ini adalah sistem Inabuoy dapat beroperasi di laut dalam yang menjadi pusat gempa dan tsunami sehingga early detection atau deteksi dini oleh Buoy sebagai konfirmasi model/prediksi di BMKG akan terjadinya tsunami dapat dilakukan.</p>
-                <p>Tidak hanya itu, menurutnya, teknologi Buoy terdiri dari 3 komponen utama yakni OBU, Buoy dan Manajemen Data di InaTOC. Secara keseluruhan terdiri dari sensor tekanan, sistem komunikasi akustik, mooring line, komunikasi data via satelit Iridium dan aplikasi software untuk manajemen data di InaTOC.</p>
-                
-                <img " src="images/tsunami-2.jpg">
-                <p>Hammam berharap melalui kegiatan ini dapat menjadi wadah untuk menyampaikan secara terbuka capaian-capaian super program InaTEWS BPPT sehingga dapat saling berbagi ilmu pengetahuan dan teknologi, pengalaman serta menjadi ajang untuk membangun sinergi antar BPPT dan Pemerintah Daerah, Institusi riset dari dalam dan luar negeri, asosiasi, lembaga sosial masyarakat, industri/swasta dan media. Sehingga program Nasional ini dapat terlaksana dengan Konsep Pentahelix, pungkasnya.</p>
-                <p>Sementara, Deputi Bidang Teknologi Pengembangan Sumberdaya Alam (TPSA) Yudi Anantasena menyampaikan, program InaTEWS ini menerapkan konsep Pentahelix selain melibatkan akademisi, masyarakat serta sektor bisnis untuk pembuatan buoy tahun lalu di BPPT.</p>
-                <p>Menurutnya, sampai saat ini BPPT sudah melakukan pemasangan di Selatan Bali, Selatan  Kabupaten Malang, Selat Sunda dan Selatan Cilacap, datanya sudah beberapa diterima di InaToc seperti data dari Buoy di Selatan Malang yang masuk lagi dengan baik.</p>
-                <p>Semoga yang dilakukan didalam  ini dapat mencapai output atau produk target InaTEWS BPPT bisa dilaksanakan dengan baik serta menunjukan sebagai bangsa khususnya BPPT serta para mitra-mitra semua bisa melakukan semua produk inovasi anak bangsa, jelasnya. (Humas BPPT)</p>
+               {!! $data['read']->fieldLang('content') !!}
             </article>
+            @if ($data['media']->count() > 0)    
             <div class="list-photo">
                 <div class="swiper-container gallery-news">
                     <div class="swiper-wrapper">
+
+                        @foreach ($data['media'] as $media)
                         <div class="swiper-slide">
-                            <div class="item-photo" data-src="images/tsunami.jpg" data-sub-html="<h4>Title</h4><span>Description</span>">
+                            <div class="item-photo" data-src="{!! $media->fileSrc() !!}" data-sub-html="<h4>{{ $item->caption['title'] }}</h4><span>{{ $item->caption['description'] }}</span>">
                                 <div class="thumb-img">
-                                    <img src="images/tsunami.jpg" alt="">
+                                    <img src="{!! $media->fileSrc() !!}" alt="">
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="item-photo" data-src="images/tsunami-2.jpg" data-sub-html="<h4>Title</h4><span>Description</span>">
-                                <div class="thumb-img">
-                                    <img src="images/tsunami-2.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="item-photo" data-src="images/tsunami-3.jpg" data-sub-html="<h4>Title</h4><span>Description</span>">
-                                <div class="thumb-img">
-                                    <img src="images/tsunami-3.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="item-photo" data-src="images/tsunami-4.jpeg" data-sub-html="<h4>Title</h4><span>Description</span>">
-                                <div class="thumb-img">
-                                    <img src="images/tsunami-4.jpeg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="item-photo" data-src="images/tsunami-5.jpg" data-sub-html="<h4>Title</h4><span>Description</span>">
-                                <div class="thumb-img">
-                                    <img src="images/tsunami-5.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
             </div>
+            @endif
             <div class="row">
                 <div class="col-lg-6">
                     <h6>Tags :</h6>
                     <ul class="list-hastag">
-                        <li class="item-hastag"><a href=""><span>Teknologi</span></a></li>
-                        <li class="item-hastag"><a href=""><span>Indonesia</span></a></li>
-                        <li class="item-hastag"><a href=""><span>Smart</span></a></li>
-                        <li class="item-hastag"><a href=""><span>BPPTIndonesia</span></a></li>
+                        @foreach ($data['read']->tags as $tag)
+                        <li class="item-hastag"><a href="#!"><span>{{ $tag->tag->name }}</span></a></li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="col-lg-6">
-                    <div class="share-box mt-0">
-                        <h6>share :</h6>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <div class="share-icon">
-                                        <i class="lab la-facebook-f"></i>
-                                    </div>
-                                    <span>Facebook</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <div class="share-icon">
-                                        <i class="lab la-twitter"></i>
-                                    </div>
-                                    <span>Twitter</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <div class="share-icon">
-                                        <i class="lab la-linkedin-in"></i>
-                                    </div>
-                                    <span>linkedin</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    @include('includes.button-share')
                 </div>
             </div>
             
         </div>
+        @if ($data['latest_post']->count() > 0)    
         <div class="box-list">
-            <h5 class="mb-4">Berita Terkait</h5>
+            <h5 class="my-4">Berita Terkait</h5>
             <div class="row">
+                
+                @foreach ($data['latest_post'] as $latest)
                 <div class="col-md-6">
                     <div class="item-post sm">
-                        <a href="detail-news.html" class="box-img img-overlay">
+                        <a href="{{ route('post.read.'.$latest->section->slug, ['slugPost' => $latest->slug]) }}" class="box-img img-overlay">
                             <div class="thumb-img">
-                                <img src="images/elang.jpg" alt="">
+                                <img src="{{ $item->coverSrc() }}" alt="">
                             </div>
                         </a>
                         <div class="box-info">
-                            <div class="post-info_2">18 Juli 20201</div>
-                            <a href="detail-news.html">
-                                <h6 class="post-title">Wujudkan Pertumbuhan Ekonomi dan Kemandirian Industri Pertahanan Melalui Inovasi Teknologi </h6>
+                            <div class="post-info_2">{{ $latest->created_at->format('d F Y') }}</div>
+                            <a href="{{ route('post.read.'.$latest->section->slug, ['slugPost' => $latest->slug]) }}">
+                                <h6 class="post-title">{!! $item->fieldLang('title') !!}</h6>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="item-post sm">
-                        <a href="detail-news.html" class="box-img img-overlay">
-                            <div class="thumb-img">
-                                <img src="images//cuaca.jpg" alt="">
-                            </div>
-                        </a>
-                        <div class="box-info">
-                            <div class="post-info_2">16 Juli 20201</div>
-                            <a href="detail-news.html">
-                                <h6 class="post-title">Hadapi Potensi Cuaca Ekstrem, BPPT Terus Lakukan Operasi TMC </h6>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="item-post sm">
-                        <a href="detail-news.html" class="box-img img-overlay">
-                            <div class="thumb-img">
-                                <img src="images/inovasi-presiden.jpeg" alt="">
-                            </div>
-                        </a>
-                        <div class="box-info">
-                            <div class="post-info_2">15 Juli 20201</div>
-                            <a href="detail-news.html">
-                                <h6 class="post-title">Melalui Inovasi, Presiden Jokowi Dorong BPPT Dalam Pertumbuhan Ekonomi Nasional</h6>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="item-post sm">
-                        <a href="detail-news.html" class="box-img img-overlay">
-                            <div class="thumb-img">
-                                <img src="images//inovasi-tech.jpg" alt="">
-                            </div>
-                        </a>
-                        <div class="box-info">
-                            <div class="post-info_2">13 Juli 20201</div>
-                            <a href="detail-news.html">
-                                <h6 class="post-title">BPPT Luncurkan Prototype PUNA MALE Elang Hitam</h6>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="item-post sm">
-                        <a href="detail-news.html" class="box-img img-overlay">
-                            <div class="thumb-img">
-                                <img src="images//tsunami.jpg" alt="">
-                            </div>
-                        </a>
-                        <div class="box-info">
-                            <div class="post-info_2">26 Juni 20201</div>
-                            <a href="detail-news.html">
-                                <h6 class="post-title">Bangun Sistem Mitigasi Bencana Terintegrasi, BPPT Berhasil Pasang Buoy Tsunami di Selatan Bali </h6>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="item-post sm">
-                        <a href="detail-news.html" class="box-img img-overlay">
-                            <div class="thumb-img">
-                                <img src="images//cuaca.jpg" alt="">
-                            </div>
-                        </a>
-                        <div class="box-info">
-                            <div class="post-info_2">18 Mei 20201</div>
-                            <a href="detail-news.html">
-                                <h6 class="post-title">Hadapi Potensi Cuaca Ekstrem, BPPT Terus Lakukan Operasi TMC </h6>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection

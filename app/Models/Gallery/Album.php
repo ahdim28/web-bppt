@@ -34,6 +34,11 @@ class Album extends Model
         Album::observe(LogObserver::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(AlbumCategory::class, 'category_id');
+    }
+
     public function photos()
     {
         return $this->hasMany(AlbumPhoto::class, 'album_id');

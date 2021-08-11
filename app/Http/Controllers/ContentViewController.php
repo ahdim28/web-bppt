@@ -241,7 +241,7 @@ class ContentViewController extends Controller
         $data['files'] = $data['read']->files;
         $data['media'] = $data['read']->media()->orderBy('position', 'ASC')->get();
         $data['field'] = $data['read']->custom_field;
-        $data['latest_post'] = $this->servicePost->latestPost($data['read']->id, 3, 'section');
+        $data['latest_post'] = $this->servicePost->latestPost($data['read']->id, 6, 'section');
         $data['prev_post'] = $this->servicePost->postPrevNext($data['read']->id, 1, 'prev', 'section');
         $data['next_post'] = $this->servicePost->postPrevNext($data['read']->id, 1, 'next', 'section');
 

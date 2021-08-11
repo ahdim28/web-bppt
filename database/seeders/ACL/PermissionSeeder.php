@@ -375,6 +375,22 @@ class PermissionSeeder extends Seeder
                 'parent' => 0,
                 'name' => 'commons'
             ],
+            90 => [
+                'parent' => 0,
+                'name' => 'structures'
+            ],
+            91 => [
+                'parent' => 91,
+                'name' => 'structure_create'
+            ],
+            92 => [
+                'parent' => 91,
+                'name' => 'structure_update'
+            ],
+            93 => [
+                'parent' => 91,
+                'name' => 'structure_delete'
+            ],
         ];
 
         foreach ($permissions as $val) {

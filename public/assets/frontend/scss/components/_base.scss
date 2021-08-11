@@ -240,13 +240,17 @@ img {
 
     h5 {
         font-size: 10px;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         font-weight: 700;
         text-transform: uppercase;
-        margin-bottom: 15px;
+        margin-bottom: 0;
         color: var(--c-blue);
         background-color: var(--c-blue_14);
         display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 
     h4 {
