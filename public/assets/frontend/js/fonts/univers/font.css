@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Univers LT Std';
+    src: url('UniversLTStd-Light.eot');
+    src: local('Univers LT Std 45 Light'), local('UniversLTStd-Light'),
+    url('UniversLTStd-Light.eot?#iefix') format('embedded-opentype'),
+    url('UniversLTStd-Light.woff2') format('woff2'),
+    url('UniversLTStd-Light.woff') format('woff'),
+    url('UniversLTStd-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Univers LT Std';
+    src: url('UniversLTStd.eot');
+    src: local('Univers LT Std 55 Roman'), local('UniversLTStd'),
+        url('UniversLTStd.eot?#iefix') format('embedded-opentype'),
+        url('UniversLTStd.woff2') format('woff2'),
+        url('UniversLTStd.woff') format('woff'),
+        url('UniversLTStd.ttf') format('truetype');
+    font-weight: normal;
+    font-style: 400;
+}
+
+@font-face {
+    font-family: 'Univers LT Std';
+    src: url('UniversLTStd-Black.eot');
+    src: local('Univers LT Std 75 Black'), local('UniversLTStd-Black'),
+        url('UniversLTStd-Black.eot?#iefix') format('embedded-opentype'),
+        url('UniversLTStd-Black.woff2') format('woff2'),
+        url('UniversLTStd-Black.woff') format('woff'),
+        url('UniversLTStd-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Univers LT Std';
+    src: url('UniversLTStd-Bold.eot');
+    src: local('Univers LT Std 65 Bold'), local('UniversLTStd-Bold'),
+        url('UniversLTStd-Bold.eot?#iefix') format('embedded-opentype'),
+        url('UniversLTStd-Bold.woff2') format('woff2'),
+        url('UniversLTStd-Bold.woff') format('woff'),
+        url('UniversLTStd-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+

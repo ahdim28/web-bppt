@@ -1,7 +1,7 @@
 <?php 
 
 return [
-	'deputy_caption' => 'Deputi BPPT',
+	'deputy_caption' => 'Bidang Deputi',
 	'service_caption' => 'Layanan BPPT',
 	'service_text' => 'Layanan Teknologi Terpadu',
 	'search_caption' => 'Cari',

@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'Whyte';
+    src: url('Whyte-Light.eot');
+    src: local('Whyte Light'), local('Whyte-Light'),
+        url('Whyte-Light.eot?#iefix') format('embedded-opentype'),
+        url('Whyte-Light.woff2') format('woff2'),
+        url('Whyte-Light.woff') format('woff'),
+        url('Whyte-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Whyte';
+    src: url('Whyte-Regular.eot');
+    src: local('Whyte Regular'), local('Whyte-Regular'),
+        url('Whyte-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Whyte-Regular.woff2') format('woff2'),
+        url('Whyte-Regular.woff') format('woff'),
+        url('Whyte-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Whyte';
+    src: url('Whyte-Medium.eot');
+    src: local('Whyte Medium'), local('Whyte-Medium'),
+        url('Whyte-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Whyte-Medium.woff2') format('woff2'),
+        url('Whyte-Medium.woff') format('woff'),
+        url('Whyte-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Whyte';
+    src: url('Whyte-Bold.eot');
+    src: local('Whyte Bold'), local('Whyte-Bold'),
+        url('Whyte-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Whyte-Bold.woff2') format('woff2'),
+        url('Whyte-Bold.woff') format('woff'),
+        url('Whyte-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Whyte';
+    src: url('Whyte-Black.eot');
+    src: local('Whyte Black'), local('Whyte-Black'),
+        url('Whyte-Black.eot?#iefix') format('embedded-opentype'),
+        url('Whyte-Black.woff2') format('woff2'),
+        url('Whyte-Black.woff') format('woff'),
+        url('Whyte-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+
+
+
+
+
+
+
+

@@ -23,6 +23,7 @@
 
 @section('jsbody')
 <script>
+    //INTRO-SLIDER
     var introContent = new Swiper('.intro-content-slide', {
         spaceBetween: 10,
         touchRatio: 0.2,
@@ -64,5 +65,39 @@
     
     introContent.controller.control = introImage;
     introImage.controller.control = introContent;
+
+    //COLLECTION-SLIDER
+    var swiper = new Swiper('.assignment-slide', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        slidesPerGroup: 2,
+        speed: 1000,
+        autoplay: {
+            delay: 5000,
+        },
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            },
+        navigation: {
+            nextEl: '.sbn-2',
+            prevEl: '.sbp-2',
+            },
+        breakpoints: {
+           
+            // when window width is <= 767.98px
+            767.98: {
+                slidesPerView: 1,
+                slidesPerGroup: 1,
+            },
+
+            // when window width is <= 1198.98px
+            1198.98: {
+                slidesPerView: 2,
+                slidesPerGroup: 2,
+            }
+        }
+
+    });
 </script>
 @endsection
