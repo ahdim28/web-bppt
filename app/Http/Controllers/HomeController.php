@@ -68,6 +68,7 @@ class HomeController extends Controller
         $data['news_selected'] = $this->post->getPost(null, null, 4, null, null)
             ->where('selection', 1);
         $data['pengantar'] = $this->page->getPage(null, null, null)->where('id', 8)->first();
+        $data['penugasan'] = $this->page->getPage(null, null, null)->where('id', 3)->first();
         $data['kecerdasan'] = $this->page->getPage(null, null, null)->where('id', 5)->first();
         $data['p3dn'] = $this->page->getPage(null, null, null)->where('id', 6)->first();
         $data['digital'] = $this->page->getPage(null, null, null)->where('id', 7)->first();

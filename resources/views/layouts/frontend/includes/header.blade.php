@@ -26,7 +26,7 @@
                                 </a>
                                 @if ($mainMenu->childPublish->count() > 0)
                                 <ul class="dropdown">
-                                    <li class="btn-back"><a href="#!" title="back"><span><i class="las la-angle-left"></i></span></a></li>
+                                    <li class="btn-back"><a href="#!" title="Back"><span><i class="las la-angle-left"></i></span></a></li>
                                     @foreach ($mainMenu->childPublish as $child1)
                                     @php
                                         $modChild1 = $child1->modMenu();
@@ -49,7 +49,7 @@
                                             <span>{!! $modChild1['title'] !!}</span>
                                         </a>
                                         <ul class="sub-dropdown">
-                                            <li class="btn-back"><a href="#!" title="back"><span><i class="las la-angle-left"></i></span></a></li>
+                                            <li class="btn-back"><a href="#!" title="Back"><span><i class="las la-angle-left"></i></span></a></li>
                                             @foreach ($child1->childPublish as $child2)
                                             @php
                                                 $modChild2 = $child2->modMenu();

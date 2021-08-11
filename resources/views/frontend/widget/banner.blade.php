@@ -80,7 +80,7 @@
         </div>
         <div class="box-scroll-down">
             <div class="container">
-                <a href="#next-scroll" class="scroll-down page-scroll" id="btn-scroll">
+                <a href="#next-scroll" class="scroll-down page-scroll" id="btn-scroll" title="@lang('common.scroll_caption')">
                     <i class="las la-mouse"></i>
                     <span>@lang('common.scroll_caption')</span>
                 </a>

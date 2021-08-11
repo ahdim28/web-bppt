@@ -81,7 +81,7 @@
         @include('includes.float-bidang')
         @include('includes.float-deputi')
 
-        <a id="button-top"><i class="las la-arrow-up"></i></a>
+        <a id="button-top" title="Go to Top"><i class="las la-arrow-up"></i></a>
         <!-- jQuery Global-->
         <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script>
 

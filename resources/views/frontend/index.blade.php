@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    @include('frontend.widget.news-selected')
+    @include('frontend.widget.banner')
     @include('frontend.widget.pengantar')
     @include('frontend.widget.penugasan')
     @include('frontend.widget.bidang')

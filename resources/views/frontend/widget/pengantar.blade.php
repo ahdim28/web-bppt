@@ -5,7 +5,7 @@
             <div class="col-lg-6">
                 <div class="box-lead">
                     <div class="sg-white">
-                        <img src="images/sg-white.svg" alt="">
+                        <img src="{{ asset('assets/frontend/images/sg-white.svg') }}" alt="Sg White" title="Sg White">
                     </div>
                     <div class="content-lead">
                         <span>@lang('common.kepala_bppt_caption')</span>
@@ -24,7 +24,7 @@
                         {!! Str::limit($data['pengantar']->fieldLang('content'), 450) !!}
                     </article>
                     <div class="box-btn mt-5">
-                        <a href="{{ route('page.read.'.$data['pengantar']->slug) }}" class="btn btn-main" title=">@lang('common.more')"><span>@lang('common.more')</span></a>
+                        <a href="{{ route('page.read.'.$data['pengantar']->slug) }}" class="btn btn-main" title="@lang('common.more')"><span>@lang('common.more')</span></a>
                     </div>
                 </div>
             </div>

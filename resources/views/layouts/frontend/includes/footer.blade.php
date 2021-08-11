@@ -31,16 +31,13 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <!-- <div class="logo">
-                        <img src="images/logo.svg" alt="">
-                    </div> -->
                     <div class="f-widget">
                         <h5 class="mb-4">@lang('common.follow_us_caption')</h5>
                         <ul class="f-social">
-                            <li><a href="" title="Facebook BPPT"><i class="lab la-facebook-f"></i></a></li>
-                            <li><a href="" title="Twitter BPPT"><i class="lab la-twitter"></i></a></li>
-                            <li><a href="" title="Instagram BPPT"><i class="lab la-instagram"></i></a></li>
-                            <li><a href="" title="Youtube BPPT"><i class="lab la-youtube"></i></a></li>
+                            <li><a href="{!! $config['facebook'] !!}" title="Facebook BPPT" target="_blank"><i class="lab la-facebook-f"></i></a></li>
+                            <li><a href="{!! $config['twitter'] !!}" title="Twitter BPPT" target="_blank"><i class="lab la-twitter"></i></a></li>
+                            <li><a href="{!! $config['instagram'] !!}" title="Instagram BPPT" target="_blank"><i class="lab la-instagram"></i></a></li>
+                            <li><a href="{!! $config['youtube'] !!}" title="Youtube BPPT" target="_blank"><i class="lab la-youtube"></i></a></li>
                         </ul>
                     </div>
                     <div class="f-widget">
@@ -52,7 +49,8 @@
                             @endphp
                             <li>
                                 <a href="{{ $modLink['routes'] }}" 
-                                    class="{{ $menuLink->attr['target_blank'] == 1 ? 'outlink' : '' }}" 
+                                    class="{{ $menuLink->attr['target_blank'] == 1 ? 'outlink' : '' }}"
+                                    title="{!! $modLink['title'] !!}" 
                                     target="{{ $menuLink->attr['target_blank'] == 1 ? '_blank' : '' }}">
                                     {!! $modLink['title'] !!}
                                 </a>
@@ -64,20 +62,20 @@
                 </div>
                 <div class="col-lg-3 ">
                     <div class="f-widget mb-0">
-                        <h5 class="mb-4">Kontak Kami</h5>
+                        <h5 class="mb-4">@lang('common.contact_caption')</h5>
                         <ul>
                             <li>
                                 <span>@lang('common.address_caption')</span>{!! $config['address'] !!}
-                             </li>
-                             <li>
-                                 <span>@lang('common.phone_caption')</span>{!! $config['phone'] !!}
-                              </li>
-                              <li>
-                                 <span>@lang('common.fax_caption')</span>{!! $config['fax'] !!}
-                              </li>
-                             <li>
-                                 <span>@lang('common.email_caption')</span>{!! $config['email'] !!}
-                             </li>
+                            </li>
+                            <li>
+                                <span>@lang('common.phone_caption')</span>{!! $config['phone'] !!}
+                            </li>
+                            <li>
+                                <span>@lang('common.fax_caption')</span>{!! $config['fax'] !!}
+                            </li>
+                            <li>
+                                <span>@lang('common.email_caption')</span>{!! $config['email'] !!}
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -1,10 +1,11 @@
+@if (!empty($data['penugasan']))
 <div class="box-wrap bg-grey">
     <div class="container-fluid">
         <div class="row align-items-center justify-content-between">
             <div class="col-lg-8">
                 <div class="title-heading">
-                    <h5> Badan Pengkajian dan Penerapan Teknologi</h5>
-                    <h1>Penugasan Nasional Kepada BPPT</h1>
+                    <h5>{!! $config['website_name'] !!}</h5>
+                    <h1>{!! $data['penugasan']->fieldLang('title') !!}</h1>
                 </div>
                 <article class="summary-text">
                     <p>Badan Pengkajian dan Penerapan Teknologi (BPPT) adalah Lembaga Pemerintah Non-Kementerian yang berada dibawah koordinasi Badan Riset Inovasi Nasional yang bertanggung jawab langsung ke Presiden dalam menjalankan tugas pemerintahan di bidang pengkajian dan penerapan teknologi.</p>
@@ -89,3 +90,4 @@
         </div>
     </div>
 </div>
+@endif

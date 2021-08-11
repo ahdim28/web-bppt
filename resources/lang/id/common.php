@@ -14,6 +14,7 @@ return [
 	'share_caption' => 'Bagikan',
 	'scroll_caption' => 'Scroll Kebawah',
 	'display_caption' => 'Display',
+	'contact_caption' => 'Kontak Kami',
 	'address_caption' => 'Alamat',
 	'phone_caption' => 'Telp',
 	'fax_caption' => 'FAX',
