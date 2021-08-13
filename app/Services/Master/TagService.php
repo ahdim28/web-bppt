@@ -124,7 +124,7 @@ class TagService
     public function wipeStore($request, $model)
     {
         $tagName = explode(',',$request->tags);
-        $tagName = array_map('strtolower', $tagName);
+        // $tagName = array_map('strtolower', $tagName);
 
         $tag = new Tag;
         foreach($tagName as $name) {

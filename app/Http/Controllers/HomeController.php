@@ -72,6 +72,8 @@ class HomeController extends Controller
         $data['kecerdasan'] = $this->page->getPage(null, null, null)->where('id', 5)->first();
         $data['p3dn'] = $this->page->getPage(null, null, null)->where('id', 6)->first();
         $data['digital'] = $this->page->getPage(null, null, null)->where('id', 7)->first();
+        //news
+        $data['hot_news'] = $this->post->getPost(null, null, 4, null, null);
         $data['link'] = $this->links->getLink(null, null, null)->where('id', 1)->first();
 
         return view('frontend.index', compact('data'));

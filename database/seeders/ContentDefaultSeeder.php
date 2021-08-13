@@ -137,13 +137,13 @@ class ContentDefaultSeeder extends Seeder
         $inquiries = [
             0 => [
                 'name' => [
-                    'id' => 'Kontak Kami',
-                    'en' => 'Contant Us'
+                    'id' => 'Kontak',
+                    'en' => 'Contant'
                 ],
-                'slug' => 'contact-us',
+                'slug' => 'kontak',
                 'body' => [
-                    'id' => '<h2 class="title">Content here</h2>',
-                    'en' => '<h2 class="title">Content here</h2>',
+                    'id' => '<h5 class="my-3">Kantor BPPT</h5>',
+                    'en' => '<h5 class="my-3">BPPT Office</h5>',
                 ],
                 'after_body' => [
                     'id' => 'Terima kasih atas timbal balik anda!',
@@ -155,11 +155,11 @@ class ContentDefaultSeeder extends Seeder
                     'alt' => null,
                 ],
                 'email' => null,
-                'show_form' => 0,
+                'show_form' => 1,
                 'show_map' => 1,
                 'is_detail' => 1,
-                'longitude' => '',
-                'latitude' => '',
+                'longitude' => '106.8205553',
+                'latitude' => '-6.1848914',
                 'meta_data' => [
                     'title' => null,
                     'description' => null,

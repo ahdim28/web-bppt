@@ -15,7 +15,7 @@
                             </a>
                         </li>
                         <li class="item-breadcrumb">
-                            <span>Struktur Organisasi</span>
+                            <span>@lang('common.structure_caption')</span>
                         </li>
                         <li class="item-breadcrumb">
                             <span>{!! Str::limit($data['read']->fieldLang('name'), 30) !!}</span>

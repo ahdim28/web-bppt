@@ -50,7 +50,10 @@
                     <article>
                         {!! $data['read']->fieldLang('content') !!}
                     </article>
-                    @include('includes.button-share')
+                    <div class="share-box">
+                        <h6>@lang('common.share_caption') :</h6>
+                        @include('includes.button-share')
+                    </div>
                 </div>
             </div>
         </div>

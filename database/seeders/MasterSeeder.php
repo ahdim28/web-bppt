@@ -29,16 +29,10 @@ class MasterSeeder extends Seeder
                 'file_path' => 'views/frontend/pages/custom/sejarah',
             ],
             2 => [
-                'name' => 'List Siaran Pers',
+                'name' => 'Siaran Pers',
                 'module' => 1,
                 'type' => 1,
                 'file_path' => 'views/frontend/content/sections/list/siaran-pers',
-            ],
-            3 => [
-                'name' => 'Detail Siaran Pers',
-                'module' => 1,
-                'type' => 2,
-                'file_path' => 'views/frontend/content/sections/detail/siaran-pers',
             ],
         ];
 

@@ -61,6 +61,10 @@
                 @endforeach
             </div>
         </div>
+        <div class="share-box">
+            <h6>@lang('common.share_caption') :</h6>
+            @include('includes.button-share')
+        </div>
     </div>
 </div>
 @endsection

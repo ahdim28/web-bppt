@@ -8,7 +8,7 @@
                     <h1>{!! $data['penugasan']->fieldLang('title') !!}</h1>
                 </div>
                 <article class="summary-text">
-                    <p>Badan Pengkajian dan Penerapan Teknologi (BPPT) adalah Lembaga Pemerintah Non-Kementerian yang berada dibawah koordinasi Badan Riset Inovasi Nasional yang bertanggung jawab langsung ke Presiden dalam menjalankan tugas pemerintahan di bidang pengkajian dan penerapan teknologi.</p>
+                    {!! $data['penugasan']->fieldLang('content') !!}
                 </article>
                 
             </div>
@@ -21,70 +21,24 @@
         </div>
         <div class="assignment-slide swiper-container">
             <div class="swiper-wrapper">
+                @foreach ($data['penugasan']->childPublish()->orderBy('position', 'ASC')->limit(8)->get() as $penugasan)    
                 <div class="swiper-slide">
-                    <a href="" class="item-assignment">
+                    <a href="{{ route('page.read.'.$penugasan->slug) }}" class="item-assignment" title="{!! $penugasan->fieldLang('title') !!}">
                         <div class="box-img img-overlay">
                             <div class="title-assignment">
                                 <div class="no-bidang">
                                     <span><i class="las la-arrow-right"></i></span>
                                     <span><i class="las la-arrow-right"></i></span>
                                 </div>
-                                <h6>Sistem Informasi zoonosisi (SIZE)</h6>
+                                <h6>{!! $penugasan->fieldLang('title') !!}</h6>
                             </div>
                             <div class="thumb-img">
-                                <img src="{{ asset('assets/frontend/images/zoonosisi.jpeg') }}" alt="">
+                                <img src="{{ $penugasan->coverSrc() }}" alt="{{ $penugasan->cover['alt'] }}" title="{{ $penugasan->cover['title'] }}">
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="swiper-slide">
-                    <a href="" class="item-assignment">
-                        <div class="box-img img-overlay">
-                             <div class="title-assignment">
-                                <div class="no-bidang">
-                                    <span><i class="las la-arrow-right"></i></span>
-                                    <span><i class="las la-arrow-right"></i></span>
-                                </div>
-                                <h6>Kendaraan Listrik Berbasis Baterai</h6>
-                            </div>
-                            <div class="thumb-img">
-                                <img src="{{ asset('assets/frontend/images/kendaraan-listrik.jpg') }}" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="" class="item-assignment">
-                        <div class="box-img img-overlay">
-                             <div class="title-assignment">
-                                <div class="no-bidang">
-                                    <span><i class="las la-arrow-right"></i></span>
-                                    <span><i class="las la-arrow-right"></i></span>
-                                </div>
-                                <h6>SPBE</h6>
-                            </div>
-                            <div class="thumb-img">
-                                <img src="{{ asset('assets/frontend/images/spbe.jpeg') }}" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="" class="item-assignment">
-                        <div class="box-img img-overlay">
-                             <div class="title-assignment">
-                                <div class="no-bidang">
-                                    <span><i class="las la-arrow-right"></i></span>
-                                    <span><i class="las la-arrow-right"></i></span>
-                                </div>
-                                <h6>Penghapusan Emas Merkuri</h6>
-                            </div>
-                            <div class="thumb-img">
-                                <img src="{{ asset('assets/frontend/images/merkuri.jpeg') }}" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                @endforeach
             </div>
             <div class="swiper-pagination d-block d-lg-none"></div>
         </div>

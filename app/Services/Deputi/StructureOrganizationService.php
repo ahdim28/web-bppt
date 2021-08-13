@@ -137,4 +137,11 @@ class StructureOrganizationService
 
         return $structure;
     }
+
+
+    //api sidadu
+    public function getApiData()
+    {
+        # code...
+    }
 }

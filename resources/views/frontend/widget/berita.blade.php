@@ -23,99 +23,35 @@
             <li class="nav-item">
                 <a class="nav-link" id="opini-tab" data-toggle="tab" href="#opini" role="tab" aria-controls="opini" aria-selected="false">Opini</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="agenda-tab" data-toggle="tab" href="#agenda" role="tab" aria-controls="agenda" aria-selected="false">Agenda Kegiatan</a>
-            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="hot-news" role="tabpanel" aria-labelledby="hot-news-tab">
                 <div class="row justify-content-around">
                     <div class="col-lg-8">
                         <div class="row">
+                            @foreach ($data['hot_news'] as $hot)
                             <div class="col-sm-6">
                                 <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
+                                    <a href="{{ route('post.read.'.$hot->section->slug, ['slugPost' => $hot->slug]) }}" class="box-img img-overlay" title="{!! $hot->fieldLang('title') !!}">
                                         <div class="box-date">
-                                            <span class="dd">08</span>
-                                            <span class="mmyy">Mar 2021</span>
+                                            <span class="dd">{{ $hot->created_at->format('d') }}</span>
+                                            <span class="mmyy">{{ $hot->created_at->format('F Y') }}</span>
                                         </div>
                                         <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images/inovasi-presiden.jpeg') }}" alt="">
+                                            <img src="{{ $hot->coverSrc() }}" alt="{{ $hot->cover['alt'] }}" title="{{ $hot->cover['title'] }}">
                                         </div>
                                     </a>
                                     <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Layanan Info Publik
+                                        <a href="{{ route('category.read.'.$hot->section->slug, ['slugCategory' => $hot->category->slug]) }}" class="post-info_2" title="{!! $hot->category->fieldLang('name') !!}">
+                                            {!! $hot->category->fieldLang('name') !!}
                                         </a>
-                                        <a href="">
-                                            <h6 class="post-title">Melalui Inovasi, Presiden Jokowi Dorong BPPT Dalam Pertumbuhan Ekonomi Nasional</h6>
+                                        <a href="{{ route('post.read.'.$hot->section->slug, ['slugPost' => $hot->slug]) }}" title="{!! $hot->fieldLang('title') !!}">
+                                            <h6 class="post-title">{!! $hot->fieldLang('title') !!}</h6>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
-                                        <div class="box-date">
-                                            <span class="dd">08</span>
-                                            <span class="mmyy">Mar 2021</span>
-                                        </div>
-                                        <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images//inovasi-tech.jpg') }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Kebijakan Teknologi
-                                        </a>
-                                        <a href="">
-                                            <h6 class="post-title">BPPT Luncurkan Prototype PUNA MALE Elang Hitam</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
-                                        <div class="box-date">
-                                            <span class="dd">08</span>
-                                            <span class="mmyy">Mar 2021</span>
-                                        </div>
-                                        <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images//tsunami.jpg') }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Teknologi Sumberdaya Alam & Kebencanaan
-                                        </a>
-                                        <a href="">
-                                            <h6 class="post-title">Bangun Sistem Mitigasi Bencana Terintegrasi, BPPT Berhasil Pasang Buoy Tsunami di Selatan Bali </h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
-                                        <div class="box-date">
-                                            <span class="dd">09</span>
-                                            <span class="mmyy">Mar 2021</span>
-                                        </div>
-                                        <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images/luhut.jpg') }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Teknologi Agroindustri dan Bioteknologi
-                                        </a>
-                                        <a href="">
-                                            <h6 class="post-title">Menko Luhut Ajak Tingkatkan Nilai Tambah Serta Penggunaan Produksi Dalam Negeri </h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         
                     </div>
@@ -201,7 +137,7 @@
                             </div>
                         </div>
                         <div class="box-btn d-flex justify-content-end">
-                            <a href="{{ route('section.read.berita') }}" class="btn btn-text"><span>Artikel Lainnya</span></a>
+                            <a href="{{ route('section.read.berita-bppt') }}" class="btn btn-text"><span>Artikel Lainnya</span></a>
                         </div>
                     </div>
                 </div>
@@ -741,184 +677,6 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="agenda" role="tabpanel" aria-labelledby="agenda-tab">
-                <div class="row justify-content-around">
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
-                                        <div class="box-date">
-                                            <span class="dd">08</span>
-                                            <span class="mmyy">Mar 2021</span>
-                                        </div>
-                                        <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images/inovasi-presiden.jpeg') }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Layanan Info Publik
-                                        </a>
-                                        <a href="">
-                                            <h6 class="post-title">Melalui Inovasi, Presiden Jokowi Dorong BPPT Dalam Pertumbuhan Ekonomi Nasional</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
-                                        <div class="box-date">
-                                            <span class="dd">08</span>
-                                            <span class="mmyy">Mar 2021</span>
-                                        </div>
-                                        <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images//inovasi-tech.jpg') }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Kebijakan Teknologi
-                                        </a>
-                                        <a href="">
-                                            <h6 class="post-title">BPPT Luncurkan Prototype PUNA MALE Elang Hitam</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
-                                        <div class="box-date">
-                                            <span class="dd">08</span>
-                                            <span class="mmyy">Mar 2021</span>
-                                        </div>
-                                        <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images//tsunami.jpg') }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Teknologi Sumberdaya Alam & Kebencanaan
-                                        </a>
-                                        <a href="">
-                                            <h6 class="post-title">Bangun Sistem Mitigasi Bencana Terintegrasi, BPPT Berhasil Pasang Buoy Tsunami di Selatan Bali </h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="item-post">
-                                    <a href="" class="box-img img-overlay">
-                                        <div class="box-date">
-                                            <span class="dd">09</span>
-                                            <span class="mmyy">Mar 2021</span>
-                                        </div>
-                                        <div class="thumb-img">
-                                            <img src="{{ asset('assets/frontend/images/luhut.jpg') }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="box-info">
-                                        <a href="" class="post-info_2">
-                                            Teknologi Agroindustri dan Bioteknologi
-                                        </a>
-                                        <a href="">
-                                            <h6 class="post-title">Menko Luhut Ajak Tingkatkan Nilai Tambah Serta Penggunaan Produksi Dalam Negeri </h6>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="box-list mt-0">
-                            <div class="item-post sm">
-                                <a href="" class="box-img img-overlay">
-                                    <div class="thumb-img">
-                                        <img src="{{ asset('assets/frontend/images/elang.jpg') }}" alt="">
-                                    </div>
-                                </a>
-                                <div class="box-info">
-                                    <div class="post-info_2">18 Juli 20201</div>
-                                    <a href="">
-                                        <h6 class="post-title">Wujudkan Pertumbuhan Ekonomi dan Kemandirian Industri Pertahanan Melalui Inovasi Teknologi </h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item-post sm">
-                                <a href="" class="box-img img-overlay">
-                                    <div class="thumb-img">
-                                        <img src="{{ asset('assets/frontend/images//cuaca.jpg') }}" alt="">
-                                    </div>
-                                </a>
-                                <div class="box-info">
-                                    <div class="post-info_2">16 Juli 20201</div>
-                                    <a href="">
-                                        <h6 class="post-title">Hadapi Potensi Cuaca Ekstrem, BPPT Terus Lakukan Operasi TMC </h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item-post sm">
-                                <a href="" class="box-img img-overlay">
-                                    <div class="thumb-img">
-                                        <img src="{{ asset('assets/frontend/images/inovasi-presiden.jpeg') }}" alt="">
-                                    </div>
-                                </a>
-                                <div class="box-info">
-                                    <div class="post-info_2">15 Juli 20201</div>
-                                    <a href="">
-                                        <h6 class="post-title">Melalui Inovasi, Presiden Jokowi Dorong BPPT Dalam Pertumbuhan Ekonomi Nasional</h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item-post sm">
-                                <a href="" class="box-img img-overlay">
-                                    <div class="thumb-img">
-                                        <img src="{{ asset('assets/frontend/images//inovasi-tech.jpg') }}" alt="">
-                                    </div>
-                                </a>
-                                <div class="box-info">
-                                    <div class="post-info_2">13 Juli 20201</div>
-                                    <a href="">
-                                        <h6 class="post-title">BPPT Luncurkan Prototype PUNA MALE Elang Hitam</h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item-post sm">
-                                <a href="" class="box-img img-overlay">
-                                    <div class="thumb-img">
-                                        <img src="{{ asset('assets/frontend/images//tsunami.jpg') }}" alt="">
-                                    </div>
-                                </a>
-                                <div class="box-info">
-                                    <div class="post-info_2">26 Juni 20201</div>
-                                    <a href="">
-                                        <h6 class="post-title">Bangun Sistem Mitigasi Bencana Terintegrasi, BPPT Berhasil Pasang Buoy Tsunami di Selatan Bali </h6>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item-post sm">
-                                <a href="" class="box-img img-overlay">
-                                    <div class="thumb-img">
-                                        <img src="{{ asset('assets/frontend/images//cuaca.jpg') }}" alt="">
-                                    </div>
-                                </a>
-                                <div class="box-info">
-                                    <div class="post-info_2">18 Mei 20201</div>
-                                    <a href="">
-                                        <h6 class="post-title">Hadapi Potensi Cuaca Ekstrem, BPPT Terus Lakukan Operasi TMC </h6>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-btn d-flex justify-content-end">
-                            <a href="" class="btn btn-text"><span>Artikel Lainnya</span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="box-list my-4">
             <ul class="list-hastag">
@@ -1014,7 +772,7 @@
                                     <img src="{{ asset('assets/frontend/images/logo-kompascom.png') }}" alt="">
                                 </div>
                                 <a href="">
-                                    <h6 class="post-title">Bersama China, BMKG Kembangkan 3 Sistem Baru Deteksi Gempa dan Tsunami</h6>
+                                    <h6 class="post-title">BPPT Jalankan "Pilot Plan" untuk Bantu Kembangan Energi Baru Terbarukan di RI</h6>
                                 </a>
                             </div>
                         </div>

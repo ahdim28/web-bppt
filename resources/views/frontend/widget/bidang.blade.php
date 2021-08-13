@@ -1,5 +1,5 @@
 @if (!empty($linkModule['fields']))    
-<div class="box-wrap bg-grey">
+<div class="box-wrap">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-8">

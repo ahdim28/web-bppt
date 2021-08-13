@@ -3,6 +3,7 @@
     <div class="container">
         <div class="bg-pd-ai">
             <div class="row align-items-center justify-content-between">
+                
                 <div class="col-lg-4">
                     <div class="box-content-ai">
                         <div class="title-heading text-white">

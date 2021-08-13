@@ -81,13 +81,21 @@ class ContentViewController extends Controller
             $categoryLimit = $data['read']->limit_category;
         }
 
+        if (!empty($request->l)) {
+            $postLimit = $request->l;
+        }
+
         if (!empty($data['read']->limit_post)) {
             $postLimit = $data['read']->limit_post;
         }
 
+        $url = $request->url();
+        $param = Str::replace($url, '', $request->fullUrl());
+
         $data['field'] = $data['read']->custom_field;
         $data['categories'] = $this->serviceCategory->getCategory($request, 'paginate', $categoryLimit, $data['read']->id);
-        $data['posts'] = $this->servicePost->getPost($request, 'paginate', $postLimit, 'section', $data['read']->id);;
+        $data['posts'] = $this->servicePost->getPost($request, 'paginate', $postLimit, 'section', $data['read']->id);
+        $data['posts']->withPath(url()->current().$param);
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('name');
@@ -164,6 +172,10 @@ class ContentViewController extends Controller
         if (!empty($data['read']->list_limit)) {
             $limit = $data['read']->list_limit;
         }
+
+        $url = $request->url();
+        $param = Str::replace($url, '', $request->fullUrl());
+
         $data['field'] = $data['read']->custom_field;
         $data['posts'] = $this->servicePost->getPost($request, 'paginate', $limit, 'category', $data['read']->id);
 
