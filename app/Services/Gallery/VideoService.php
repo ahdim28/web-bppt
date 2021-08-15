@@ -72,12 +72,12 @@ class VideoService
         });
 
         if (!empty($withPaginate)) {
-            $result = $query->orderBy('position', 'ASC')->paginate($limit);
+            $result = $query->orderBy('created_at', 'DESC')->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('position', 'ASC')->limit($limit)->get();
+                $result = $query->orderBy('created_at', 'DESC')->limit($limit)->get();
             } else {
-                $result = $query->orderBy('position', 'ASC')->get();
+                $result = $query->orderBy('created_at', 'DESC')->get();
             }
         }
 
