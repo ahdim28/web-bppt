@@ -41,7 +41,7 @@
             nextEl: '.sbn-1',
             prevEl: '.sbp-1',
         },
-        loop: false,
+        loop: true,
         parallax: true,
         effect: 'fade',
         autoplay: {

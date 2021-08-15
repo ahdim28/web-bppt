@@ -59,7 +59,12 @@ class AlbumPhoto extends Model
 
     public function photoSrc()
     {
-        return Storage::url(config('custom.files.gallery.photo.path').$this->album_id.'/'.
+        $path = Storage::url(config('custom.files.gallery.photo.path').$this->album_id.'/'.
             $this->file);
+        if ($this->flags == 1) {
+            $path = Storage::url('public/gallery/photo/'.$this->file);
+        }
+
+        return $path;
     }
 }

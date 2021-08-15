@@ -48,7 +48,7 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><strong>{{ url('/').'/album/' }}</strong></span>
+                                                <span class="input-group-text"><strong>{{ url('/').'/photo/' }}</strong></span>
                                             </div>
                                             <input type="text" class="form-control slug_spot @error('slug') is-invalid @enderror" lang="{{ $lang->iso_codes }}" name="slug"
                                                     value="{{ !isset($data['category']) ? old('slug') : old('slug', $data['category']->slug) }}" placeholder="Enter slug...">

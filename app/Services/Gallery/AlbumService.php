@@ -49,11 +49,15 @@ class AlbumService
         return $result;
     }
 
-    public function getAlbum($request = null, $withPaginate = null, $limit = null)
+    public function getAlbum($request = null, $withPaginate = null, $limit = null, $categoryId = null)
     {
         $query = $this->model->query();
 
         $query->publish();
+
+        if (!empty($categoryId)) {
+            $query->where('category_id', $categoryId);
+        }
 
         if (!empty($request)) {
             $query->when($request->q, function ($query, $q) {

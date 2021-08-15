@@ -3,6 +3,7 @@
 namespace App\Services\Content;
 
 use App\Models\Content\Post\Post;
+use App\Models\Content\Post\PostEvent;
 use App\Models\Content\Post\PostFile;
 use App\Models\Content\Post\PostProfile;
 use App\Services\LanguageService;
@@ -74,12 +75,16 @@ class PostService
     }
 
     public function getPost($request = null, $withPaginate = null, $limit = null, 
-        $type = null, $idType = null)
+        $type = null, $idType = null, $selection = false)
     {
         $orderField = 'created_at';
         $orderBy = 'DESC';
 
         $query = $this->model->query();
+
+        if ($selection == true) {
+            $query->selection();
+        }
 
         if ($type == 'section') {
             $section = $this->section->find($idType);
@@ -282,6 +287,15 @@ class PostService
             $profile->save();
         }
 
+        if ($section->extra == 3) {
+            $event = new PostEvent;
+            $event->post_id = $post->id;
+            $event->start_date = $request->start_date ?? null;
+            $event->end_date = $request->end_date ?? null;
+            $event->location = $request->location ?? null;
+            $event->save();
+        }
+
         if (!empty($request->tags)) {
             $this->tag->wipeStore($request, $post);
         }
@@ -343,6 +357,14 @@ class PostService
             }
             $profile->fields = $field2;
             $profile->save();
+        }
+
+        if ($post->section->extra == 3) {
+            $event = $post->event;
+            $event->start_date = $request->start_date ?? null;
+            $event->end_date = $request->end_date ?? null;
+            $event->location = $request->location ?? null;
+            $event->save();
         }
 
         if (!empty($request->tags)) {
@@ -498,6 +520,7 @@ class PostService
     
             $post->files()->delete();
             $post->profile()->delete();
+            $post->event()->delete();
             $post->tags()->delete();
             $post->delete();
             return true;

@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="text-body">{!! $item->fieldLang('name') !!} (<strong>{{ $item->photos->count() }}</strong>)
-                        <a href="{{ route('gallery.album.read', ['slugAlbum' => $item->slug]) }}" target="_blank"><i class="las la-external-link-alt"></i></a>
+                        <a href="{{ route('gallery.photo.category.album', ['slugCategory' => $item->category->slug, 'slugAlbum' => $item->slug]) }}" target="_blank"><i class="las la-external-link-alt"></i></a>
                     </div> 
                 </h5>
                 <div class="d-flex flex-wrap align-items-center mb-2">

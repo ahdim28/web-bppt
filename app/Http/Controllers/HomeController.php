@@ -13,15 +13,17 @@ use App\Services\Gallery\AlbumService;
 use App\Services\Gallery\PlaylistService;
 use App\Services\Inquiry\InquiryService;
 use App\Services\Link\LinkService;
+use App\Services\Master\TagService;
 use App\Services\NotificationService;
 use App\Services\Page\PageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
     private $page, $section, $category, $post, $bannerCategory, $catalogCategory,
-        $catalogProduct, $album, $playlist, $links, $inquiry, $config, $notification;
+        $catalogProduct, $album, $playlist, $links, $inquiry, $tag, $config, $notification;
 
     public function __construct(
         PageService $page,
@@ -35,6 +37,7 @@ class HomeController extends Controller
         PlaylistService $playlist,
         LinkService $links,
         InquiryService $inquiry,
+        TagService $tag,
         ConfigurationService $config,
         NotificationService $notification
     )
@@ -50,6 +53,7 @@ class HomeController extends Controller
         $this->playlist = $playlist;
         $this->links = $links;
         $this->inquiry = $inquiry;
+        $this->tag = $tag;
         $this->config = $config;
         $this->notification = $notification;
     }
@@ -65,15 +69,18 @@ class HomeController extends Controller
 
     public function home(Request $request)
     {
-        $data['news_selected'] = $this->post->getPost(null, null, 4, null, null)
-            ->where('selection', 1);
+        $data['news_selected'] = $this->post->getPost(null, null, 4, null, null, true)->take(4);
         $data['pengantar'] = $this->page->getPage(null, null, null)->where('id', 8)->first();
         $data['penugasan'] = $this->page->getPage(null, null, null)->where('id', 3)->first();
         $data['kecerdasan'] = $this->page->getPage(null, null, null)->where('id', 5)->first();
         $data['p3dn'] = $this->page->getPage(null, null, null)->where('id', 6)->first();
         $data['digital'] = $this->page->getPage(null, null, null)->where('id', 7)->first();
-        //news
-        $data['hot_news'] = $this->post->getPost(null, null, 4, null, null);
+        $data['berita'] = $this->section->find(1);
+        $data['inovasi'] = $this->section->find(4);
+        $data['opini'] = $this->section->find(3);
+        $data['tags'] = $this->tag->getTag()->take(5);
+        $data['publikasi'] = $this->section->find(7);
+        $data['agenda'] = $this->section->find(5);
         $data['link'] = $this->links->getLink(null, null, null)->where('id', 1)->first();
 
         return view('frontend.index', compact('data'));
@@ -85,12 +92,12 @@ class HomeController extends Controller
         //     return redirect()->route('home');
         // }
 
-        $data['pages'] = $this->page->getPage($request);
-        $data['sections'] = $this->section->getSection($request);
-        $data['categories'] = $this->category->getCategory($request);
-        $data['posts'] = $this->post->getPost($request);
-        $data['catalog_categories'] = $this->catalogCategory->getCatalogCategory($request);
-        $data['catalog_products'] = $this->catalogProduct->getCatalogProduct($request);
+        // $data['pages'] = $this->page->getPage($request);
+        // $data['sections'] = $this->section->getSection($request);
+        // $data['categories'] = $this->category->getCategory($request);
+        $data['posts'] = $this->post->getPost($request, null, null, null, null, false);
+        // $data['catalog_categories'] = $this->catalogCategory->getCatalogCategory($request);
+        // $data['catalog_products'] = $this->catalogProduct->getCatalogProduct($request);
 
         return view('frontend.search', compact('data'), [
             'title' => 'Search',

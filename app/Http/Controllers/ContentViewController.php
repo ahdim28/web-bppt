@@ -94,6 +94,7 @@ class ContentViewController extends Controller
 
         $data['field'] = $data['read']->custom_field;
         $data['categories'] = $this->serviceCategory->getCategory($request, 'paginate', $categoryLimit, $data['read']->id);
+        $data['categories']->withPath(url()->current().$param);
         $data['posts'] = $this->servicePost->getPost($request, 'paginate', $postLimit, 'section', $data['read']->id);
         $data['posts']->withPath(url()->current().$param);
 

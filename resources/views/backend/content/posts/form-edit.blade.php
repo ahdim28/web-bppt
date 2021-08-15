@@ -25,6 +25,9 @@
         @if ($data['section']->extra == 2)
         <a class="list-group-item list-group-item-action" data-toggle="list" href="#profiles">PROFILES</a>
         @endif
+        @if ($data['section']->extra == 3)
+        <a class="list-group-item list-group-item-action" data-toggle="list" href="#event">EVENT</a>
+        @endif
         @if ($data['fields']->count() || !empty($data['post']->field_category_id) || Auth::user()->hasRole('super'))
         <a class="list-group-item list-group-item-action" data-toggle="list" href="#field">CUSTOM FIELD</a>
         @endif
@@ -352,6 +355,43 @@
                         </div>
                     </div>
                     @endforeach
+                </div>
+            </div>
+            @endif
+
+            @if ($data['section']->extra == 3)
+            <div class="tab-pane fade" id="event">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2 text-sm-right">Start Date</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="datetime-picker form-control @error('start_date') is-invalid @enderror" name="start_date"
+                                    value="{{ old('start_date', $data['post']->event->start_date) }}" placeholder="enter start date...">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="las la-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2 text-sm-right">End Date</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="datetime-picker form-control @error('end_date') is-invalid @enderror" name="end_date"
+                                    value="{{ old('end_date', $data['post']->event->end_date) }}" placeholder="enter end date...">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="las la-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2 text-sm-right">Location</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control mb-1" name="location" value="{{ old('location', $data['post']->event->location) }}" placeholder="Enter location...">
+                        </div>
+                    </div>
                 </div>
             </div>
             @endif

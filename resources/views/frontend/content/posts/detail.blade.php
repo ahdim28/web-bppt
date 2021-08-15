@@ -143,7 +143,7 @@
             autoplay: {
                 delay: 2000,
             },
-            loop: false,
+            loop: true,
             breakpoints: {
                 // when window width is <= 575.98px
                 575.98: {

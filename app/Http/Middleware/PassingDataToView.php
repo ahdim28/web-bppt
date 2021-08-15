@@ -83,7 +83,7 @@ class PassingDataToView
             'linkModule' => [
                 'fields' => Page::where('id', 4)->publish()->first(),
                 'deputys' => StructureOrganization::orderBy('position', 'ASC')->get(),
-                'photos' => AlbumPhoto::limit(12)->orderBy('position', 'ASC')->get(),
+                'photos' => AlbumPhoto::where('album_id', 8)->limit(12)->orderBy('position', 'ASC')->get(),
             ],
         ]);
 

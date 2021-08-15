@@ -18,12 +18,17 @@
                             <span>@lang('common.gallery_caption')</span>
                         </li>
                         <li class="item-breadcrumb">
-                            <a href="{{ route('gallery.album.list') }}">
+                            <a href="{{ route('gallery.photo') }}">
                                 <span>@lang('common.photo_caption')</span>
                             </a>
                         </li>
                         <li class="item-breadcrumb">
-                            <span>{!! $data['read']->fieldLang('name') !!}</span>
+                            <a href="{{ route('gallery.photo.category', ['slugCategory' => $data['read']->category->slug]) }}">
+                                <span>{!! Str::limit($data['read']->category->fieldLang('name'), 30) !!}</span>
+                            </a>
+                        </li>
+                        <li class="item-breadcrumb">
+                            <span>{!! Str::limit($data['read']->fieldLang('name'), 30) !!}</span>
                         </li>
                     </ul>
                     <div class="title-heading text-center">

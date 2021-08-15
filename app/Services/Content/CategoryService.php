@@ -63,7 +63,7 @@ class CategoryService
     }
 
     public function getCategory($request = null, $withPaginate = null, 
-        $limit = null, int $sectionId = null)
+        $limit = null, int $sectionId = nullz)
     {
         $query = $this->model->query();
 

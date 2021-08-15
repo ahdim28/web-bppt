@@ -73,6 +73,17 @@ class PlaylistCategoryService
         return $this->model->findOrFail($id);
     }
 
+    public function findBySlug($slug)
+    {
+        $query = $this->model->query();
+
+        $query->where('slug', $slug);
+
+        $result = $query->first();
+
+        return $result;
+    }
+
     public function store($request)
     {
         $playCat = new PlaylistCategory;

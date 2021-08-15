@@ -146,6 +146,7 @@ class StructureOrganizationController extends Controller
         $slug = $request->route('slugStructure');
 
         $data['read'] = $this->service->findBySlug($slug);
+        // $data['sidadu'] = $this->service->getSidaduApi($data['read']->kode_unit);
 
         //check
         if (empty($slug)) {

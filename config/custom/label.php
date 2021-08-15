@@ -84,6 +84,10 @@ return [
             'title' => 'PROFILE',
             'color' => 'primary'
         ],
+        3 => [
+            'title' => 'EVENT',
+            'color' => 'info'
+        ]
     ],
     'menu_module' => [
         0 => 'Page',

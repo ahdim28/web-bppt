@@ -18,7 +18,7 @@ class StructureOrganizationService
     )
     {
         $this->model = $model;  
-        $this->lang = $lang; 
+        $this->lang = $lang;
     }
 
     public function getStructureList($request)
@@ -138,10 +138,17 @@ class StructureOrganizationService
         return $structure;
     }
 
-
-    //api sidadu
-    public function getApiData()
+    public function getSidaduApi($kodeUnit)
     {
-        # code...
+        $client = new \GuzzleHttp\Client();
+
+        $url = "https://sidadu.bppt.go.id/operator/webservice/website-bppt.php?kodeunit=".$kodeUnit;
+        $response = $client->request('GET', $url, [
+
+        ]);
+        $data = $response->getBody()->getContents();
+        $json = json_decode($data);
+
+        return $json;
     }
 }

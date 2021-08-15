@@ -69,22 +69,22 @@
 @endif
 @if (config('custom.setting.module.album') == true) 
     <sitemap>
-        <loc>{{ route('gallery.album.list') }}</loc>
+        <loc>{{ route('gallery.photo') }}</loc>
     </sitemap>
     @foreach ($data['albums'] as $album)
     <sitemap>
-        <loc>{{ route('gallery.album.read', ['slugAlbum' => $album->slug]) }}</loc>
+        <loc>{{ route('gallery.photo.category.album', ['slugCategory' => $album->category->slug, 'slugAlbum' => $album->slug]) }}</loc>
         <lastmod>{{ $album->updated_at }}</lastmod>
     </sitemap>
     @endforeach
 @endif
 @if (config('custom.setting.module.playlist') == true) 
     <sitemap>
-        <loc>{{ route('gallery.playlist.list') }}</loc>
+        <loc>{{ route('gallery.video') }}</loc>
     </sitemap>
     @foreach ($data['playlists'] as $playlist)
     <sitemap>
-        <loc>{{ route('gallery.playlist.read', ['slugPlaylist' => $playlist->slug]) }}</loc>
+        <loc>{{ route('gallery.video.category.palylist', ['slugCategory' => $palylist->category->slug, 'slugPlaylist' => $palylist->slug]) }}</loc>
         <lastmod>{{ $playlist->updated_at }}</lastmod>
     </sitemap>
     @endforeach

@@ -20,7 +20,7 @@ class ContentDefaultSeeder extends Seeder
         $structures = [
             0 => [
                 'sidadu_id' => null,
-                'unit_code' => null,
+                'unit_code' => '4000000',
                 'name' => [
                     'id' => 'Kepala BPPT',
                     'en' => 'Kepala BPPT',
@@ -34,7 +34,7 @@ class ContentDefaultSeeder extends Seeder
             ],
             1 => [
                 'sidadu_id' => null,
-                'unit_code' => null,
+                'unit_code' => '4100000',
                 'name' => [
                     'id' => 'Sekretariat Utama',
                     'en' => 'Sekretariat Utama',
@@ -48,7 +48,7 @@ class ContentDefaultSeeder extends Seeder
             ],
             2 => [
                 'sidadu_id' => null,
-                'unit_code' => null,
+                'unit_code' => '4200000',
                 'name' => [
                     'id' => 'Bidang Pengkajian Kebijakan Teknologi',
                     'en' => 'Bidang Pengkajian Kebijakan Teknologi',
@@ -61,7 +61,7 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 3,
             ],
             3 => [
-                'sidadu_id' => null,
+                'sidadu_id' => '4300000',
                 'unit_code' => null,
                 'name' => [
                     'id' => 'Bidang Teknologi Pengembangan Sumber Daya Alam',
@@ -75,7 +75,7 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 4,
             ],
             4 => [
-                'sidadu_id' => null,
+                'sidadu_id' => '4400000',
                 'unit_code' => null,
                 'name' => [
                     'id' => 'Bidang Teknologi Agroindustri dan Bioteknologi',
@@ -90,7 +90,7 @@ class ContentDefaultSeeder extends Seeder
             ],
             5 => [
                 'sidadu_id' => null,
-                'unit_code' => null,
+                'unit_code' => '4500000',
                 'name' => [
                     'id' => 'Bidang Teknologi Informasi, Energi, dan Material',
                     'en' => 'Bidang Teknologi Informasi, Energi, dan Material',
@@ -104,7 +104,7 @@ class ContentDefaultSeeder extends Seeder
             ],
             6 => [
                 'sidadu_id' => null,
-                'unit_code' => null,
+                'unit_code' => '4600000',
                 'name' => [
                     'id' => 'Bidang Teknologi Industri Rancang Bangun dan Rekayasa',
                     'en' => 'Bidang Teknologi Industri Rancang Bangun dan Rekayasa',
@@ -196,8 +196,8 @@ class ContentDefaultSeeder extends Seeder
             0 => [
                 'inquiry_id' => 1,
                 'label' => [
-                    'id' => 'Nama',
-                    'en' => 'Name',
+                    'id' => 'Nama Lengkap',
+                    'en' => 'Full Name',
                 ],
                 'name' => 'name',
                 'type' => 0,
@@ -205,7 +205,7 @@ class ContentDefaultSeeder extends Seeder
                     'id' => null,
                     'attr' => null,
                     'type' => 'text',
-                    'class' => 'col-lg-6',
+                    'class' => 'col-xl-6',
                 ],
                 'position' => 1,
                 'validation' => 'required'
@@ -222,12 +222,29 @@ class ContentDefaultSeeder extends Seeder
                     'id' => null,
                     'attr' => null,
                     'type' => 'email',
-                    'class' => 'col-lg-6',
+                    'class' => 'col-xl-6',
                 ],
                 'position' => 2,
                 'validation' => 'required|email'
             ],
             2 => [
+                'inquiry_id' => 1,
+                'label' => [
+                    'id' => 'Subyek',
+                    'en' => 'Subject',
+                ],
+                'name' => 'subject',
+                'type' => 1,
+                'properties' => [
+                    'id' => null,
+                    'attr' => null,
+                    'type' => 'text',
+                    'class' => 'col-xl-12',
+                ],
+                'position' => 3,
+                'validation' => 'required'
+            ],
+            3 => [
                 'inquiry_id' => 1,
                 'label' => [
                     'id' => 'Pesan',
@@ -239,9 +256,9 @@ class ContentDefaultSeeder extends Seeder
                     'id' => null,
                     'attr' => null,
                     'type' => 'text',
-                    'class' => 'col-lg-12',
+                    'class' => 'col-xl-12',
                 ],
-                'position' => 3,
+                'position' => 4,
                 'validation' => 'required'
             ],
         ];

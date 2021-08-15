@@ -24,7 +24,7 @@ class StructureOrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'sidadu_id' => 'required',
+            // 'sidadu_id' => 'required',
             'unit_code' => 'required',
             'name_'.config('custom.language.default') => 'required',
             'slug' => $this->method() == 'POST' ? 'required|max:50|unique:structure_organizations,slug' : 

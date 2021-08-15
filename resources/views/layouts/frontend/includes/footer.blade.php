@@ -19,7 +19,7 @@
                                 @endforeach
                             </div>
                             <div class="box-btn d-flex justify-content-end mt-3">
-                                <a href="{{ route('gallery.album.list') }}" class="btn btn-text" title="@lang('common.gallery_caption') @lang('common.photo_caption') @lang('common.other')"><span>@lang('common.gallery_caption') @lang('common.photo_caption') @lang('common.other')</span></a>
+                                <a href="{{ route('gallery.photo') }}" class="btn btn-text" title="@lang('common.gallery_caption') @lang('common.photo_caption') @lang('common.other')"><span>@lang('common.gallery_caption') @lang('common.photo_caption') @lang('common.other')</span></a>
                             </div>
                         </div>
                     </div>

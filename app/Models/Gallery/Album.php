@@ -82,6 +82,9 @@ class Album extends Model
 
             $cover = Storage::url(config('custom.files.gallery.photo.path').'/'.$id.'/'.
                 $photo->file);
+            if ($photo->flags == 1) {
+                $cover = Storage::url('public/gallery/photo/'.$photo->file);
+            }
 
         } else {
 

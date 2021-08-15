@@ -34,6 +34,18 @@ class MasterSeeder extends Seeder
                 'type' => 1,
                 'file_path' => 'views/frontend/content/sections/list/siaran-pers',
             ],
+            3 => [
+                'name' => 'Detail Event',
+                'module' => 1,
+                'type' => 2,
+                'file_path' => 'views/frontend/content/sections/detail/event',
+            ],
+            4 => [
+                'name' => 'Dokumen',
+                'module' => 1,
+                'type' => 1,
+                'file_path' => 'views/frontend/content/sections/detail/dokumen',
+            ],
         ];
 
         foreach ($templates as $val) {

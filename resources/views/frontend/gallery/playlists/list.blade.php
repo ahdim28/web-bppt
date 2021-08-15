@@ -30,21 +30,12 @@
         </div>
     </div>
 </div>
+
 <div class="box-wrap">
     <div class="container">
-        {{-- <div class="d-flex justify-content-end mb-3">
-            <div class="form-group d-flex align-items-center">
-                <label class="mb-0 mr-3" for="select-display">@lang('common.display')</label>
-                <select id="select-display" class="form-control fit">
-                    @for ($i = 2014; $i <= now()->format('Y'); $i++)
-                    <option value="{{ $i }}" {{ $i == Request::get('y') ? 'selected' : '' }}>{{ $i }}</option>
-                    @endfor
-                </select>
-            </div>
-        </div> --}}
         <div class="list-video">
             <div class="row">
-                @forelse ($data['video'] as $item)    
+                @forelse ($data['videos'] as $item)    
                 <div class="col-md-4">
                     <div class="item-video"  data-lg-size="1280-720" data-src="https://www.youtube.com/watch?v={{ $item->youtube_id }}">
                         <div class="box-img img-overlay">
@@ -81,7 +72,7 @@
                 @endforelse
             </div>
             <div class="box-btn d-flex justify-content-end">
-                {{ $data['video']->onEachSide(1)->links('vendor.pagination.frontend') }}
+                {{ $data['videos']->onEachSide(1)->links('vendor.pagination.frontend') }}
             </div>
         </div>
     </div>

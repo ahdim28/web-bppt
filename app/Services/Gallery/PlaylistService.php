@@ -49,11 +49,15 @@ class PlaylistService
         return $result;
     }
 
-    public function getPlaylist($request = null, $withPaginate = null, $limit = null)
+    public function getPlaylist($request = null, $withPaginate = null, $limit = null, $categoryId = null)
     {
         $query = $this->model->query();
 
         $query->publish();
+
+        if (!empty($categoryId)) {
+            $query->where('category_id');
+        }
 
         if (!empty($request)) {
             $query->when($request->q, function ($query, $q) {

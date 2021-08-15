@@ -195,17 +195,25 @@ if (config('custom.language.needLocale')) {
 
 Route::group($group, function () {
 
-    Route::get('/gallery', [GalleryViewController::class, 'list'])
-        ->name('gallery.list');
-    //album
-    Route::get('/album', [GalleryViewController::class, 'listAlbum'])
-        ->name('gallery.album.list');
-    Route::get('/album/{slugAlbum}', [GalleryViewController::class, 'readAlbum'])
-        ->name('gallery.album.read');
-    //playlist
-    Route::get('/playlist', [GalleryViewController::class, 'listPlaylist'])
-        ->name('gallery.playlist.list');
-    Route::get('/playlist/{slugPlaylist}', [GalleryViewController::class, 'readPlaylist'])
-        ->name('gallery.playlist.read');
+    Route::prefix('gallery')->name('gallery.')->group(function () {
+
+        Route::get('/', [GalleryViewController::class, 'list'])
+            ->name('list');
+        //album
+        Route::get('/photo', [GalleryViewController::class, 'listCatAlbum'])
+            ->name('photo');
+        Route::get('/photo/{slugCategory}', [GalleryViewController::class, 'readCatAlbum'])
+            ->name('photo.category');
+        Route::get('/photo/{slugCategory}/{slugAlbum}', [GalleryViewController::class, 'readAlbum'])
+            ->name('photo.category.album');
+        //playlist
+        Route::get('/video', [GalleryViewController::class, 'listCatPlaylist'])
+            ->name('video');
+        Route::get('/video/{slugCategory}', [GalleryViewController::class, 'readCatPlaylist'])
+            ->name('video.category');
+        Route::get('/video/{slugCategory}/{slugPlaylist}', [GalleryViewController::class, 'readPlaylist'])
+            ->name('video.category.playlist');
+        
+    });
         
 });

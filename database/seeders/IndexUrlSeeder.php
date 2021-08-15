@@ -132,7 +132,7 @@ class IndexUrlSeeder extends Seeder
                 'type' => null,
             ],
             23 => [
-                'slug' => 'contact-us',
+                'slug' => 'kontak',
                 'id' => 1,
                 'type' => 'App\Models\Inquiry\Inquiry',
             ],

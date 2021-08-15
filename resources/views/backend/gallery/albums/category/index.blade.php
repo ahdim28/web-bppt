@@ -59,7 +59,7 @@
                     <th style="width: 230px;">Created</th>
                     <th style="width: 230px;">Updated</th>
                     <th class="text-center" style="width: 110px;">Position</th>
-                    <th class="text-center" style="width: 110px;">Action</th>
+                    <th class="text-center" style="width: 140px;">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -124,6 +124,9 @@
                         @endif
                     </td>
                     <td class="text-center">
+                        <a href="{{ route('gallery.photo.category', ['slugCategory' => $item->slug]) }}" class="btn icon-btn btn-sm btn-info" title="View Detail" target="_blank">
+                            <i class="las la-external-link-alt"></i>
+                        </a>
                         @can('album_update')
                         <a href="{{ route('gallery.album.category.edit', ['id' => $item->id]) }}" class="btn icon-btn btn-sm btn-primary" title="Edit Category">
                             <i class="las la-pen"></i>
@@ -217,6 +220,9 @@
                                         @else
                                         <button type="button" class="btn icon-btn btn-sm btn-default" title="you are not allowed to take this action" disabled><i class="las la-arrow-down"></i></button>
                                         @endif
+                                        <a href="{{ route('gallery.photo.category', ['slugCategory' => $item->slug]) }}" class="btn icon-btn btn-sm btn-info" title="View Detail" target="_blank">
+                                            <i class="las la-external-link-alt"></i>
+                                        </a>
                                         @can('album_update')
                                         <a href="{{ route('gallery.album.category.edit', ['id' => $item->id]) }}" class="btn icon-btn btn-sm btn-primary" title="Edit Type">
                                             <i class="las la-pen"></i>

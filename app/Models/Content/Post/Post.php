@@ -61,6 +61,11 @@ class Post extends Model
         return $this->hasOne(PostProfile::class, 'post_id');
     }
 
+    public function event()
+    {
+        return $this->hasOne(PostEvent::class, 'post_id');
+    }
+
     public function field()
     {
         return $this->belongsTo(FieldCategory::class, 'field_category_id');

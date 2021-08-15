@@ -45,12 +45,18 @@ class PhotoService
         return $result;
     }
 
-    public function getPhoto($request, $withPaginate = null, $limit = null, $albumId = null)
+    public function getPhoto($request, $withPaginate = null, $limit = null, $categoryId = null, $albumId = null)
     {
         $query = $this->model->query();
 
         if (!empty($albumId)) {
             $query->where('album_id', $albumId);
+        }
+
+        if (!empty($categoryId)) {
+            $query->whereHas('album', function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            });
         }
 
         $query->when($request->q, function ($query, $q) {

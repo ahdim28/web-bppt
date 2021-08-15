@@ -49,12 +49,18 @@ class VideoService
         return $result;
     }
 
-    public function getVideo($request, $withPaginate = null, $limit = null, $playlistId = null)
+    public function getVideo($request, $withPaginate = null, $limit = null, $categoryId = null, $playlistId = null)
     {
         $query = $this->model->query();
 
         if (!empty($playlistId)) {
             $query->where('playlist_id', $playlistId);
+        }
+
+        if (!empty($categoryId)) {
+            $query->whereHas('playlist', function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            });
         }
 
         $query->when($request->q, function ($query, $q) {

@@ -57,7 +57,7 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text"><strong>{{ url('/').'/playlist/' }}</strong></span>
+                                                        <span class="input-group-text"><strong>{{ url('/').'/video/{slugCategory}/' }}</strong></span>
                                                     </div>
                                                     <input type="text" class="form-control slug_spot @error('slug') is-invalid @enderror" lang="{{ $lang->iso_codes }}" name="slug"
                                                             value="{{ old('slug') }}" placeholder="Enter slug...">

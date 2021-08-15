@@ -78,7 +78,7 @@
                     <th style="width: 10px;">No</th>
                     <th>Name</th>
                     <th class="text-center" style="width: 100px;">Categories</th>
-                    <th class="text-center" style="width: 100px;">Posts</th>
+                    <th class="text-center" style="width: 130px;">Posts</th>
                     <th class="text-center" style="width: 80px;">@lang('lang.viewer')</th>
                     <th class="text-center" style="width: 120px;">Extra</th>
                     <th class="text-center" style="width: 80px;">@lang('lang.public')</th>
