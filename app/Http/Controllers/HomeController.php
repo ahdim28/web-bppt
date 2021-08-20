@@ -70,6 +70,7 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         $data['banner'] = $this->bannerCategory->find(1);
+        $data['inovation'] = $this->section->find(7);
         $data['technology'] = $this->page->find(4);
         $data['artificial'] = $this->page->find(5);
         $data['p3dn'] = $this->page->find(6);
@@ -107,9 +108,9 @@ class HomeController extends Controller
         // $data['catalog_products'] = $this->catalogProduct->getCatalogProduct($request);
 
         return view('frontend.search', compact('data'), [
-            'title' => 'Search Result "'.$result.'" ',
+            'title' => __('common.search_result_caption').' "'.$result.'" ',
             'breadcrumbs' => [
-                'Search' => ''
+                __('common.search_caption') => ''
             ],
         ]);
     }

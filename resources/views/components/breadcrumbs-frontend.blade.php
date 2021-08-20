@@ -18,7 +18,7 @@
         </li>
         @endforeach
     </ul>
-    @if (!empty(Request::route('slugPost')) && Request::route('slug') == 'agenda-kegiatan' || empty(Request::route('slugPost')))
+    @if (!empty(Request::route('slugPost')) && Request::route('slug') == 'agenda-kegiatan' || !empty(Request::route('slugPost')) && Request::route('slug') == 'inovasi-bppt' || empty(Request::route('slugPost')))
     <div class="title-heading">
         <h2>{!! $title !!}</h2>
     </div>
