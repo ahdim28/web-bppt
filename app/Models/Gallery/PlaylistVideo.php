@@ -86,4 +86,18 @@ class PlaylistVideo extends Model
 
         return $type;
     }
+
+    public function scopePublish($query)
+    {
+        return $query->where('publish', 1);
+    }
+
+    public function customConfig()
+    {
+        $config = [
+            'publish' => config('custom.label.publish.'.$this->publish),
+        ];
+
+        return $config;
+    }
 }

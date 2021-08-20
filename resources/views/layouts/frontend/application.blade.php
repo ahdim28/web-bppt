@@ -37,6 +37,10 @@
     <meta name="twitter:description" content="{!! isset($data['meta_description']) ? strip_tags($data['meta_description']) : strip_tags($config['meta_description']) !!}">
     <meta name="twitter:image" content="{!! isset($data['cover']) ? asset($data['cover']) : $config['open_graph'] !!}">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"> 
+
     <link rel="canonical" href="{{ url()->full() }}" />
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicon/apple-icon-57x57.png') }}">
@@ -78,13 +82,11 @@
         @yield('layout-content')
 
         {{-- bidang --}}
-        @include('includes.float-bidang')
-        @include('includes.float-deputi')
-
+        @include('layouts.frontend.includes.sidebar')
+        
         <a id="button-top" title="Go to Top"><i class="las la-arrow-up"></i></a>
         <!-- jQuery Global-->
         <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script>
-
         <!-- jQuery addtional-->
         <script src="{{ asset('assets/frontend/js/jquery.easing.min.js') }}"></script>   
         <script src="{{ asset('assets/frontend/js/scrolling-nav.js') }}"></script>

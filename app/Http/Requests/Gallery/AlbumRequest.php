@@ -27,8 +27,10 @@ class AlbumRequest extends FormRequest
         return [
             'category_id' => 'required',
             'name_'.config('custom.language.default') => 'required',
-            'slug' => $this->method() == 'POST' ? 'required|max:50|unique:gallery_albums,slug' : 
-                'required|max:50|unique:gallery_albums,slug,'.$this->id,
+            // 'slug' => $this->method() == 'POST' ? 'required|max:50|unique:gallery_albums,slug' : 
+            //     'required|max:50|unique:gallery_albums,slug,'.$this->id,
+            'slug' => $this->method() == 'POST' ? 'required|unique:gallery_albums,slug' : 
+                'required|unique:gallery_albums,slug,'.$this->id,
         ];
     }
 

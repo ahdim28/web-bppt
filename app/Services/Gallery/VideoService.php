@@ -28,6 +28,9 @@ class VideoService
 
         $query->where('playlist_id', $playlistId);
         $query->when($request, function ($query, $req) {
+            if ($req->s != '') {
+                $query->where('publish', $req->s);
+            }
             if ($req->is_youtube != '') {
                 $query->where('is_youtube', $req->is_youtube);
             }
@@ -49,18 +52,19 @@ class VideoService
         return $result;
     }
 
-    public function getVideo($request, $withPaginate = null, $limit = null, $categoryId = null, $playlistId = null)
+    public function getVideo($request = null, $withPaginate = null, $limit = null, $categoryId = null, $playlistId = null)
     {
         $query = $this->model->query();
 
-        if (!empty($playlistId)) {
-            $query->where('playlist_id', $playlistId);
-        }
-
+        $query->publish();
         if (!empty($categoryId)) {
             $query->whereHas('playlist', function ($query) use ($categoryId) {
                 $query->where('category_id', $categoryId);
             });
+        }
+
+        if (!empty($playlistId)) {
+            $query->where('playlist_id', $playlistId);
         }
 
         $query->when($request->q, function ($query, $q) {
@@ -71,13 +75,14 @@ class VideoService
             });
         });
 
+        $query->orderBy('created_at', 'DESC');
         if (!empty($withPaginate)) {
-            $result = $query->orderBy('created_at', 'DESC')->paginate($limit);
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('created_at', 'DESC')->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy('created_at', 'DESC')->get();
+                $result = $query->get();
             }
         }
 
@@ -88,6 +93,7 @@ class VideoService
     {
         $query = $this->model->query();
 
+        $query->publish();
         $result = $query->count();
 
         return $result;
@@ -108,7 +114,10 @@ class VideoService
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $fileName = Str::random(3).'-'.str_replace(' ', '-', $file->getClientOriginalName());
+                $fileName = $file->getClientOriginalName();
+                if (file_exists(storage_path('app/public/gallery/video/'.$playlistId.'/'.$fileName))) {
+                    $fileName = Str::random(3).'-'.$file->getClientOriginalName();
+                }
     
                 Storage::put(config('custom.files.gallery.video.path').$playlistId.'/'.
                     $fileName, file_get_contents($file));
@@ -116,8 +125,10 @@ class VideoService
     
             if ($request->hasFile('thumbnail')) {
                 $fileThumb = $request->file('thumbnail');
-                $fileNameThumb = Str::random(3).'-'.str_replace(' ', '-', 
-                    $fileThumb->getClientOriginalName());
+                $fileNameThumb = $file->getClientOriginalName();
+                if (file_exists(storage_path('app/public/gallery/video/thumbnail/'.$playlistId.'/'.$fileName))) {
+                    $fileNameThumb = Str::random(3).'-'.$fileThumb->getClientOriginalName();
+                }
     
                 Storage::put(config('custom.files.gallery.video.thumbnail.path').$playlistId.'/'.
                     $fileNameThumb, file_get_contents($fileThumb));
@@ -147,7 +158,10 @@ class VideoService
             
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $fileName = Str::random(3).'-'.str_replace(' ', '-', $file->getClientOriginalName());
+                $fileName = $file->getClientOriginalName();
+                if (file_exists(storage_path('app/public/gallery/video/'.$video->playlist_id.'/'.$fileName))) {
+                    $fileName = Str::random(3).'-'.$file->getClientOriginalName();
+                }
     
                 Storage::delete(config('custom.files.gallery.video.path').$video->playlist_id.'/'.
                 '/'.$request->old_file);
@@ -158,8 +172,10 @@ class VideoService
     
             if ($request->hasFile('thumbnail')) {
                 $fileThumb = $request->file('thumbnail');
-                $fileNameThumb = Str::random(3).'-'.str_replace(' ', '-', 
-                    $fileThumb->getClientOriginalName());
+                $fileNameThumb = $file->getClientOriginalName();
+                if (file_exists(storage_path('app/public/gallery/video/thumbnail/'.$video->playlist_id.'/'.$fileName))) {
+                    $fileNameThumb = Str::random(3).'-'.$fileThumb->getClientOriginalName();
+                }
     
                 Storage::delete(config('custom.files.gallery.video.thumbnail.path').$video->playlist_id.'/'.
                     '/'.$request->old_thumbnail);
@@ -193,6 +209,17 @@ class VideoService
 
         $video->title = $title;
         $video->description = $description;
+        $video->publish = (bool)$request->publish;
+
+        return $video;
+    }
+
+    public function publish(int $id)
+    {
+        $video = $this->find($id);
+        $video->publish = !$video->publish;
+        $video->updated_by = Auth::user()->id;
+        $video->save();
 
         return $video;
     }

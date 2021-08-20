@@ -2,35 +2,15 @@
 
 @section('content')
 <div class="banner-breadcrumb">
-    <div class="bg-breadcrumb">
+    <div class="bg-breadcrumb"> 
     </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="box-breadcrumb bc-center">
-                    <ul class="list-breadcrumb">
-                        <li class="item-breadcrumb">
-                            <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
-                                <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
-                            </a>
-                        </li>
-                        <li class="item-breadcrumb">
-                            <span>@lang('common.gallery_caption')</span>
-                        </li>
-                        <li class="item-breadcrumb">
-                            <a href="{{ route('gallery.photo') }}">
-                                <span>@lang('common.photo_caption')</span>
-                            </a>
-                        </li>
-                        <li class="item-breadcrumb">
-                            <span>{!! Str::limit($data['read']->fieldLang('name'), 30) !!}</span>
-                        </li>
-                    </ul>
-                    <div class="title-heading text-center">
-                        <h1>{!! $data['read']->fieldLang('name') !!}</h1>
-                    </div>
-                    
-                </div>
+    <div class="flex-breadcrumb">
+        <div class="row justify-content-between">
+            <div class="col-xl-7">
+                @include('components.breadcrumbs-frontend')
+            </div>
+            <div class="col-xl-4">
+                @include('includes.search')
             </div>
         </div>
     </div>
@@ -49,7 +29,7 @@
                         </div>
                         <div class="box-img img-overlay">
                             <div class="thumb-img">
-                                <img src="{{ $item->photoCover($item->id) }}" alt="">
+                                <img src="{{ $item->imgPreview($item->id) }}" alt="">
                             </div>
                         </div>
                     </div>

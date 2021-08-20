@@ -24,18 +24,19 @@ class StructureOrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'sidadu_id' => 'required',
-            'unit_code' => 'required',
+            'unit_code' => $this->method() == 'POST' ? 'required|unique:structure_organizations,unit_code' : 
+                'required|unique:structure_organizations,unit_code,'.$this->id,
             'name_'.config('custom.language.default') => 'required',
-            'slug' => $this->method() == 'POST' ? 'required|max:50|unique:structure_organizations,slug' : 
-                'required|max:50|unique:structure_organizations,slug,'.$this->id,
+            // 'slug' => $this->method() == 'POST' ? 'required|max:50|unique:structure_organizations,slug' : 
+            //     'required|max:50|unique:structure_organizations,slug,'.$this->id,
+            'slug' => $this->method() == 'POST' ? 'required|unique:structure_organizations,slug' : 
+                'required|unique:structure_organizations,slug,'.$this->id,
         ];
     }
 
     public function attributes()
     {
         return [
-            'sidadu_id' => 'Sidadu ID',
             'unit_code' => 'Unit Code',
             'name_'.config('custom.language.default') => 'Name',
             'slug' => 'Slug',

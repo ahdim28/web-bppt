@@ -24,6 +24,17 @@
                     </div>
             </div>
             <div class="col-md">
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="status custom-select" name="s">
+                        <option value=" " selected>Any</option>
+                        @foreach (config('custom.label.publish') as $key => $val)
+                        <option value="{{ $key }}" {{ Request::get('s') == ''.$key.'' ? 'selected' : '' }} title="Filter by {{ __($val['title']) }}">{{ __($val['title']) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md">
                     <div class="form-group">
                         <label class="form-label">Search</label>
                         <div class="input-group">
@@ -65,6 +76,15 @@
             <div class="w-100">
                 <div class="card-img-top d-block ui-rect-60 ui-bg-cover" style="background-image: url({{ $item->photoSrc() }});">
                     <div class="d-flex justify-content-between align-items-end ui-rect-content p-3">
+                        <div class="flex-shrink-1">
+                            <a href="javascript:void(0);" onclick="$(this).find('form').submit();" title="click to {{ $item->publish == 1 ? 'publish' : 'un-publish' }} album">
+                                <span class="badge badge-{{ $item->customConfig()['publish']['color'] }}">{{ __($item->customConfig()['publish']['title']) }}</span>
+                                <form action="{{ route('gallery.album.photo.publish', ['albumId' => $item->album_id, 'id' => $item->id]) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                </form>
+                            </a>
+                        </div>
                         <div class="text-big">
                             <div class="badge badge-dark font-weight-bold">IMAGE</div>
                         </div>

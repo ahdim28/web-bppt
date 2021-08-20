@@ -58,7 +58,7 @@ class InquiryService
         return $result;
     }
 
-    public function getInquiry($request = null, $withPaginate = null, $limit = null)
+    public function getInquiry($request = null, $withPaginate = false, $limit = null)
     {
         $query = $this->model->query();
 
@@ -74,7 +74,7 @@ class InquiryService
         }
 
         $query->orderBy('position', 'ASC');
-        if (!empty($withPaginate)) {
+        if ($withPaginate == true) {
             $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
@@ -92,7 +92,6 @@ class InquiryService
         $query = $this->model->query();
 
         $query->publish();
-
         $result = $query->count();
 
         return $result;
@@ -127,7 +126,8 @@ class InquiryService
         $inquiry->created_by = auth()->user()->id;
         $inquiry->save();
 
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->store($slug, $inquiry);
 
         return $inquiry;
@@ -151,7 +151,8 @@ class InquiryService
 
         $inquiry->save();
 
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->update($request->url_id, $slug);
 
         return $inquiry;
@@ -168,7 +169,7 @@ class InquiryService
                 $request->input('after_body_'.config('custom.language.default')) : $request->input('after_body_'.$value->iso_codes);
         }
 
-        $inquiry->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $inquiry->slug = Str::slug($request->slug, '-');
         $inquiry->name = $name;
         $inquiry->body = $body;
         $inquiry->after_body = $afterBody;

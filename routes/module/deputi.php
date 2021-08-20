@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Deputi\StructureOrganizationController;
+use App\Http\Controllers\PageViewController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -49,7 +50,9 @@ if (config('custom.language.needLocale')) {
 
 Route::group($group, function () {
 
-    Route::get('/structure-organization/{slugStructure}', [StructureOrganizationController::class, 'readStructure'])
+    Route::get('/organisasi', [PageViewController::class, 'listStructure'])
+        ->name('structure.list');
+    Route::get('/organisasi/{slugStructure}', [PageViewController::class, 'readStructure'])
         ->name('structure.read');
 
 });

@@ -16,7 +16,8 @@ class CreateContentSectionsTable extends Migration
         Schema::create('content_sections', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->string('slug');
+            // $table->string('slug');
+            $table->text('slug');
             $table->json('description')->nullable();
             $table->boolean('public')->default(true);
             $table->string('extra')->nullable();

@@ -5,7 +5,7 @@
 @endsection
 
 @section('layout-content')
-<div class="authentication-wrapper authentication-2 ui-bg-cover ui-bg-overlay-container px-4" style="background-image: url('{{ asset($bg['login']) }}');">
+<div class="authentication-wrapper authentication-2 ui-bg-cover ui-bg-overlay-container px-4" style="background-image: url('{{ asset(config('custom.files.banner_login.file')) }}');">
   <div class="ui-bg-overlay bg-dark opacity-25"></div>
 
   <div class="authentication-inner py-5">

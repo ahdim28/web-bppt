@@ -4,34 +4,13 @@
 <div class="banner-breadcrumb">
     <div class="bg-breadcrumb"> 
     </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="box-breadcrumb bc-center">
-                    <ul class="list-breadcrumb">
-                        <li class="item-breadcrumb">
-                            <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
-                                <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
-                            </a>
-                        </li>
-                        @if ($data['read']->parent != 0)
-                        @if ($data['read']->getParent()->parent != 0)
-                        <li class="item-breadcrumb">
-                            <span>{!! Str::limit($data['read']->getParent()->getParent()->fieldLang('title'), 30) !!}</span>
-                        </li>   
-                        @endif
-                        <li class="item-breadcrumb">
-                            <span>{!! Str::limit($data['read']->getParent()->fieldLang('title'), 30) !!}</span>
-                        </li>    
-                        @endif
-                        <li class="item-breadcrumb">
-                            <span>{!! Str::limit($data['read']->fieldLang('title'), 30) !!}</span>
-                        </li>
-                    </ul>
-                    <div class="title-heading text-center">
-                        <h1>{!! $data['read']->fieldLang('title') !!}</h1>
-                    </div>
-                </div>
+    <div class="flex-breadcrumb">
+        <div class="row justify-content-between">
+            <div class="col-xl-7">
+                @include('components.breadcrumbs-frontend')
+            </div>
+            <div class="col-xl-4">
+                @include('includes.search')
             </div>
         </div>
     </div>

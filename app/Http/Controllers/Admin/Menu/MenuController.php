@@ -91,12 +91,12 @@ class MenuController extends Controller
         $data['pages'] = $this->page->getPage();
         $data['sections'] = $this->section->getSection();
         $data['categories'] = $this->category->getCategory();
-        $data['posts'] = $this->post->getPost();
-        $data['cat_categories'] = $this->catalogCategory->getCatalogCategory();
-        $data['cat_products'] = $this->catalogProduct->getCatalogProduct();
-        $data['albums'] = $this->album->getAlbum();
-        $data['playlists'] = $this->playlist->getPlaylist();
-        $data['links'] = $this->link->getLink();
+        // $data['posts'] = $this->post->getPost();
+        // $data['cat_categories'] = $this->catalogCategory->getCatalogCategory();
+        // $data['cat_products'] = $this->catalogProduct->getCatalogProduct();
+        // $data['albums'] = $this->album->getAlbum();
+        // $data['playlists'] = $this->playlist->getPlaylist();
+        // $data['links'] = $this->link->getLink();
         $data['inquiries'] = $this->inquiry->getInquiry();
 
         return view('backend.menu.form', compact('data'), [
@@ -136,12 +136,12 @@ class MenuController extends Controller
         $data['pages'] = $this->page->getPage();
         $data['sections'] = $this->section->getSection();
         $data['categories'] = $this->category->getCategory();
-        $data['posts'] = $this->post->getPost();
-        $data['cat_categories'] = $this->catalogCategory->getCatalogCategory();
-        $data['cat_products'] = $this->catalogProduct->getCatalogProduct();
-        $data['albums'] = $this->album->getAlbum();
-        $data['playlists'] = $this->playlist->getPlaylist();
-        $data['links'] = $this->link->getLink();
+        // $data['posts'] = $this->post->getPost();
+        // $data['cat_categories'] = $this->catalogCategory->getCatalogCategory();
+        // $data['cat_products'] = $this->catalogProduct->getCatalogProduct();
+        // $data['albums'] = $this->album->getAlbum();
+        // $data['playlists'] = $this->playlist->getPlaylist();
+        // $data['links'] = $this->link->getLink();
         $data['inquiries'] = $this->inquiry->getInquiry();
 
         return view('backend.menu.form-edit', compact('data'), [

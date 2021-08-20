@@ -106,16 +106,16 @@ class IndexUrlSeeder extends Seeder
                 'id' => null,
                 'type' => null,
             ],
-            18 => [
-                'slug' => 'album',
-                'id' => null,
-                'type' => null,
-            ],
-            19 => [
-                'slug' => 'playlist',
-                'id' => null,
-                'type' => null,
-            ],
+            // 18 => [
+            //     'slug' => 'album',
+            //     'id' => null,
+            //     'type' => null,
+            // ],
+            // 19 => [
+            //     'slug' => 'playlist',
+            //     'id' => null,
+            //     'type' => null,
+            // ],
             20 => [
                 'slug' => 'link',
                 'id' => null,
@@ -132,14 +132,19 @@ class IndexUrlSeeder extends Seeder
                 'type' => null,
             ],
             23 => [
+                'slug' => 'organisasi',
+                'id' => null,
+                'type' => null,
+            ],
+            24 => [
+                'slug' => 'dokumen',
+                'id' => null,
+                'type' => null,
+            ],
+            25 => [
                 'slug' => 'kontak',
                 'id' => 1,
                 'type' => 'App\Models\Inquiry\Inquiry',
-            ],
-            24 => [
-                'slug' => 'structure-organization',
-                'id' => null,
-                'type' => null,
             ],
         ];
 

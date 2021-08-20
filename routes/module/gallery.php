@@ -23,25 +23,28 @@ Route::middleware(['auth'])->prefix('admin/gallery')->name('gallery.')
             
             Route::get('/', [AlbumCategoryController::class, 'index'])
                 ->name('index')
-                ->middleware('permission:albums');
+                ->middleware('permission:gallery_category_albums');
             Route::get('/create', [AlbumCategoryController::class, 'create'])
                 ->name('create')
-                ->middleware('permission:album_create');
+                ->middleware('permission:gallery_category_album_create');
             Route::post('/', [AlbumCategoryController::class, 'store'])
                 ->name('store')
-                ->middleware('permission:album_create');
+                ->middleware('permission:gallery_category_album_create');
             Route::get('/{id}/edit', [AlbumCategoryController::class, 'edit'])
                 ->name('edit')
-                ->middleware('permission:album_update');
+                ->middleware('permission:gallery_category_album_update');
             Route::put('/{id}', [AlbumCategoryController::class, 'update'])
                 ->name('update')
-                ->middleware('permission:album_update');
+                ->middleware('permission:gallery_category_album_update');
+            Route::put('/{id}/publish', [AlbumCategoryController::class, 'publish'])
+                ->name('publish')
+                ->middleware('permission:gallery_category_album_update');
             Route::put('/{id}/position/{position}', [AlbumCategoryController::class, 'position'])
                 ->name('position')
-                ->middleware('permission:album_update');
+                ->middleware('permission:gallery_category_album_update');
             Route::delete('/{id}', [AlbumCategoryController::class, 'destroy'])
                 ->name('destroy')
-                ->middleware('permission:album_delete');
+                ->middleware('permission:gallery_category_album_delete');
 
         });
 
@@ -87,6 +90,8 @@ Route::middleware(['auth'])->prefix('admin/gallery')->name('gallery.')
                 ->name('edit');
             Route::put('/{id}', [PhotoController::class, 'update'])
                 ->name('update');
+            Route::put('/{id}/publish', [PhotoController::class, 'publish'])
+                ->name('publish');
             Route::put('/{id}/position/{position}', [PhotoController::class, 'position'])
                 ->name('position');
             Route::post('/sort', [PhotoController::class, 'sort'])
@@ -106,25 +111,28 @@ Route::middleware(['auth'])->prefix('admin/gallery')->name('gallery.')
             
             Route::get('/', [PlaylistCategoryController::class, 'index'])
                 ->name('index')
-                ->middleware('permission:playlists');
+                ->middleware('permission:gallery_category_playlists');
             Route::get('/create', [PlaylistCategoryController::class, 'create'])
                 ->name('create')
-                ->middleware('permission:playlist_create');
+                ->middleware('permission:gallery_category_playlist_create');
             Route::post('/', [PlaylistCategoryController::class, 'store'])
                 ->name('store')
-                ->middleware('permission:playlist_create');
+                ->middleware('permission:gallery_category_playlist_create');
             Route::get('/{id}/edit', [PlaylistCategoryController::class, 'edit'])
                 ->name('edit')
-                ->middleware('permission:playlist_update');
+                ->middleware('permission:gallery_category_playlist_update');
             Route::put('/{id}', [PlaylistCategoryController::class, 'update'])
                 ->name('update')
-                ->middleware('permission:playlist_update');
+                ->middleware('permission:gallery_category_playlist_update');
+            Route::put('/{id}/publish', [PlaylistCategoryController::class, 'publish'])
+                ->name('publish')
+                ->middleware('permission:gallery_category_playlist_update');
             Route::put('/{id}/position/{position}', [PlaylistCategoryController::class, 'position'])
                 ->name('position')
-                ->middleware('permission:playlist_update');
+                ->middleware('permission:gallery_category_playlist_update');
             Route::delete('/{id}', [PlaylistCategoryController::class, 'destroy'])
                 ->name('destroy')
-                ->middleware('permission:playlist_delete');
+                ->middleware('permission:gallery_category_playlist_delete');
 
         });
 
@@ -170,6 +178,8 @@ Route::middleware(['auth'])->prefix('admin/gallery')->name('gallery.')
                 ->name('edit');
             Route::put('/{id}', [VideoController::class, 'update'])
                 ->name('update');
+            Route::put('/{id}/publish', [VideoController::class, 'publish'])
+                ->name('publish');
             Route::put('/{id}/position/{position}', [VideoController::class, 'position'])
                 ->name('position');
             Route::post('/sort', [VideoController::class, 'sort'])

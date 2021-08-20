@@ -23,6 +23,7 @@ class Album extends Model
     protected $casts = [
         'name' => 'json',
         'description' => 'json',
+        'image_preview' => 'json',
         'banner' => 'json',
         'custom_field' => 'json'
     ];
@@ -74,24 +75,28 @@ class Album extends Model
         return $this->belongsTo(User::class, 'delete_by');
     }
 
-    public function photoCover($id)
+    public function imgPreview($id)
     {
         $photo = AlbumPhoto::where('album_id', $id)->first();
 
-        if (!empty($photo)) {
-
-            $cover = Storage::url(config('custom.files.gallery.photo.path').'/'.$id.'/'.
-                $photo->file);
-            if ($photo->flags == 1) {
-                $cover = Storage::url('public/gallery/photo/'.$photo->file);
-            }
-
+        if (!empty($this->image_preview['file_path'])) {
+            $cover = Storage::url($this->image_preview['file_path']);
         } else {
+           
+            if (!empty($photo)) {
 
-            $cover = asset(config('custom.files.cover_album.file'));
-
-        }
-
+                $cover = Storage::url(config('custom.files.gallery.photo.path').'/'.$id.'/'.
+                    $photo->file);
+                if ($photo->flags == 1) {
+                    $cover = Storage::url(config('custom.files.gallery.photo.path').$photo->file);
+                }
+    
+            } else {
+                $cover = asset(config('custom.files.cover_album.file'));
+            }
+    
+        }        
+        
         return $cover;
     }
 

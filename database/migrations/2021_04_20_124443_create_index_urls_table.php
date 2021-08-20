@@ -15,7 +15,8 @@ class CreateIndexUrlsTable extends Migration
     {
         Schema::create('index_urls', function (Blueprint $table) {
             $table->id();
-            $table->string('slug', 50)->unique();
+            // $table->string('slug', 50)->unique();
+            $table->text('slug');
             $table->unsignedBigInteger('urlable_id')->nullable();
             $table->string('urlable_type')->nullable();
             $table->timestamps();

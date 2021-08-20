@@ -17,8 +17,10 @@ class CreateGalleryAlbumsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->json('name');
-            $table->string('slug')->unique();
+            // $table->string('slug');
+            $table->text('slug');
             $table->json('description')->nullable();
+            $table->json('image_preview')->nullable();
             $table->json('banner')->nullable();
             $table->boolean('publish')->default(true);
             $table->integer('photo_limit')->nullable();

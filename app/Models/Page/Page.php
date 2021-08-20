@@ -92,11 +92,6 @@ class Page extends Model
             ->orderBy('position', 'ASC');
     }
 
-    public function getParent()
-    {
-        return Page::where('id', $this->parent)->first();
-    }
-
     public function fieldLang($field, $lang = null)
     {
         if ($lang == null) {
@@ -116,23 +111,18 @@ class Page extends Model
         return $query->where('public', 1);
     }
 
-    public function coverSrc()
+    public function coverSrc($type = 'default')
     {
         if (!empty($this->cover['file_path'])) {
             $cover = Storage::url($this->cover['file_path']);
         } else {
-            $cover = asset(config('custom.files.cover.file'));
-        }
 
-        return $cover;
-    }
-
-    public function coverEmpty()
-    {
-        if (!empty($this->cover['file_path'])) {
-            $cover = Storage::url($this->cover['file_path']);
-        } else {
-            $cover = asset('assets/dummy/profile-empty.jpg');
+            if ($type == 'profile') {
+                $cover = asset('assets/dummy/profile-empty.jpg');
+            } else {
+                $cover = asset(config('custom.files.cover.file'));
+            }
+            
         }
 
         return $cover;

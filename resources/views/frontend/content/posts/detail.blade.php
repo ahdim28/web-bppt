@@ -1,5 +1,9 @@
 @extends('layouts.frontend.layout')
 
+@section('body-attr')
+class="bannerless"
+@endsection
+
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/frontend/css/swiper.min.css') }}">
 @endsection
@@ -7,23 +11,7 @@
 @section('content')
 <div class="box-wrap single-post">
     <div class="container">
-        <div class="box-breadcrumb">
-            <ul class="list-breadcrumb">
-                <li class="item-breadcrumb">
-                    <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
-                        <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
-                    </a>
-                </li>
-                <li class="item-breadcrumb">
-                    <a href="{{ route('section.read.'.$data['read']->section->slug) }}" title="{!! $data['read']->section->fieldLang('name') !!}">
-                        <span>{!! Str::limit($data['read']->section->fieldLang('name'), 30) !!}</span>
-                    </a>
-                </li>
-                <li class="item-breadcrumb">
-                    <span>{!! Str::limit($data['read']->fieldLang('title'), 30) !!}</span>
-                </li>
-            </ul>
-        </div>
+        @include('components.breadcrumbs-frontend')
         <div class="box-post">
            <div class="post-hits">
                 <div class="box-hits">{{ $data['read']->viewer }}</div>
@@ -36,7 +24,7 @@
                 <div class="box-info">
                     <div class="item-info">
                         <i class="las la-user"></i>
-                        <span>{!! $data['read']->createBy->name !!}</span>
+                        <span>{!! $data['creator']!!}</span>
                     </div>
                     <a href="{{ route('category.read.'.$data['read']->section->slug, ['slugCategory' => $data['read']->category->slug]) }}" class="item-info" title="{!! $data['read']->category->fieldLang('name') !!}">
                         <i class="las la-tag"></i>
@@ -44,7 +32,7 @@
                     </a>
                     <div class="item-info">
                         <i class="las la-print"></i>
-                        <a href="#!" title="Print"><span>Print<span></a>
+                        <a href="#!"><span>print<span></a>
                     </div>
                 </div>
             </div>
@@ -72,7 +60,6 @@
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                 </div>
             </div>
@@ -103,7 +90,6 @@
         <div class="box-list">
             <h5 class="my-4">{!! $data['read']->section->fieldLang('name') !!} @lang('common.related_caption')</h5>
             <div class="row">
-                
                 @foreach ($data['latest_post'] as $latest)  
                 <div class="col-md-6">
                     <div class="item-post sm">
@@ -121,7 +107,6 @@
                     </div>
                 </div>
                 @endforeach
-
             </div>
         </div>
         @endif
@@ -136,21 +121,21 @@
 @section('jsbody')
 <script>
     //COLLECTION-SLIDER
-        var swiper = new Swiper('.gallery-news', {
-            slidesPerView: 5,
-            spaceBetween: 2,
-            speed: 1000,
-            autoplay: {
-                delay: 2000,
-            },
-            loop: true,
-            breakpoints: {
-                // when window width is <= 575.98px
-                575.98: {
-                    slidesPerView: 3,
-                }
+    var swiper = new Swiper('.gallery-news', {
+        slidesPerView: 5,
+        spaceBetween: 2,
+        speed: 1000,
+        autoplay: {
+            delay: 2000,
+        },
+        loop: true,
+        breakpoints: {
+            // when window width is <= 575.98px
+            575.98: {
+                slidesPerView: 3,
             }
+        }
 
-        });
+    });
 </script>
 @endsection

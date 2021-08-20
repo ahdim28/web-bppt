@@ -69,19 +69,17 @@ class HomeController extends Controller
 
     public function home(Request $request)
     {
-        $data['news_selected'] = $this->post->getPost(null, null, 4, null, null, true)->take(4);
-        $data['pengantar'] = $this->page->getPage(null, null, null)->where('id', 8)->first();
-        $data['penugasan'] = $this->page->getPage(null, null, null)->where('id', 3)->first();
-        $data['kecerdasan'] = $this->page->getPage(null, null, null)->where('id', 5)->first();
-        $data['p3dn'] = $this->page->getPage(null, null, null)->where('id', 6)->first();
-        $data['digital'] = $this->page->getPage(null, null, null)->where('id', 7)->first();
-        $data['berita'] = $this->section->find(1);
-        $data['inovasi'] = $this->section->find(4);
-        $data['opini'] = $this->section->find(3);
-        $data['tags'] = $this->tag->getTag()->take(5);
-        $data['publikasi'] = $this->section->find(7);
-        $data['agenda'] = $this->section->find(5);
-        $data['link'] = $this->links->getLink(null, null, null)->where('id', 1)->first();
+        $data['banner'] = $this->bannerCategory->find(1);
+        $data['technology'] = $this->page->find(4);
+        $data['artificial'] = $this->page->find(5);
+        $data['p3dn'] = $this->page->find(6);
+        $data['digital'] = $this->page->find(7);
+        $data['hot_news'] = $this->post->getPost(null, false, 10, 'section', 1, true);
+        $data['news'] = $this->post->getPost(null, false, 10, 'section', 1, false);
+        $data['inovations'] = $this->post->getPost(null, false, 10, 'section', 4, false);
+        $data['opini'] = $this->post->getPost(null, false, 10, 'section', 3, false);
+        $data['tags'] = $this->tag->getTag();
+        $data['link'] = $this->links->find(1);
 
         return view('frontend.index', compact('data'));
     }
@@ -92,17 +90,26 @@ class HomeController extends Controller
         //     return redirect()->route('home');
         // }
 
+        $result = '';
+        if (!empty($request->keyword)) {
+            $result = $request->keyword;
+        }
+
+        if (!empty($request->tags)) {
+            $result = $request->tags;
+        }
+
         // $data['pages'] = $this->page->getPage($request);
         // $data['sections'] = $this->section->getSection($request);
         // $data['categories'] = $this->category->getCategory($request);
-        $data['posts'] = $this->post->getPost($request, null, null, null, null, false);
+        $data['posts'] = $this->post->getPost($request, true, 12, null, null, false);
         // $data['catalog_categories'] = $this->catalogCategory->getCatalogCategory($request);
         // $data['catalog_products'] = $this->catalogProduct->getCatalogProduct($request);
 
         return view('frontend.search', compact('data'), [
-            'title' => 'Search',
+            'title' => 'Search Result "'.$result.'" ',
             'breadcrumbs' => [
-
+                'Search' => ''
             ],
         ]);
     }

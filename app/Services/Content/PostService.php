@@ -74,13 +74,14 @@ class PostService
         return $result;
     }
 
-    public function getPost($request = null, $withPaginate = null, $limit = null, 
-        $type = null, $idType = null, $selection = false)
+    public function getPost($request = null, $withPaginate = false, $limit = null, $type = null, $idType = null, $selection = false)
     {
         $orderField = 'created_at';
         $orderBy = 'DESC';
 
         $query = $this->model->query();
+        $query->select('id', 'section_id', 'category_id', 'title', 'slug', 'intro',
+             'content', 'cover', 'banner', 'publish', 'public', 'is_detail', 'meta_data', 'viewer', 'created_at');
 
         if ($selection == true) {
             $query->selection();
@@ -107,13 +108,14 @@ class PostService
             $this->search($query, $request);
         }
 
-        if (!empty($withPaginate)) {
-            $result = $query->orderBy($orderField, $orderBy)->paginate($limit);
+        $query->orderBy($orderField, $orderBy);
+        if ($withPaginate == true) {
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy($orderField, $orderBy)->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy($orderField, $orderBy)->get();
+                $result = $query->get();
             }
 
         }
@@ -191,7 +193,19 @@ class PostService
 
     public function search($query, $request)
     {
-        $query->when($request->section_id, function ($query, $section_id) {
+        $query->when($request->event, function ($query, $req) {
+            
+            if ($req == 'latest') {
+                $query->whereHas('event', function ($queryEv) {
+                    $queryEv->where('start_date', '<', now()->format('Y-m-d H:i:s'));
+                });
+            } else {
+                $query->whereHas('event', function ($queryEv) {
+                    $queryEv->where('start_date', '>', now()->format('Y-m-d H:i:s'));
+                });
+            }
+        
+        })->when($request->section_id, function ($query, $section_id) {
             $query->where('section_id', $section_id);
         })->when($request->category_id, function ($query, $category_id) {
             $query->where('category_id', $category_id);
@@ -212,7 +226,6 @@ class PostService
         $query = $this->model->query();
 
         $query->publish();
-
         $result = $query->count();
 
         return $result;
@@ -227,9 +240,13 @@ class PostService
     {
         $query = $this->model->query();
 
+        $query->select('id', 'section_id', 'category_id', 'title', 'slug', 'intro', 
+        'content', 'cover', 'banner', 'publish', 'public', 'is_detail', 'selection', 
+        'custom_view_id', 'meta_data', 'position', 'viewer', 'created_by');
+
         $query->where('slug', $slug);
 
-        $result = $query->first();
+        $result = $query->limit(1)->first();
 
         return $result;
     }
@@ -390,7 +407,8 @@ class PostService
         }
 
         $post->category_id = $request->category_id;
-        $post->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $post->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $post->slug = Str::slug($request->slug, '-');
         $post->title = $title;
         $post->intro = $intro;
         $post->content = $content;

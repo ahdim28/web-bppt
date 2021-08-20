@@ -60,6 +60,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('/{id}/position/{position}', [CategoryController::class, 'position'])
             ->name('position')
             ->middleware('permission:content_category_update');
+        Route::put('/{id}/publish', [CategoryController::class, 'publish'])
+            ->name('publish')
+            ->middleware('permission:content_category_update');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])
             ->name('destroy')
             ->middleware('permission:content_category_delete');

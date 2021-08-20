@@ -51,7 +51,7 @@ class LinkService
         return $result;
     }
 
-    public function getLink($request = null, $withPaginate = null, $limit = null)
+    public function getLink($request = null, $withPaginate = false, $limit = null)
     {
         $query = $this->model->query();
 
@@ -66,13 +66,14 @@ class LinkService
             });
         }
 
-        if (!empty($withPaginate)) {
-            $result = $query->orderBy('position', 'ASC')->paginate($limit);
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('position', 'ASC')->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy('position', 'ASC')->get();
+                $result = $query->get();
             }
         }
 
@@ -84,7 +85,6 @@ class LinkService
         $query = $this->model->query();
 
         $query->publish();
-
         $result = $query->count();
 
         return $result;
@@ -114,7 +114,8 @@ class LinkService
         $link->created_by = Auth::user()->id;
         $link->save();
 
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->store($slug, $link);
 
         return $link;
@@ -127,7 +128,8 @@ class LinkService
         $link->updated_by = Auth::user()->id;
         $link->save();
 
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->update($request->url_id, $slug);
 
         return $link;
@@ -142,7 +144,7 @@ class LinkService
                 $request->input('description_'.config('custom.language.default')) : $request->input('description_'.$value->iso_codes);
         }
 
-        $link->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $link->slug = Str::slug($request->slug, '-');
         $link->name = $name;
         $link->description = $description;
         $link->publish = (bool)$request->publish;

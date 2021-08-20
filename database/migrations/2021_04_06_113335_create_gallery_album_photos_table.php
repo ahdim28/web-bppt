@@ -22,8 +22,9 @@ class CreateGalleryAlbumPhotosTable extends Migration
             $table->json('title')->nullable();
             $table->json('description')->nullable();
             $table->text('alt')->nullable();
+            $table->boolean('publish')->default(true);
             $table->integer('position');
-            $table->boolean('flags')->default(0);
+            $table->boolean('flags')->default(false);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

@@ -6,6 +6,7 @@ use App\Models\Configuration;
 use App\Models\Content\Section;
 use App\Models\Deputi\StructureOrganization;
 use App\Models\Gallery\AlbumPhoto;
+use App\Models\Inquiry\Inquiry;
 use App\Models\Inquiry\InquiryForm;
 use App\Models\Language;
 use App\Models\Menu\MenuCategory;
@@ -26,19 +27,19 @@ class PassingDataToView
     public function handle(Request $request, Closure $next)
     {
         View::share([
-            'bg' => [
-                'login' => config('custom.files.banner_login.file'),
-            ],
-            'counter' => [
-                'inquiry_form' => InquiryForm::where('status', 0)->count(),
-            ],
+            // 'bg' => [
+            //     'login' => config('custom.files.banner_login.file'),
+            // ],
+            // 'counter' => [
+            //     'inquiry_form' => InquiryForm::where('status', 0)->count(),
+            // ],
             'config' => [
                 //group 1
                 'logo' => Configuration::file('logo',),
                 'logo_2' => Configuration::file('logo_2'),
-                'logo_small' => Configuration::file('logo_small'),
-                'logo_small_2' => Configuration::file('logo_small_2'),
-                'logo_mail' => Configuration::file('logo_mail'),
+                // 'logo_small' => Configuration::file('logo_small'),
+                // 'logo_small_2' => Configuration::file('logo_small_2'),
+                // 'logo_mail' => Configuration::file('logo_mail'),
                 'open_graph' => Configuration::file('open_graph'),
                 'banner_default' => Configuration::file('banner_default'),
                 //group 2
@@ -65,25 +66,26 @@ class PassingDataToView
                 'facebook' => Configuration::value('facebook'),
                 'linkedin' => Configuration::value('linkedin'),
                 'whatsapp' => Configuration::value('whatsapp'),
-                'app_store' => Configuration::value('app_store'),
+                // 'app_store' => Configuration::value('app_store'),
                 'instagram' => Configuration::value('instagram'),
-                'pinterest' => Configuration::value('pinterest'),
+                // 'pinterest' => Configuration::value('pinterest'),
                 'youtube_id' => Configuration::value('youtube_id'),
                 'website' => Configuration::value('website'),
-                'google_play_store' => Configuration::value('google_play_store'),
+                // 'google_play_store' => Configuration::value('google_play_store'),
                 //group 5
                 'kepala_bppt' => Configuration::value('kepala_bppt'),
                 'layanan_bppt' => Configuration::value('layanan_bppt'),
             ],
-            'languages' => Language::active()->get(),
+            'languages' => Language::select('iso_codes', 'country')->active()->get(),
             'menu' => [
                 'header' => MenuCategory::find(1),
-                'quick_link' => MenuCategory::find(2),
+                'sidebar' => MenuCategory::find(2),
+                'quick' => MenuCategory::find(3),
             ],
             'linkModule' => [
-                'fields' => Page::where('id', 4)->publish()->first(),
-                'deputys' => StructureOrganization::orderBy('position', 'ASC')->get(),
-                'photos' => AlbumPhoto::where('album_id', 8)->limit(12)->orderBy('position', 'ASC')->get(),
+                'contact' => Inquiry::select('id', 'slug', 'name')->where('id', 1)->publish()->first(),
+                'photos' => AlbumPhoto::select('id', 'album_id', 'file', 'title', 'description', 'alt', 'publish', 'flags')
+                    ->limit(12)->orderBy('position', 'DESC')->get(),
             ],
         ]);
 

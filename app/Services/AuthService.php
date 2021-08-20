@@ -26,10 +26,10 @@ class AuthService
      */
     public function login($request)
     {
-        $checkRole = $this->modelUser->where('username', $request->username)->first();
+        // $checkRole = $this->modelUser->where('username', $request->username)->first();
 
-        //cek role apa saja yang bisa login di backend
-        if ($checkRole->hasRole('super|support|admin')) {
+        // //cek role apa saja yang bisa login di backend
+        // if ($checkRole->hasRole('super|support|admin')) {
            
             $remember = $request->has('remember') ? true : false;
             if (Auth::attempt($request->forms(), $remember)) {
@@ -38,9 +38,9 @@ class AuthService
                 return false;
             }
 
-        } else {
-            return false;
-        }
+        // } else {
+        //     return false;
+        // }
     }
 
     public function loginFrontend($request)

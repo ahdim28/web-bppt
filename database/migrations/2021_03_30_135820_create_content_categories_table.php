@@ -18,8 +18,10 @@ class CreateContentCategoriesTable extends Migration
             $table->unsignedBigInteger('section_id');
             $table->integer('parent')->default(0);
             $table->json('name');
-            $table->string('slug');
+            // $table->string('slug');
+            $table->text('slug');
             $table->json('description')->nullable();
+            $table->boolean('publish')->default(true);
             $table->boolean('public')->default(true);
             $table->boolean('is_detail')->default(false);
             $table->unsignedBigInteger('list_view_id')->nullable();

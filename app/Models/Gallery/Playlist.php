@@ -23,6 +23,7 @@ class Playlist extends Model
     protected $casts = [
         'name' => 'json',
         'description' => 'json',
+        'image_preview' => 'json',
         'banner' => 'json',
         'custom_field' => 'json',
     ];
@@ -74,29 +75,34 @@ class Playlist extends Model
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
-    public function coverSrc($id)
+    public function imgPreview($id)
     {
         $video = PlaylistVideo::where('playlist_id', $id)->first();
 
-        if (!empty($video)) {
+        if (!empty($this->image_preview['file_path'])) {
+            $cover = Storage::url($this->image_preview['file_path']);
+        } else {
 
-            if (!empty($video->file)) {
+            if (!empty($video)) {
 
-                $cover = Storage::url(config('custom.files.gallery.video.path').'/'.$id.'/thumbnail/'.
-                    $video->file);
+                if (!empty($video->file)) {
 
-            } elseif (!empty($video->youtube_id)) {
+                    $cover = Storage::url(config('custom.files.gallery.video.path').'/'.$id.'/thumbnail/'.
+                        $video->file);
 
-                $cover = 'https://i.ytimg.com/vi/'.$video->youtube_id.'/mqdefault.jpg';
+                } elseif (!empty($video->youtube_id)) {
+
+                    $cover = 'https://i.ytimg.com/vi/'.$video->youtube_id.'/mqdefault.jpg';
+
+                } else {
+
+                    $cover = asset(config('custom.files.cover_playlist.file'));
+
+                }
 
             } else {
-
                 $cover = asset(config('custom.files.cover_playlist.file'));
-
             }
-
-        } else {
-            $cover = asset(config('custom.files.cover_playlist.file'));
         }
 
         return $cover;

@@ -130,16 +130,40 @@
                     </div>
                     <hr>
                     <div class="form-group row">
+                        <label class="col-form-label col-sm-2 text-sm-right">Image Preview</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="image1" aria-label="Image" aria-describedby="button-image" name="image_file"
+                                        value="{{ old('image_file') }}" placeholder="browse image..." readonly>
+                                <div class="input-group-append" title="browse file">
+                                    <span class="input-group-text">
+                                        <input type="checkbox" id="remove-image" value="1">&nbsp; Remove
+                                    </span>
+                                    <button class="btn btn-primary file-name" id="button-image" type="button"><i class="las la-image"></i>&nbsp; Browse</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="title..." name="image_title" value="{{ old('image_title') }}">
+                                </div>
+                                <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="alt..." name="image_alt" value="{{ old('image_alt') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right">Banner</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="image1" aria-label="Image" aria-describedby="button-image" name="banner_file"
+                                <input type="text" class="form-control" id="image2" aria-label="Image2" aria-describedby="button-image2" name="banner_file"
                                         value="{{ old('banner_file') }}" placeholder="browse banner..." readonly>
                                 <div class="input-group-append" title="browse file">
                                     <span class="input-group-text">
                                         <input type="checkbox" id="remove-banner" value="1">&nbsp; Remove
                                     </span>
-                                    <button class="btn btn-primary file-name" id="button-image" type="button"><i class="las la-image"></i>&nbsp; Browse</button>
+                                    <button class="btn btn-primary file-name" id="button-image2" type="button"><i class="las la-image"></i>&nbsp; Browse</button>
                                 </div>
                             </div>
                             <br>
@@ -224,9 +248,14 @@
 @section('jsbody')
 <script src="{{ asset('assets/backend/js/pages_account-settings.js') }}"></script>
 <script>
+    $('#remove-image').click(function() {
+        if ($('#remove-image').prop('checked') == true) {
+            $('#image1').val('');
+        }
+    });
     $('#remove-banner').click(function() {
         if ($('#remove-banner').prop('checked') == true) {
-            $('#image1').val('');
+            $('#image2').val('');
         }
     });
 </script>

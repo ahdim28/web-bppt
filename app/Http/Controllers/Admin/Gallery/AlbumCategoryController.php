@@ -92,6 +92,13 @@ class AlbumCategoryController extends Controller
         return $redir->with('success', 'category update successfully');
     }
 
+    public function publish($id)
+    {
+        $this->service->publish($id);
+
+        return back()->with('success', 'category update successfully');
+    }
+
     public function position($id, $position)
     {
         $this->service->position($id, $position);

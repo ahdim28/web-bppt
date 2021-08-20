@@ -92,6 +92,20 @@
                                         <textarea class="form-control tiny-mce" name="description_{{ $lang->iso_codes }}">{!! old('description_'.$lang->iso_codes) !!}</textarea>
                                     </div>
                                 </div>
+                                @if ($lang->iso_codes == config('custom.language.default'))
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2 text-sm-right">Status</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control show-tick" name="publish" data-style="btn-default">
+                                            @foreach (config('custom.label.publish') as $key => $publish)
+                                                <option value="{{ $key }}" {{ (old('publish') == ''.$key.'') ? 'selected' : '' }}>
+                                                    {{ __($publish['title']) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
                         @endforeach

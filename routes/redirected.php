@@ -6,6 +6,6 @@ Route::get('/backend', function () {
     return redirect('/backend/authentication');
 });
 
-Route::get('/'.config('custom.language.default'), function () {
+Route::get('/id', function () {
     return redirect()->route('home');
 });

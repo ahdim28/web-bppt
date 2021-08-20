@@ -2,27 +2,15 @@
 
 @section('content')
 <div class="banner-breadcrumb">
-    <div class="bg-breadcrumb">
+    <div class="bg-breadcrumb"> 
     </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="box-breadcrumb bc-center">
-                    <ul class="list-breadcrumb">
-                        <li class="item-breadcrumb">
-                            <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
-                                <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
-                            </a>
-                        </li>
-                        <li class="item-breadcrumb">
-                            <span>Search</span>
-                        </li>
-                    </ul>
-                    <div class="title-heading text-center">
-                        <h1>Hasil Pencarian :</h1>
-                        <h5>"<i>{!! !empty(Request::get('keyword')) ? Request::get('keyword') : Request::get('tags') !!}</i>"</h5>
-                    </div>
-                </div>
+    <div class="flex-breadcrumb">
+        <div class="row justify-content-between">
+            <div class="col-xl-7">
+                @include('components.breadcrumbs-frontend')
+            </div>
+            <div class="col-xl-4">
+                @include('includes.search')
             </div>
         </div>
     </div>
@@ -59,17 +47,20 @@
                     <strong style="color:red;">
                         @if (count(Request::query()) > 0)
                         ! @lang('lang.data_attr_not_found', [
-                            'attribute' => 'Search'
+                            'attribute' => 'Search Result'
                         ]) !
                         @else
                         ! @lang('lang.data_attr_empty', [
-                            'attribute' => 'Search'
+                            'attribute' => 'Search Result'
                         ]) !
                         @endif
                     </strong>
                 </i>
             </div>
             @endforelse
+        </div>
+        <div class="box-btn d-flex justify-content-end">
+            {{ $data['posts']->onEachSide(1)->links('vendor.pagination.frontend') }}
         </div>
     </div>
 </div>

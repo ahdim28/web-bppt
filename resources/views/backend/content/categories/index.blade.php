@@ -23,6 +23,17 @@
             </div>
             <div class="col-md">
                 <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="status custom-select" name="s">
+                        <option value=" " selected>Any</option>
+                        @foreach (config('custom.label.publish') as $key => $val)
+                        <option value="{{ $key }}" {{ Request::get('s') == ''.$key.'' ? 'selected' : '' }} title="Filter by {{ __($val['title']) }}">{{ __($val['title']) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group">
                     <label class="form-label">@lang('lang.public')</label>
                     <select class="status custom-select" name="p">
                         <option value=" " selected>@lang('lang.any')</option>
@@ -68,6 +79,7 @@
                     <th>Name</th>
                     <th class="text-center" style="width: 80px;">@lang('lang.viewer')</th>
                     <th class="text-center" style="width: 120px;">Limit</th>
+                    <th class="text-center" style="width: 100px;">Status</th>
                     <th class="text-center" style="width: 80px;">@lang('lang.public')</th>
                     <th style="width: 230px;">@lang('lang.created')</th>
                     <th style="width: 230px;">@lang('lang.updated')</th>
@@ -78,7 +90,7 @@
             <tbody>
                 @if ($data['categories']->total() == 0)
                     <tr>
-                        <td colspan="9" align="center">
+                        <td colspan="10" align="center">
                             <i>
                                 <strong style="color:red;">
                                     @if (count(Request::query()) > 0)
@@ -102,6 +114,20 @@
                     <td class="text-center"><span class="badge badge-info">{{ $item->viewer }}</span></td>
                     <td class="text-center">
                         <span class="badge badge-primary">{{ $item->list_limit ?? 'Default Config' }}</span>
+                    </td>
+                    <td class="text-center">
+                        @can ('content_category_update')
+                        <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="badge badge-{{ $item->customConfig()['publish']['color'] }}"
+                            title="Status">
+                            {{ __($item->customConfig()['publish']['title']) }}
+                            <form action="{{ route('category.publish', ['sectionId' => $item->section_id, 'id' => $item->id]) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                            </form>
+                        </a>
+                        @else
+                        <span class="badge badge-{{ $item->customConfig()['publish']['color'] }}">{{ __($item->customConfig()['publish']['title']) }}</span>
+                        @endcan
                     </td>
                     <td class="text-center">
                         <span class="badge badge-{{ $item->customConfig()['public']['color'] }}">{{ __($item->customConfig()['public']['title']) }}</span>

@@ -107,6 +107,11 @@ class Category extends Model
         return $query->where('public', 1);
     }
 
+    public function scopePublish($query)
+    {
+        return $query->where('publish', 1);
+    }
+
     public function bannerSrc()
     {
         if (!empty($this->banner['file_path'])) {
@@ -126,6 +131,7 @@ class Category extends Model
     public function customConfig()
     {
         $config = [
+            'publish' => config('custom.label.publish.'.$this->publish),
             'public' => config('custom.label.optional.'.$this->public),
         ];
 

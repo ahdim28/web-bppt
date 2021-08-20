@@ -25,7 +25,11 @@ class AlbumCategoryService
     {
         $query = $this->model->query();
 
-        $query->when($request->q, function ($query, $q) {
+        $query->when($request, function ($query, $req) {
+            if ($req->s != '') {
+                $query->where('publish', $req->s);
+            }
+        })->when($request->q, function ($query, $q) {
             $query->where(function ($query) use ($q) {
                 $query->where('name->'.App::getLocale(), 'like', '%'.$q.'%')
                     ->orWhere('description->'.App::getLocale(), 'like', '%'.$q.'%');
@@ -42,10 +46,11 @@ class AlbumCategoryService
         return $result;
     }
 
-    public function getAlbumCategory($request = null, $withPaginate = false, $limit = false)
+    public function getAlbumCategory($request = null, $withPaginate = false, $limit = null)
     {
         $query = $this->model->query();
 
+        $query->publish();
         if (!empty($request)) {
             $query->when($request->q, function ($query, $q) {
                 $query->where(function ($query) use ($q) {
@@ -55,13 +60,14 @@ class AlbumCategoryService
             });
         }
 
-        if (!empty($withPaginate)) {
-            $result = $query->orderBy('position', 'ASC')->paginate($limit);
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('position', 'ASC')->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy('position', 'ASC')->get();
+                $result = $query->get();
             }
         }
 
@@ -114,9 +120,26 @@ class AlbumCategoryService
                 $request->input('description_'.config('custom.language.default')) : $request->input('description_'.$value->iso_codes);
         }
 
-        $alCat->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $alCat->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $alCat->slug = Str::slug($request->slug, '-');
         $alCat->name = $name;
         $alCat->description = $description;
+        $alCat->publish = (bool)$request->publish;
+        $alCat->image_preview = [
+            'file_path' => Str::replace(url('storage/'), '', $request->image_file) ?? null,
+            'title' => $request->image_title ?? null,
+            'alt' => $request->image_alt ?? null,
+        ];
+
+        return $alCat;
+    }
+
+    public function publish(int $id)
+    {
+        $alCat = $this->find($id);
+        $alCat->publish = !$alCat->publish;
+        $alCat->updated_by = Auth::user()->id;
+        $alCat->save();
 
         return $alCat;
     }

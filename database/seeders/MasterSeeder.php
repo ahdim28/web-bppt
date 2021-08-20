@@ -40,12 +40,6 @@ class MasterSeeder extends Seeder
                 'type' => 2,
                 'file_path' => 'views/frontend/content/sections/detail/event',
             ],
-            4 => [
-                'name' => 'Dokumen',
-                'module' => 1,
-                'type' => 1,
-                'file_path' => 'views/frontend/content/sections/detail/dokumen',
-            ],
         ];
 
         foreach ($templates as $val) {

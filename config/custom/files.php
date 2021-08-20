@@ -19,6 +19,11 @@ return [
         'mimes' => 'doc,docx,pdf,xls,xlsx,ppt,pptx',
         'size' => '10000',
     ],
+    'edocman' => [
+        'path' => 'public/edocman/',
+        'mimes' => 'doc,docx,xls,xlsx,pdf,ppt,pptx,jpg,png,zip,rar',
+        'size' => '10000',
+    ],
     'banner' => [
         'path' => 'public/banner/',
         'mimes' => 'jpg,jpeg,png,svg',
@@ -110,7 +115,7 @@ return [
             'size' => '2000',
         ],
         'banner_default' => [
-            'file' => 'assets/dummy/banner_default.jpg',
+            'file' => 'assets/dummy/banner_default.jpeg',
             'mimes' => 'jpg,jpeg,png,svg',
             'pixel' => '500 x 500',
             'size' => '2000',

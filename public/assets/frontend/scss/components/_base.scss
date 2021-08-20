@@ -28,6 +28,7 @@ body {
     font: normal 14px/1.8 var(--f-default);
     background-color: var(--c-white);
     overflow-x: hidden;
+    transition: .3s var(--easing);
 }
 
 #page {
@@ -166,6 +167,7 @@ article {
         margin-right: auto;
         margin-bottom: 20px;
         height: auto !important;
+        max-width: 70%;
     }
 
     img[style="float: left;"] {
@@ -255,7 +257,7 @@ img {
 
     h4 {
         
-        font-weight: 700;
+        font-weight: 400;
         margin-bottom: 20px;
     }
 

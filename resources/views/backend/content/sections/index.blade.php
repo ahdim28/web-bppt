@@ -77,8 +77,8 @@
                 <tr>
                     <th style="width: 10px;">No</th>
                     <th>Name</th>
-                    <th class="text-center" style="width: 100px;">Categories</th>
-                    <th class="text-center" style="width: 130px;">Posts</th>
+                    <th class="text-center" style="width: 150px;">Categories</th>
+                    <th class="text-center" style="width: 150px;">Posts</th>
                     <th class="text-center" style="width: 80px;">@lang('lang.viewer')</th>
                     <th class="text-center" style="width: 120px;">Extra</th>
                     <th class="text-center" style="width: 80px;">@lang('lang.public')</th>
@@ -113,7 +113,7 @@
                     <td>{{ $data['no']++ }}</td>
                     <td><strong>{!! Str::limit($item->fieldLang('name'), 50) !!}</strong></td>
                     <td class="text-center">
-                        Total : <span class="badge badge-success">{{ $item->categories->count() }}</span><br>
+                        {{-- Total : <span class="badge badge-success">{{ $item->categories->count() }}</span><br> --}}
                         @can ('content_categories')
                         <a href="{{ route('category.index', ['sectionId' => $item->id]) }}" class="btn btn-sm btn-warning" title="Category">
                             <i class="las la-list"></i> LIST
@@ -121,7 +121,7 @@
                         @endcan
                     </td>
                     <td class="text-center">
-                        Total : <span class="badge badge-success">{{ $item->posts->count() }}</span><br>
+                        {{-- Total : <span class="badge badge-success">{{ $item->posts->count() }}</span><br> --}}
                         @can ('content_posts')
                         <a href="{{ route('post.index', ['sectionId' => $item->id]) }}" class="btn btn-sm btn-warning" title="Post">
                             <i class="las la-list"></i> LIST
@@ -225,7 +225,7 @@
                                 <div class="item-table">
                                     <div class="data-table">Categories</div>
                                     <div class="desc-table">
-                                        Total : <span class="badge badge-success">{{ $item->categories->count() }}</span><br>
+                                        {{-- Total : <span class="badge badge-success">{{ $item->categories->count() }}</span><br> --}}
                                         @can ('content_categories')
                                         <a href="{{ route('category.index', ['sectionId' => $item->id]) }}" class="btn btn-sm btn-warning" title="Category">
                                             <i class="las la-list"></i> LIST
@@ -236,7 +236,7 @@
                                 <div class="item-table">
                                     <div class="data-table">Posts</div>
                                     <div class="desc-table">
-                                        Total : <span class="badge badge-success">{{ $item->posts->count() }}</span><br>
+                                        {{-- Total : <span class="badge badge-success">{{ $item->posts->count() }}</span><br> --}}
                                         @can ('content_posts')
                                         <a href="{{ route('post.index', ['sectionId' => $item->id]) }}" class="btn btn-sm btn-warning" title="Post">
                                             <i class="las la-list"></i> LIST

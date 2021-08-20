@@ -25,8 +25,10 @@ class PlaylistCategoryRequest extends FormRequest
     {
         return [
             'name_'.config('custom.language.default') => 'required',
-            'slug' => $this->method() == 'POST' ? 'required|max:50|unique:gallery_playlist_categories,slug' : 
-                'required|max:50|unique:gallery_playlist_categories,slug,'.$this->id,
+            // 'slug' => $this->method() == 'POST' ? 'required|max:50|unique:gallery_playlist_categories,slug' : 
+            //     'required|max:50|unique:gallery_playlist_categories,slug,'.$this->id,
+            'slug' => $this->method() == 'POST' ? 'required|unique:gallery_playlist_categories,slug' : 
+                'required|unique:gallery_playlist_categories,slug,'.$this->id,
         ];
     }
 

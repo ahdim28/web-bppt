@@ -38,10 +38,10 @@ class ContentViewController extends Controller
         //data
         $data['banner'] = $this->config->getFile('banner_default');
         $limit = $this->config->getValue('content_limit');
-        $data['sections'] = $this->serviceSection->getSection($request, 'paginate', $limit);
+        $data['sections'] = $this->serviceSection->getSection($request, true, $limit);
 
         return view('frontend.content.sections.list', compact('data'), [
-            'title' => 'Content - Sections',
+            'title' => 'Sections',
             'breadcrumbs' => [
                 'Sections' => ''
             ],
@@ -77,26 +77,27 @@ class ContentViewController extends Controller
         $categoryLimit = $this->config->getValue('content_limit');
         $postLimit = $this->config->getValue('content_limit');
 
-        if (!empty($data['read']->limit_category)) {
-            $categoryLimit = $data['read']->limit_category;
-        }
-
         if (!empty($request->l)) {
+            $categoryLimit = $request->l;
             $postLimit = $request->l;
         }
 
-        if (!empty($data['read']->limit_post)) {
+        if (!empty($data['read']->limit_category) && empty($request->l)) {
+            $categoryLimit = $data['read']->limit_category;
+        }
+
+        if (!empty($data['read']->limit_post) && empty($request->l)) {
             $postLimit = $data['read']->limit_post;
         }
 
         $url = $request->url();
         $param = Str::replace($url, '', $request->fullUrl());
 
-        $data['field'] = $data['read']->custom_field;
-        $data['categories'] = $this->serviceCategory->getCategory($request, 'paginate', $categoryLimit, $data['read']->id);
+        $data['categories'] = $this->serviceCategory->getCategory($request, true, $categoryLimit, $data['read']->id);
         $data['categories']->withPath(url()->current().$param);
-        $data['posts'] = $this->servicePost->getPost($request, 'paginate', $postLimit, 'section', $data['read']->id);
+        $data['posts'] = $this->servicePost->getPost($request, true, $postLimit, 'section', $data['read']->id);
         $data['posts']->withPath(url()->current().$param);
+        $data['field'] = $data['read']->custom_field;
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('name');
@@ -118,7 +119,7 @@ class ContentViewController extends Controller
         return view('frontend.content.sections.'.$blade, compact('data'), [
             'title' => $data['read']->fieldLang('name'),
             'breadcrumbs' => [
-                $data['read']->fieldLang('name') => ''
+                Str::limit($data['read']->fieldLang('name'), 15) => ''
             ],
         ]);
     }
@@ -133,10 +134,10 @@ class ContentViewController extends Controller
         //data
         $data['banner'] = $this->config->getFile('banner_default');
         $limit = $this->config->getValue('content_limit');
-        $data['categories'] = $this->serviceCategory->getCategory($request, 'paginate', $limit);
+        $data['categories'] = $this->serviceCategory->getCategory($request, true, $limit);
 
         return view('frontend.content.categories.list', compact('data'), [
-            'title' => 'Content - Categories',
+            'title' => 'Categories',
             'breadcrumbs' => [
                 'Categories' => ''
             ],
@@ -154,8 +155,8 @@ class ContentViewController extends Controller
             return abort(404);
         }
 
-        if (empty($data['read']) || $data['read']->is_detail == 0) {
-            return redirect()->route('home');
+        if ($data['read']->publish == 0 || empty($data['read']) || $data['read']->is_detail == 0) {
+            return redirect()->route('section.read.'.$data['read']->section->slug);
         }
 
         if ($slug != $data['read']->slug) {
@@ -174,11 +175,16 @@ class ContentViewController extends Controller
             $limit = $data['read']->list_limit;
         }
 
+        if (!empty($request->l)) {
+            $limit = $request->l;
+        }
+
         $url = $request->url();
         $param = Str::replace($url, '', $request->fullUrl());
 
         $data['field'] = $data['read']->custom_field;
-        $data['posts'] = $this->servicePost->getPost($request, 'paginate', $limit, 'category', $data['read']->id);
+        $data['posts'] = $this->servicePost->getPost($request, true, $limit, 'category', $data['read']->id);
+        $data['posts']->withPath(url()->current().$param);
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('name');
@@ -200,7 +206,8 @@ class ContentViewController extends Controller
         return view('frontend.content.categories.'.$blade, compact('data'), [
             'title' => $data['read']->fieldLang('name'),
             'breadcrumbs' => [
-                $data['read']->fieldLang('name') => ''
+                Str::limit($data['read']->section->fieldLang('name'), 15) => route('section.read.'.$data['read']->section->slug),
+                Str::limit($data['read']->fieldLang('name'), 15) => ''
             ],
         ]);
     }
@@ -215,10 +222,10 @@ class ContentViewController extends Controller
         //data
         $data['banner'] = $this->config->getFile('banner_default');
         $limit = $this->config->getValue('content_limit');
-        $data['posts'] = $this->servicePost->getPost($request, 'paginate', $limit);
+        $data['posts'] = $this->servicePost->getPost($request, true, $limit);
 
         return view('frontend.content.posts.list', compact('data'), [
-            'title' => 'Content - Posts',
+            'title' => 'Posts',
             'breadcrumbs' => [
                 'Posts' => ''
             ],
@@ -251,12 +258,14 @@ class ContentViewController extends Controller
         $this->servicePost->recordViewer($data['read']->id);
 
         //data
-        $data['files'] = $data['read']->files;
+        // $data['files'] = $data['read']->files;
+        // $data['profile'] = $data['read']->profile;
+        $data['event'] = $data['read']->event;
         $data['media'] = $data['read']->media()->orderBy('position', 'ASC')->get();
-        $data['field'] = $data['read']->custom_field;
+        // $data['field'] = $data['read']->custom_field;
         $data['latest_post'] = $this->servicePost->latestPost($data['read']->id, 6, 'section');
-        $data['prev_post'] = $this->servicePost->postPrevNext($data['read']->id, 1, 'prev', 'section');
-        $data['next_post'] = $this->servicePost->postPrevNext($data['read']->id, 1, 'next', 'section');
+        // $data['prev_post'] = $this->servicePost->postPrevNext($data['read']->id, 1, 'prev', 'section');
+        // $data['next_post'] = $this->servicePost->postPrevNext($data['read']->id, 1, 'next', 'section');
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('title');
@@ -281,10 +290,10 @@ class ContentViewController extends Controller
 
         //images
         $data['creator'] = $data['read']->createBy->name;
-        $data['banner'] = $data['read']->bannerSrc($data['read']);
         if (!empty($data['read']->cover['file_path'])) {
             $data['cover'] = $data['read']->coverSrc($data['read']);
         }
+        $data['banner'] = $data['read']->bannerSrc($data['read']);
 
         //share
         $data['share_facebook'] = "https://www.facebook.com/share.php?u=".
@@ -313,7 +322,9 @@ class ContentViewController extends Controller
         return view($pathView, compact('data'), [
             'title' => $data['read']->fieldLang('title'),
             'breadcrumbs' => [
-                $data['read']->fieldLang('title') => ''
+                Str::limit($data['read']->section->fieldLang('name'), 15) => route('section.read.'.$data['read']->section->slug),
+                Str::limit($data['read']->category->fieldLang('name'), 15) => route('category.read.'.$data['read']->section->slug, ['slugCategory' => $data['read']->category->slug]),
+                Str::limit($data['read']->fieldLang('title'), 15) => ''
             ],
         ]);
     }

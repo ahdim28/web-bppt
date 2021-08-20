@@ -141,17 +141,6 @@ class Post extends Model
         return $cover;
     }
 
-    public function coverEmpty()
-    {
-        if (!empty($this->cover['file_path'])) {
-            $cover = Storage::url($this->cover['file_path']);
-        } else {
-            $cover = asset('assets/dummy/profile-empty.jpg');
-        }
-
-        return $cover;
-    }
-
     public function bannerSrc()
     {
         if (!empty($this->banner['file_path'])) {

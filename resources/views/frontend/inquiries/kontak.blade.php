@@ -6,27 +6,15 @@
 
 @section('content')
 <div class="banner-breadcrumb">
-    <div class="bg-breadcrumb">
+    <div class="bg-breadcrumb"> 
     </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="box-breadcrumb bc-center">
-                    <ul class="list-breadcrumb">
-                        <li class="item-breadcrumb">
-                            <a href="{{ route('home') }}" title="@lang('menu.frontend.title1')">
-                                <i class="las la-home"></i><span>@lang('menu.frontend.title1')</span>
-                            </a>
-                        </li>
-                        <li class="item-breadcrumb">
-                            <span>{!! Str::limit($data['read']->fieldLang('name'), 30) !!}</span>
-                        </li>
-                    </ul>
-                    <div class="title-heading text-center">
-                        <h1>{!! $data['read']->fieldLang('name') !!}</h1>
-                    </div>
-                    
-                </div>
+    <div class="flex-breadcrumb">
+        <div class="row justify-content-between">
+            <div class="col-xl-7">
+                @include('components.breadcrumbs-frontend')
+            </div>
+            <div class="col-xl-4">
+                @include('includes.search')
             </div>
         </div>
     </div>
@@ -76,7 +64,7 @@
                     </div>
                     <div class="col-md-12">
                         <div class="item-contact">
-                            <span>@lang('common.address_caption')< :</span>
+                            <span>@lang('common.address_caption') :</span>
                             <div class="content-contact">
                                 <i class="las la-map-marked-alt"></i>
                                 <div class="desc-contact">{!! $config['address'] !!}</div>
@@ -113,9 +101,9 @@
                                 <div class="form-group">
                                     <label for="{!! $field->name !!}">{!! $field->fieldLang('label') !!}</label>
                                     @if ($field->type == 1)
-                                    <textarea class="form-control @error($field->name) is-invalid @enderror" name="{!! $field->name !!}" value="{{ old($field->name) }}"></textarea>
+                                    <textarea class="form-control @error($field->name) is-invalid @enderror" name="{!! $field->name !!}" value="{{ old($field->name) }}" {!! $field->properties['attr'] !!}></textarea>
                                     @else
-                                    <input type="{{ $field->properties['type'] }}" class="form-control @error($field->name) is-invalid @enderror" name="{!! $field->name !!}" value="{{ old($field->name) }}">
+                                    <input type="{{ $field->properties['type'] }}" class="form-control @error($field->name) is-invalid @enderror" name="{!! $field->name !!}" value="{{ old($field->name) }}"  {!! $field->properties['attr'] !!}>
                                     @endif
                                     @include('components.field-error', ['field' => $field->name])
                                 </div>
@@ -125,7 +113,7 @@
                                 <div class="form-group">
                                     {!! htmlFormSnippet() !!}
                                     @error('g-recaptcha-response')
-                                    <p style="color:red;">{{ $message }}<p>
+                                    <small style="color:red;">{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>

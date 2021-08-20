@@ -22,6 +22,17 @@
                     </div>
             </div>
             <div class="col-md">
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="status custom-select" name="s">
+                        <option value=" " selected>Any</option>
+                        @foreach (config('custom.label.publish') as $key => $val)
+                        <option value="{{ $key }}" {{ Request::get('s') == ''.$key.'' ? 'selected' : '' }} title="Filter by {{ __($val['title']) }}">{{ __($val['title']) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md">
                     <div class="form-group">
                         <label class="form-label">Search</label>
                         <div class="input-group">
@@ -42,7 +53,7 @@
     <div class="card-header with-elements">
         <h5 class="card-header-title mt-1 mb-0">Album Category List</h5>
         <div class="card-header-elements ml-auto">
-            @can ('album_create')
+            @can ('gallery_category_album_create')
             <a href="{{ route('gallery.album.category.create') }}" class="btn btn-success icon-btn-only-sm" title="Add New Category">
                 <i class="las la-plus"></i> <span>Category</span>
             </a>
@@ -56,6 +67,7 @@
                     <th style="width: 10px;">No</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th class="text-center" style="width: 100px;">Status</th>
                     <th style="width: 230px;">Created</th>
                     <th style="width: 230px;">Updated</th>
                     <th class="text-center" style="width: 110px;">Position</th>
@@ -65,7 +77,7 @@
             <tbody>
                 @if ($data['categories']->total() == 0)
                     <tr>
-                        <td colspan="7" align="center">
+                        <td colspan="8" align="center">
                             <i>
                                 <strong style="color:red;">
                                 @if (count(Request::query()) > 0)
@@ -84,7 +96,22 @@
                     <td><strong>{!! Str::limit($item->fieldLang('name'), 50) !!}</strong></td>
                     <td>[{!! !empty($item->fieldLang('description')) ? Str::limit(strip_tags($item->fieldLang('description')), 60) : __('lang.no', [
                         'attribute' => 'Description'
-                    ]) !!}]</td>
+                    ]) !!}]
+                    </td>
+                    <td class="text-center">
+                        @can ('gallery_category_album_update')
+                        <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="badge badge-{{ $item->customConfig()['publish']['color'] }}"
+                            title="Status">
+                            {{ __($item->customConfig()['publish']['title']) }}
+                            <form action="{{ route('gallery.album.category.publish', ['id' => $item->id]) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                            </form>
+                        </a>
+                        @else
+                        <span class="badge badge-{{ $item->customConfig()['publish']['color'] }}">{{ __($item->customConfig()['publish']['title']) }}</span>
+                        @endcan
+                    </td>
                     <td>
                         {{ $item->created_at->format('d F Y (H:i A)') }}
                         @if (!empty($item->created_by))
@@ -100,7 +127,7 @@
                         @endif
                     </td>
                     <td class="text-center">
-                        @if (Auth::user()->can('album_update') && $item->min('position') != $item->position)
+                        @if (Auth::user()->can('gallery_category_album_update') && $item->min('position') != $item->position)
                         <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="btn icon-btn btn-sm btn-dark" data-toggle="tooltip" data-original-title="Click to up position">
                             <i class="las la-arrow-up"></i>
                             <form action="{{ route('gallery.album.category.position', ['id' => $item->id, 'position' => ($item->position - 1)]) }}" method="POST">
@@ -111,7 +138,7 @@
                         @else
                         <button type="button" class="btn icon-btn btn-sm btn-default" title="you are not allowed to take this action" disabled><i class="las la-arrow-up"></i></button>
                         @endif
-                        @if (Auth::user()->can('album_update') && $item->max('position') != $item->position)
+                        @if (Auth::user()->can('gallery_category_album_update') && $item->max('position') != $item->position)
                         <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="btn icon-btn btn-sm btn-dark" data-toggle="tooltip" data-original-title="Click to down position">
                             <i class="las la-arrow-down"></i>
                             <form action="{{ route('gallery.album.category.position', ['id' => $item->id, 'position' => ($item->position + 1)]) }}" method="POST">
@@ -127,12 +154,12 @@
                         <a href="{{ route('gallery.photo.category', ['slugCategory' => $item->slug]) }}" class="btn icon-btn btn-sm btn-info" title="View Detail" target="_blank">
                             <i class="las la-external-link-alt"></i>
                         </a>
-                        @can('album_update')
+                        @can('gallery_category_album_update')
                         <a href="{{ route('gallery.album.category.edit', ['id' => $item->id]) }}" class="btn icon-btn btn-sm btn-primary" title="Edit Category">
                             <i class="las la-pen"></i>
                         </a>
                         @endcan
-                        @can('album_delete')
+                        @can('gallery_category_album_delete')
                         <a href="javascript:;" data-id="{{ $item->id }}" class="btn icon-btn btn-sm btn-danger swal-delete" title="Delete Category">
                             <i class="las la-trash"></i>
                         </a>
@@ -144,7 +171,7 @@
             <tbody class="tbody-responsive">
                 @if ($data['categories']->total() == 0)
                     <tr>
-                        <td colspan="7" align="center">
+                        <td colspan="8" align="center">
                             <i>
                                 <strong style="color:red;">
                                 @if (count(Request::query()) > 0)
@@ -177,6 +204,23 @@
                                     </div>
                                 </div>
                                 <div class="item-table">
+                                    <div class="data-table">Status</div>
+                                    <div class="desc-table">
+                                        @can ('gallery_category_album_update')
+                                        <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="badge badge-{{ $item->customConfig()['publish']['color'] }}"
+                                            title="Status">
+                                            {{ __($item->customConfig()['publish']['title']) }}
+                                            <form action="{{ route('gallery.album.category.publish', ['id' => $item->id]) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                            </form>
+                                        </a>
+                                        @else
+                                        <span class="badge badge-{{ $item->customConfig()['publish']['color'] }}">{{ __($item->customConfig()['publish']['title']) }}</span>
+                                        @endcan
+                                    </div>
+                                </div>
+                                <div class="item-table">
                                     <div class="data-table">@lang('lang.created')</div>
                                     <div class="desc-table">
                                         {{ $item->created_at->format('d F Y (H:i A)') }}
@@ -198,7 +242,7 @@
                                 </div>
                                 <div class="item-table m-0">
                                     <div class="desc-table text-right">
-                                        @if (Auth::user()->can('album_update') && $item->min('position') != $item->position)
+                                        @if (Auth::user()->can('gallery_category_album_update') && $item->min('position') != $item->position)
                                         <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="btn icon-btn btn-sm btn-dark" data-toggle="tooltip" data-original-title="Click to up position">
                                             <i class="las la-arrow-up"></i>
                                             <form action="{{ route('gallery.album.category.position', ['id' => $item->id, 'position' => ($item->position - 1)]) }}" method="POST">
@@ -209,7 +253,7 @@
                                         @else
                                         <button type="button" class="btn icon-btn btn-sm btn-default" title="you are not allowed to take this action" disabled><i class="las la-arrow-up"></i></button>
                                         @endif
-                                        @if (Auth::user()->can('album_update') && $item->max('position') != $item->position)
+                                        @if (Auth::user()->can('gallery_category_album_update') && $item->max('position') != $item->position)
                                         <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="btn icon-btn btn-sm btn-dark" data-toggle="tooltip" data-original-title="Click to down position">
                                             <i class="las la-arrow-down"></i>
                                             <form action="{{ route('gallery.album.category.position', ['id' => $item->id, 'position' => ($item->position + 1)]) }}" method="POST">
@@ -223,12 +267,12 @@
                                         <a href="{{ route('gallery.photo.category', ['slugCategory' => $item->slug]) }}" class="btn icon-btn btn-sm btn-info" title="View Detail" target="_blank">
                                             <i class="las la-external-link-alt"></i>
                                         </a>
-                                        @can('album_update')
+                                        @can('gallery_category_album_update')
                                         <a href="{{ route('gallery.album.category.edit', ['id' => $item->id]) }}" class="btn icon-btn btn-sm btn-primary" title="Edit Type">
                                             <i class="las la-pen"></i>
                                         </a>
                                         @endcan
-                                        @can('album_delete')
+                                        @can('gallery_category_album_delete')
                                         <a href="javascript:;" data-id="{{ $item->id }}" class="btn icon-btn btn-sm btn-danger swal-delete" title="Delete Type">
                                             <i class="las la-trash"></i>
                                         </a>

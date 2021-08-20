@@ -49,12 +49,11 @@ class AlbumService
         return $result;
     }
 
-    public function getAlbum($request = null, $withPaginate = null, $limit = null, $categoryId = null)
+    public function getAlbum($request = null, $withPaginate = false, $limit = null, $categoryId = null)
     {
         $query = $this->model->query();
 
         $query->publish();
-
         if (!empty($categoryId)) {
             $query->where('category_id', $categoryId);
         }
@@ -68,13 +67,14 @@ class AlbumService
             });
         }
 
-        if (!empty($withPaginate)) {
-            $result = $query->orderBy('position', 'ASC')->paginate($limit);
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('position', 'ASC')->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy('position', 'ASC')->get();
+                $result = $query->get();
             }
         }
 
@@ -86,7 +86,6 @@ class AlbumService
         $query = $this->model->query();
 
         $query->publish();
-
         $result = $query->count();
 
         return $result;
@@ -139,13 +138,19 @@ class AlbumService
         }
 
         $album->category_id = $request->category_id;
-        $album->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $album->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $album->slug = Str::slug($request->slug, '-');
         $album->name = $name;
         $album->description = $description;
         $album->publish = (bool)$request->publish;
         $album->photo_limit = $request->photo_limit ?? null;
         $album->is_detail = (bool)$request->is_detail;
         $album->custom_view_id = $request->custom_view_id ?? null;
+        $album->image_preview = [
+            'file_path' => Str::replace(url('storage/'), '', $request->image_file) ?? null,
+            'title' => $request->image_title ?? null,
+            'alt' => $request->image_alt ?? null,
+        ];
         $album->banner = [
             'file_path' => Str::replace(url('storage/'), '', $request->banner_file) ?? null,
             'title' => $request->banner_title ?? null,

@@ -189,7 +189,7 @@
                             <i class="las la-external-link-alt"></i>
                         </a>
                         @can('medias')
-                        <a href="{{ route('media.index', ['moduleId' => $item->id, 'moduleName' => 'post', 'sectionId' => $item->section_id]) }}" class="btn icon-btn btn-sm btn-info" title="Media">
+                        <a href="{{ route('media.index', ['moduleId' => $item->id, 'moduleName' => 'post', 'sectionId' => $item->section_id]) }}" class="btn icon-btn btn-sm btn-primary" title="Media">
                             <i class="las la-folder"></i>
                         </a>
                         @endcan
@@ -328,7 +328,7 @@
                                             <i class="las la-external-link-alt"></i>
                                         </a>
                                         @can('medias')
-                                        <a href="{{ route('media.index', ['moduleId' => $item->id, 'moduleName' => 'post', 'sectionId' => $item->section_id]) }}" class="btn icon-btn btn-sm btn-info" title="Media">
+                                        <a href="{{ route('media.index', ['moduleId' => $item->id, 'moduleName' => 'post', 'sectionId' => $item->section_id]) }}" class="btn icon-btn btn-sm btn-primary" title="Media">
                                             <i class="las la-folder"></i>
                                         </a>
                                         @endcan

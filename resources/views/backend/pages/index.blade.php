@@ -161,7 +161,7 @@
                             </a>
                             @endcan
                             @can('medias')
-                            <a href="{{ route('media.index', ['moduleId' => $item->id, 'moduleName' => 'page']) }}" class="btn icon-btn btn-sm btn-info" title="Media">
+                            <a href="{{ route('media.index', ['moduleId' => $item->id, 'moduleName' => 'page']) }}" class="btn icon-btn btn-sm btn-primary" title="Media">
                                 <i class="las la-folder"></i>
                             </a>
                             @endcan

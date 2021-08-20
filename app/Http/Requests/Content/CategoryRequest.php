@@ -26,8 +26,10 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name_'.config('custom.language.default') => 'required',
-            'slug' => $this->method() == 'POST' ? 'required|max:50|unique:content_categories,slug' : 
-                'required|max:50|unique:content_categories,slug,'.$this->id,
+            // 'slug' => $this->method() == 'POST' ? 'required|max:50|unique:content_categories,slug' : 
+            //     'required|max:50|unique:content_categories,slug,'.$this->id,
+            'slug' => $this->method() == 'POST' ? 'required|unique:content_categories,slug' : 
+                'required|unique:content_categories,slug,'.$this->id,
         ];
     }
 

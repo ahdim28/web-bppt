@@ -54,6 +54,7 @@
             <thead>
                 <tr>
                     <th style="width: 10px;">No</th>
+                    <th style="width: 120px;">Unit Code</th>
                     <th>Name</th>
                     <th style="width: 230px;">@lang('lang.created')</th>
                     <th style="width: 230px;">@lang('lang.updated')</th>
@@ -64,7 +65,7 @@
             <tbody>
                 @if ($data['structures']->total() == 0)
                     <tr>
-                        <td colspan="6" align="center">
+                        <td colspan="7" align="center">
                             <i>
                                 <strong style="color:red;">
                                     @if (count(Request::query()) > 0)
@@ -84,7 +85,8 @@
                 @foreach ($data['structures'] as $item)
                 <tr>
                     <td>{{ $data['no']++ }}</td>
-                    <td><strong>{!! Str::limit($item->fieldLang('name'), 50) !!}</strong></td>
+                    <td><strong>{{ $item->unit_code }}</strong></td>
+                    <td>{!! Str::limit($item->fieldLang('name'), 50) !!}</td>
                     <td>
                         {{ $item->created_at->format('d F Y (H:i A)') }}
                         @if (!empty($item->created_by))
@@ -144,7 +146,7 @@
             <tbody class="tbody-responsive">
                 @if ($data['structures']->total() == 0)
                     <tr>
-                        <td colspan="6" align="center">
+                        <td colspan="7" align="center">
                             <i>
                                 <strong style="color:red;">
                                 @if (count(Request::query()) > 0)
@@ -167,9 +169,15 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="item-table">
+                                    <div class="data-table">Unit Code</div>
+                                    <div class="desc-table">
+                                        <strong>{{ $item->unit_code }}</strong>
+                                    </div>
+                                </div>
+                                <div class="item-table">
                                     <div class="data-table">Name</div>
                                     <div class="desc-table">
-                                        <strong>{!! Str::limit($item->fieldLang('name'), 50) !!}</strong>
+                                        {!! Str::limit($item->fieldLang('name'), 50) !!}
                                     </div>
                                 </div>
                                 <div class="item-table">

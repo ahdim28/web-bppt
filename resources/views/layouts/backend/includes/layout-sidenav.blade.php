@@ -3,7 +3,7 @@
     <!-- Brand demo (see assets/css/demo/demo.css) -->
     <div class="app-brand demo">
         <span class="app-brand-logo demo">
-            <img src="{{ $config['logo_2'] }}" alt="{{ $config['website_name'] }} Logo">
+            <img src="{{ $config['logo'] }}" alt="{{ $config['website_name'] }} Logo">
         </span>
         <a href="javascript:void(0)" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
           <i class="las la-thumbtack"></i>
@@ -112,8 +112,8 @@
         </li>
         @endif
 
-        @if (Auth::user()->can('pages') || Auth::user()->can('content_sections') || Auth::user()->can('banner_categories') || 
-          Auth::user()->can('catalog_types') || Auth::user()->can('catalog_categories') || Auth::user()->can('catalog_products') ||
+        @if (Auth::user()->can('pages') || Auth::user()->can('structures') || Auth::user()->can('content_sections') || Auth::user()->can('banner_categories') || 
+          Auth::user()->can('document_categories') || Auth::user()->can('catalog_types') || Auth::user()->can('catalog_categories') || Auth::user()->can('catalog_products') ||
           Auth::user()->can('albums') || Auth::user()->can('playlists') || Auth::user()->can('links') || Auth::user()->can('inquiries'))
         <!-- Module -->
         <li class="sidenav-divider mb-1"></li>
@@ -147,6 +147,7 @@
         </li>
         @endcan
 
+        @if (config('custom.setting.module.banner') == true)
         @can ('banner_categories')
         <!-- Banner -->
         <li class="sidenav-item {{ Request::is('admin/banner*') ? 'active' : '' }}">
@@ -155,7 +156,18 @@
           </a>
         </li>
         @endcan
+        @endif
 
+        @can ('document_categories')
+        <!-- Content -->
+        <li class="sidenav-item {{ Request::is('admin/document*') ? 'active' : '' }}">
+          <a href="{{ route('document.category.index') }}" class="sidenav-link" title="Document">
+            <i class="sidenav-icon las la-file"></i><div>Document</div>
+          </a>
+        </li>
+        @endcan
+
+        @if (config('custom.setting.module.catalog') == true)
         @if (Auth::user()->can('catalog_types') || Auth::user()->can('catalog_categories') || Auth::user()->can('catalog_products'))
         <!-- Catalogue -->
         <li class="sidenav-item {{ Request::is('admin/catalog*') ? 'open active' : '' }}">
@@ -187,6 +199,7 @@
               @endcan
           </ul>
         </li>
+        @endif
         @endif
 
         @if (Auth::user()->can('albums') || Auth::user()->can('playlists'))
@@ -229,9 +242,12 @@
         <li class="sidenav-item {{ Request::is('admin/inquiry*') ? 'active' : '' }}">
           <a href="{{ route('inquiry.index') }}" class="sidenav-link" title="@lang('menu.backend.title24')">
             <i class="sidenav-icon las la-envelope"></i> <div>@lang('menu.backend.title24')</div>
-            @if ($counter['inquiry_form'] > 0)    
+            @php
+                $inquiryCount = \App\Models\Inquiry\InquiryForm::where('status', 0)->count();
+            @endphp
+            @if ($inquiryCount > 0)    
             <div class="pl-1 ml-auto">
-              <div class="badge badge-danger">{{ $counter['inquiry_form'] }}</div>
+              <div class="badge badge-danger">{{ $inquiryCount }}</div>
             </div>
             @endif
           </a>

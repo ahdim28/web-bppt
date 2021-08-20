@@ -15,10 +15,10 @@ class CreateStructureOrganizationsTable extends Migration
     {
         Schema::create('structure_organizations', function (Blueprint $table) {
             $table->id();
-            $table->string('sidadu_id')->nullable();
             $table->string('unit_code')->nullable();
             $table->json('name');
-            $table->string('slug');
+            // $table->string('slug');
+            $table->text('slug');
             $table->json('description')->nullable();
             $table->integer('position');
             $table->unsignedBigInteger('created_by')->nullable();

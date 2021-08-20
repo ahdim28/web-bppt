@@ -53,7 +53,9 @@
     @can ('album_create')
     <a href="{{ route('gallery.album.create') }}" class="btn btn-success rounded-pill mr-2" title="Add New Album"><i class="las la-plus"></i>Album</a>
     @endcan
+    @can ('gallery_category_album_create')
     <a href="{{ route('gallery.album.category.index') }}" class="btn btn-warning rounded-pill" title="Category List"><i class="las la-list"></i>Category</a>
+    @endcan
 </div>
 
 <div class="card mb-4">
@@ -63,7 +65,7 @@
         <li class="list-group-item py-4" id="{{ $item->id }}">
             <div class="media flex-wrap">
                 <div class="d-none d-sm-block ui-w-140">
-                <a href="javascript:void(0)" class="d-block ui-rect-67 ui-bg-cover" style="background-image: url('{{ $item->photoCover($item->id) }}');"></a>
+                <a href="javascript:void(0)" class="d-block ui-rect-67 ui-bg-cover" style="background-image: url('{{ $item->imgPreview($item->id) }}');"></a>
                 </div>
                 <div class="media-body ml-sm-4">
                 <h5 class="mb-2">
@@ -125,7 +127,7 @@
                     <div class="mt-2">
                         @can ('album_update')
                         <a href="javascript:void(0);" onclick="$(this).find('form').submit();" title="click to {{ $item->publish == 1 ? 'publish' : 'un-publish' }} album">
-                            <span class="badge badge-{{ $item->publish == 1 ? 'success' : 'warning' }}">{{ $item->publish == 1 ? 'PUBLISH' : 'DRAFT' }}</span>
+                            <span class="badge badge-{{ $item->customConfig()['publish']['color'] }}">{{ __($item->customConfig()['publish']['title']) }}</span>
                             <form action="{{ route('gallery.album.publish', ['id' => $item->id]) }}" method="POST">
                             @csrf
                             @method('PUT')

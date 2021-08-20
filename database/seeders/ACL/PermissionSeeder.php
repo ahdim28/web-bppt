@@ -391,6 +391,70 @@ class PermissionSeeder extends Seeder
                 'parent' => 91,
                 'name' => 'structure_delete'
             ],
+            94 => [
+                'parent' => 0,
+                'name' => 'gallery_category_albums'
+            ],
+            95 => [
+                'parent' => 95,
+                'name' => 'gallery_category_album_create'
+            ],
+            96 => [
+                'parent' => 95,
+                'name' => 'gallery_category_album_update'
+            ],
+            97 => [
+                'parent' => 95,
+                'name' => 'gallery_category_album_delete'
+            ],
+            98 => [
+                'parent' => 0,
+                'name' => 'gallery_category_playlists'
+            ],
+            99 => [
+                'parent' => 99,
+                'name' => 'gallery_category_playlist_create'
+            ],
+            100 => [
+                'parent' => 99,
+                'name' => 'gallery_category_playlist_update'
+            ],
+            101 => [
+                'parent' => 99,
+                'name' => 'gallery_category_playlist_delete'
+            ],
+            102 => [
+                'parent' => 0,
+                'name' => 'document_categories'
+            ],
+            103 => [
+                'parent' => 103,
+                'name' => 'document_category_create'
+            ],
+            104 => [
+                'parent' => 103,
+                'name' => 'document_category_update'
+            ],
+            105 => [
+                'parent' => 103,
+                'name' => 'document_category_delete'
+            ],
+            106 => [
+                'parent' => 0,
+                'name' => 'documents'
+            ],
+            107 => [
+                'parent' => 107,
+                'name' => 'document_create'
+            ],
+            108 => [
+                'parent' => 107,
+                'name' => 'document_update'
+            ],
+            109 => [
+                'parent' => 107,
+                'name' => 'document_delete'
+            ],
         ];
 
         foreach ($permissions as $val) {

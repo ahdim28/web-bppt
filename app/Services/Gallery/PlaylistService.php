@@ -49,14 +49,13 @@ class PlaylistService
         return $result;
     }
 
-    public function getPlaylist($request = null, $withPaginate = null, $limit = null, $categoryId = null)
+    public function getPlaylist($request = null, $withPaginate = false, $limit = null, $categoryId = null)
     {
         $query = $this->model->query();
 
         $query->publish();
-
         if (!empty($categoryId)) {
-            $query->where('category_id');
+            $query->where('category_id', $categoryId);
         }
 
         if (!empty($request)) {
@@ -68,13 +67,14 @@ class PlaylistService
             });
         }
 
-        if (!empty($withPaginate)) {
-            $result = $query->orderBy('position', 'ASC')->paginate($limit);
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('position', 'ASC')->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy('position', 'ASC')->get();
+                $result = $query->get();
             }
         }
 
@@ -86,7 +86,6 @@ class PlaylistService
         $query = $this->model->query();
 
         $query->publish();
-
         $result = $query->count();
 
         return $result;
@@ -146,6 +145,11 @@ class PlaylistService
         $playlist->video_limit = $request->video_limit ?? null;
         $playlist->is_detail = (bool)$request->is_detail;
         $playlist->custom_view_id = $request->custom_view_id ?? null;
+        $playlist->image_preview = [
+            'file_path' => Str::replace(url('storage/'), '', $request->image_file) ?? null,
+            'title' => $request->image_title ?? null,
+            'alt' => $request->image_alt ?? null,
+        ];
         $playlist->banner = [
             'file_path' => str_replace(url('storage/'), '', $request->banner_file) ?? null,
             'title' => $request->banner_title ?? null,

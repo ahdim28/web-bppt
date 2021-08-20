@@ -26,8 +26,10 @@ class PostRequest extends FormRequest
     {
         return [
             'title_'.config('custom.language.default') => 'required',
-            'slug' => $this->method() == 'POST' ? 'required|max:50|unique:content_posts,slug' : 
-                'required|max:50|unique:content_posts,slug,'.$this->id,
+            // 'slug' => $this->method() == 'POST' ? 'required|max:50|unique:content_posts,slug' : 
+            //     'required|max:50|unique:content_posts,slug,'.$this->id,
+            'slug' => $this->method() == 'POST' ? 'required|unique:content_posts,slug' : 
+                'required|unique:content_posts,slug,'.$this->id,
             'category_id' => 'required',
             'files' => 'nullable|array',
             'files.*' => 'nullable|max:'.config('custom.files.post_files.size').

@@ -22,6 +22,7 @@ class CreateGalleryPlaylistVideosTable extends Migration
             $table->text('youtube_id')->nullable();
             $table->json('title')->nullable();
             $table->json('description')->nullable();
+            $table->boolean('publish')->default(true);
             $table->integer('position');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

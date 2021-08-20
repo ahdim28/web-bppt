@@ -58,9 +58,8 @@
             <thead>
                 <tr>
                     <th style="width: 10px;">No</th>
-                    <th style="width: 10px;">ID</th>
                     <th>@lang('mod/menu.category.label.field1')</th>
-                    <th class="text-center" style="width: 100px;">@lang('mod/menu.title')</th>
+                    {{-- <th class="text-center" style="width: 100px;">@lang('mod/menu.title')</th> --}}
                     <th style="width: 215px;">@lang('lang.created')</th>
                     <th style="width: 215px;">@lang('lang.updated')</th>
                     <th class="text-center" style="width: 240px;">@lang('lang.action')</th>
@@ -89,11 +88,10 @@
                 @foreach ($data['categories'] as $item)
                 <tr>
                     <td>{{ $data['no']++ }}</td>
-                    <td>#{{ $item->id }}</td>
                     <td><strong>{!! Str::limit($item->name, 50) !!}</strong></td>
-                    <td class="text-center">
+                    {{-- <td class="text-center">
                         @lang('lang.total') : <span class="badge badge-success">{{ $item->menu->count() }}</span>
-                    </td>
+                    </td> --}}
                     <td>
                         <span class="text-muted">@lang('lang.by') {{ $item->createBy->name }}</span><br>
                         {{ $item->created_at->format('d F Y (H:i A)') }}
@@ -156,23 +154,17 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="item-table">
-                                    <div class="data-table">ID</div>
-                                    <div class="desc-table">
-                                        <strong>#{{ $item->id }}</strong>
-                                    </div>
-                                </div>
-                                <div class="item-table">
                                     <div class="data-table">@lang('mod/menu.category.label.field1')</div>
                                     <div class="desc-table">
                                         <strong>{!! Str::limit($item->name, 50) !!}</strong>
                                     </div>
                                 </div>
-                                <div class="item-table">
+                                {{-- <div class="item-table">
                                     <div class="data-table">@lang('mod/menu.title')</div>
                                     <div class="desc-table">
                                         @lang('lang.total') : <span class="badge badge-success">{{ $item->menu->count() }}</span><br>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="item-table m-0">
                                     <div class="desc-table text-right">
                                         @can('menus')
@@ -240,7 +232,7 @@
     $('.modal-edit').click(function() {
         var id = $(this).data('id');
         var name = $(this).data('name');
-        var url = '/admin/management/menu/category/' + id;
+        var url = '/admin/menu/category/' + id;
 
         $(".modal-dialog #form-edit").attr('action', url);
         $('.modal-body #name').val(name);

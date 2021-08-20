@@ -88,7 +88,7 @@
                         </a>
                         @endcan
                         @can('medias')
-                        <a href="{{ route('media.index', ['moduleId' => $child->id, 'moduleName' => 'page']) }}" class="btn icon-btn btn-sm btn-info" title="Media">
+                        <a href="{{ route('media.index', ['moduleId' => $child->id, 'moduleName' => 'page']) }}" class="btn icon-btn btn-sm btn-primary" title="Media">
                             <i class="las la-folder"></i>
                         </a>
                         @endcan
@@ -110,6 +110,6 @@
     </div>
 </div>
 @if (count($child->childs))
-    @include('backend.pages.child', ['childs' => $child->childs, 'level' => ($level+15)])
+    @include('backend.pages.child', ['childs' => $child->childs, 'level' => ($level+20)])
 @endif
 @endforeach

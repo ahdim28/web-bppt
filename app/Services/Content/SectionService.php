@@ -55,7 +55,7 @@ class SectionService
         return $result;
     }
 
-    public function getSection($request = null, $withPaginate = null, $limit = null)
+    public function getSection($request = null, $withPaginate = false, $limit = null)
     {
         $query = $this->model->query();
 
@@ -67,7 +67,8 @@ class SectionService
             $this->search($query, $request);
         }
 
-        if (!empty($withPaginate)) {
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
             $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
@@ -122,7 +123,8 @@ class SectionService
         $section->created_by = Auth::user()->id;
         $section->save();
 
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->store($slug, $section);
 
         return $section;
@@ -135,7 +137,8 @@ class SectionService
         $section->updated_by = Auth::user()->id;
         $section->save();
 
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->update($request->url_id, $slug);
 
         return $section;
@@ -150,7 +153,8 @@ class SectionService
                 $request->input('description_'.config('custom.language.default')) : $request->input('description_'.$value->iso_codes);
         }
 
-        $section->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $section->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $section->slug = Str::slug($request->slug, '-');
         $section->name = $name;
         $section->description = $description;
         $section->public = (bool)$request->public;

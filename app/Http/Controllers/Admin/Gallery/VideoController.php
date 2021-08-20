@@ -96,6 +96,13 @@ class VideoController extends Controller
         return $redir->with('success', 'video successfully updated');
     }
 
+    public function publish($playlistId, $id)
+    {
+        $this->service->publish($id);
+
+        return back()->with('success', 'category update successfully');
+    }
+
     public function position($playlistId, $id, $position)
     {
         $this->service->position($id, $position);

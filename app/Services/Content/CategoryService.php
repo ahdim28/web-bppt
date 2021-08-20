@@ -30,6 +30,9 @@ class CategoryService
 
         $query->where('section_id', $sectionId);
         $query->when($request, function ($query, $req) {
+            if ($req->s != '') {
+                $query->where('publish', $req->s);
+            }
             if ($req->p != '') {
                 $query->where('public', $req->p);
             }
@@ -53,17 +56,13 @@ class CategoryService
     {
         $query = $this->model->query();
 
-        if (!empty($sectionId)) {
-            $query->where('section_id', $sectionId);
-        }
-
+        $query->where('section_id', $sectionId);
         $result = $query->get();
 
         return $result;
     }
 
-    public function getCategory($request = null, $withPaginate = null, 
-        $limit = null, int $sectionId = nullz)
+    public function getCategory($request = null, $withPaginate = false, $limit = null, int $sectionId = null)
     {
         $query = $this->model->query();
 
@@ -71,6 +70,7 @@ class CategoryService
             $query->where('section_id', $sectionId);
         }
 
+        $query->publish();
         if (Auth::guard()->check() == false) {
             $query->public();
         }
@@ -79,7 +79,8 @@ class CategoryService
             $this->search($query, $request);
         }
 
-        if (!empty($withPaginate)) {
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
             $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
@@ -106,6 +107,7 @@ class CategoryService
     {
         $query = $this->model->query();
 
+        $query->publish();
         $result = $query->count();
 
         return $result;
@@ -162,9 +164,11 @@ class CategoryService
                 $request->input('description_'.config('custom.language.default')) : $request->input('description_'.$value->iso_codes);
         }
 
-        $category->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $category->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $category->slug = Str::slug($request->slug, '-');
         $category->name = $name;
         $category->description = $description;
+        $category->publish = (bool)$request->publish;
         $category->public = (bool)$request->public;
         $category->is_detail = (bool)$request->is_detail;
         $category->list_view_id = $request->list_view_id ?? null;
@@ -218,6 +222,16 @@ class CategoryService
 
             return $category;
         }
+    }
+
+    public function publish(int $id)
+    {
+        $category = $this->find($id);
+        $category->publish = !$category->publish;
+        $category->updated_by = Auth::user()->id;
+        $category->save();
+
+        return $category;
     }
 
     public function recordViewer(int $id)

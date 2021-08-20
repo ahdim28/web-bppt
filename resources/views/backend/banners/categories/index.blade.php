@@ -84,9 +84,9 @@
                     <td>{{ $data['no']++ }}</td>
                     <td><strong>{!! Str::limit($item->fieldLang('name'), 50) !!}</strong></td>
                     <td>
-                        [{!! !empty($item->fieldLang('description')) ? Str::limit(strip_tags($item->fieldLang('description')), 60) : __('lang.no', [
+                        {!! !empty($item->fieldLang('description')) ? Str::limit(strip_tags($item->fieldLang('description')), 60) : __('lang.no', [
                             'attribute' => 'Description'
-                        ]) !!}]
+                        ]) !!}
                     </td>
                     <td class="text-center">
                         Total : <span class="badge badge-success">{{ $item->banners->count() }}</span>
@@ -160,9 +160,9 @@
                                 <div class="item-table">
                                     <div class="data-table">Description</div>
                                     <div class="desc-table">
-                                        [{!! !empty($item->fieldLang('description')) ? Str::limit(strip_tags($item->fieldLang('description')), 60) : __('lang.no', [
+                                        {!! !empty($item->fieldLang('description')) ? Str::limit(strip_tags($item->fieldLang('description')), 60) : __('lang.no', [
                                             'attribute' => 'Description'
-                                        ]) !!}]
+                                        ]) !!}
                                     </div>
                                 </div>
                                 <div class="item-table">

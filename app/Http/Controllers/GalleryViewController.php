@@ -41,13 +41,13 @@ class GalleryViewController extends Controller
         
         $data['banner'] = $this->config->getFile('banner_default');
         $limit = $this->config->getValue('content_limit');
-        $data['album'] = $this->serviceAlbum->getAlbum($request, null, $limit);
-        $data['playlist'] = $this->servicePlaylist->getPlaylist($request, null, $limit);
+        $data['album'] = $this->serviceAlbum->getAlbum($request, true, $limit);
+        $data['playlist'] = $this->servicePlaylist->getPlaylist($request, true, $limit);
 
         return view('frontend.gallery.index', compact('data'), [
-            'title' => 'Gallery',
+            'title' => __('common.gallery_caption'),
             'breadcrumbs' => [
-                'Gallery' => ''
+                __('common.gallery_caption') => ''
             ],
         ]);
     }
@@ -63,14 +63,14 @@ class GalleryViewController extends Controller
         $limit = $this->config->getValue('content_limit');
 
         $data['categories'] = $this->serviceCatAlbum->getAlbumCategory(null, true, $limit);
-        $data['albums'] = $this->serviceAlbum->getAlbum($request, 'paginate', $limit);
-        $data['photos'] = $this->servicePhoto->getPhoto($request, 'paginate', $limit);
+        $data['albums'] = $this->serviceAlbum->getAlbum($request, true, $limit);
+        $data['photos'] = $this->servicePhoto->getPhoto($request, true, $limit);
 
         return view('frontend.gallery.albums.list', compact('data'), [
-            'title' => 'Gallery - Photo',
+            'title' => __('common.gallery_caption').' '.__('common.photo_caption'),
             'breadcrumbs' => [
-                'Gallery' => route('gallery.list'),
-                'Photo' => ''
+                __('common.gallery_caption') => route('gallery.list'),
+                __('common.photo_caption') => ''
             ],
         ]);
     }
@@ -86,10 +86,14 @@ class GalleryViewController extends Controller
             return abort(404);
         }
 
+        if ($data['read']->publish == 0 || empty($data['read'])) {
+            return redirect()->route('home');
+        }
+
         $limit = $this->config->getValue('content_limit');
 
-        $data['albums'] = $this->serviceAlbum->getAlbum($request, 'paginate', $limit, $data['read']->id);
-        $data['photos'] = $this->servicePhoto->getPhoto($request, 'paginate', null, $data['read']->id);
+        $data['albums'] = $this->serviceAlbum->getAlbum($request, true, $limit, $data['read']->id);
+        $data['photos'] = $this->servicePhoto->getPhoto($request, true, $limit, $data['read']->id, null);
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('name');
@@ -100,14 +104,15 @@ class GalleryViewController extends Controller
 
         //images
         $data['creator'] = $data['read']->createBy->name;
+        $data['cover'] = $data['read']->imgPreview();
         $data['banner'] = $this->config->getFile('banner_default');
 
         return view('frontend.gallery.albums.category', compact('data'), [
-            'title' => 'Gallery - '.$data['read']->fieldLang('name'),
+            'title' => $data['read']->fieldLang('name'),
             'breadcrumbs' => [
-                'Gallery' => route('gallery.list'),
-                'Photo' => route('gallery.photo'),
-                'Category' => '',
+                __('common.gallery_caption') => route('gallery.list'),
+                __('common.photo_caption') => route('gallery.photo'),
+                Str::limit($data['read']->fieldLang('name'), 15) => ''
             ],
         ]);
     }
@@ -132,7 +137,7 @@ class GalleryViewController extends Controller
         if (!empty($data['read']->photo_limit)) {
             $limit = $data['read']->photo_limit;
         }
-        $data['photo'] = $this->servicePhoto->getPhoto($request, null, null, null, $data['read']->id);
+        $data['photo'] = $this->servicePhoto->getPhoto($request, false, null, null, $data['read']->id);
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('name');
@@ -143,7 +148,7 @@ class GalleryViewController extends Controller
 
         //images
         $data['creator'] = $data['read']->createBy->name;
-        $data['cover'] = $data['read']->photoCover($data['read']->id);
+        $data['cover'] = $data['read']->imgPreview($data['read']->id);
         $data['banner'] = $data['read']->bannerSrc($data['read']);
 
         $blade = 'detail';
@@ -153,11 +158,12 @@ class GalleryViewController extends Controller
         }
 
         return view('frontend.gallery.albums.'.$blade, compact('data'), [
-            'title' => 'Gallery - '.$data['read']->fieldLang('name'),
+            'title' => $data['read']->fieldLang('name'),
             'breadcrumbs' => [
-                'Gallery' => route('gallery.list'),
-                'Photo' => route('gallery.photo'),
-                'Category' => '',
+                __('common.gallery_caption') => route('gallery.list'),
+                __('common.photo_caption') => route('gallery.photo'),
+                Str::limit($data['read']->category->fieldLang('name'), 15) => route('gallery.photo.category', ['slugCategory' => $data['read']->category->slug]),
+                Str::limit($data['read']->fieldLang('name'), 15) => ''
             ],
         ]);
     }
@@ -173,14 +179,14 @@ class GalleryViewController extends Controller
         $limit = $this->config->getValue('content_limit');
 
         $data['categories'] = $this->serviceCatPlaylist->getPlaylistCategory(null, true, $limit);
-        $data['playlists'] = $this->servicePlaylist->getPlaylist($request, 'paginate', $limit);
-        $data['videos'] = $this->serviceVideo->getVideo($request, 'paginate', $limit);
+        $data['playlists'] = $this->servicePlaylist->getPlaylist($request, true, $limit);
+        $data['videos'] = $this->serviceVideo->getVideo($request, true, $limit);
 
         return view('frontend.gallery.playlists.list', compact('data'), [
-            'title' => 'Gallery - Video',
+            'title' => __('common.gallery_caption').' '.__('common.video_caption'),
             'breadcrumbs' => [
-                'Gallery' => route('gallery.list'),
-                'Video' => ''
+                __('common.gallery_caption') => route('gallery.list'),
+                __('common.video_caption') => ''
             ],
         ]);
     }
@@ -196,10 +202,14 @@ class GalleryViewController extends Controller
             return abort(404);
         }
 
+        if ($data['read']->publish == 0 || empty($data['read'])) {
+            return redirect()->route('home');
+        }
+
         $limit = $this->config->getValue('content_limit');
 
-        $data['playlists'] = $this->servicePlaylist->getPlaylist($request, 'paginate', $limit, $data['read']->id);
-        $data['videos'] = $this->serviceVideo->getVideo($request, 'paginate', null, $data['read']->id);
+        $data['playlists'] = $this->servicePlaylist->getPlaylist($request, true, $limit, $data['read']->id);
+        $data['videos'] = $this->serviceVideo->getVideo($request, true, $data['read']->id, null);
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('name');
@@ -210,14 +220,15 @@ class GalleryViewController extends Controller
 
         //images
         $data['creator'] = $data['read']->createBy->name;
+        $data['cover'] = $data['read']->imgPreview();
         $data['banner'] = $this->config->getFile('banner_default');
 
         return view('frontend.gallery.playlists.category', compact('data'), [
-            'title' => 'Gallery - '.$data['read']->fieldLang('name'),
+            'title' => $data['read']->fieldLang('name'),
             'breadcrumbs' => [
-                'Gallery' => route('gallery.list'),
-                'Video' => route('gallery.video'),
-                'Category' => '',
+                __('common.gallery_caption') => route('gallery.list'),
+                __('common.gallery_video') => route('gallery.video'),
+                Str::limit($data['read']->fieldLang('name'), 15) => ''
             ],
         ]);
     }
@@ -242,7 +253,7 @@ class GalleryViewController extends Controller
         if (!empty($data['read']->video_limit)) {
             $limit = $data['read']->video_limit;
         }
-        $data['video'] = $this->serviceVideo->getVideo($request, null, null, null, $data['read']->id);
+        $data['video'] = $this->serviceVideo->getVideo($request, false, null, null, $data['read']->id);
 
         // meta data
         $data['meta_title'] = $data['read']->fieldLang('name');
@@ -253,7 +264,7 @@ class GalleryViewController extends Controller
 
         //images
         $data['creator'] = $data['read']->createBy->name;
-        $data['cover'] = $data['read']->coverSrc($data['read']->id);
+        $data['cover'] = $data['read']->imgPreview($data['read']->id);
         $data['banner'] = $data['read']->bannerSrc($data['read']);
 
         $blade = 'detail';
@@ -263,11 +274,12 @@ class GalleryViewController extends Controller
         }
 
         return view('frontend.gallery.playlists.'.$blade, compact('data'), [
-            'title' => 'Gallery - '.$data['read']->fieldLang('name'),
+            'title' => $data['read']->fieldLang('name'),
             'breadcrumbs' => [
-                'Gallery' => route('gallery.list'),
-                'Video' => route('gallery.video'),
-                'Category' => '',
+                __('common.gallery_caption') => route('gallery.list'),
+                __('common.video_caption') => route('gallery.video'),
+                Str::limit($data['read']->category->fieldLang('name'), 15) => route('gallery.video.category', ['slugCategory' => $data['read']->category->slug]),
+                Str::limit($data['read']->fieldLang('name'), 15) => ''
             ],
         ]);
     }

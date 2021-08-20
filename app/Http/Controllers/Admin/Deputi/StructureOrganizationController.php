@@ -12,17 +12,15 @@ use Illuminate\Support\Str;
 
 class StructureOrganizationController extends Controller
 {
-    private $service, $serviceLang, $config;
+    private $service, $serviceLang;
 
     public function __construct(
         StructureOrganizationService $service,
-        LanguageService $serviceLang,
-        ConfigurationService $config
+        LanguageService $serviceLang
     )
     {
         $this->service = $service;
         $this->serviceLang = $serviceLang;
-        $this->config = $config;
 
         $this->lang = config('custom.language.multiple');
     }
@@ -62,12 +60,16 @@ class StructureOrganizationController extends Controller
 
     public function store(StructureOrganizationRequest $request)
     {
-        $this->service->store($request);
+        $structure = $this->service->store($request);
 
-        $redir = $this->redirectForm($request);
-        return $redir->with('success', __('alert.create_success', [
-            'attribute' => 'Structure Organization'
-        ]));
+        if ($structure == true) {
+            $redir = $this->redirectForm($request);
+            return $redir->with('success', __('alert.create_success', [
+                'attribute' => 'Structure Organization'
+            ]));
+        } else {
+            return back()->with('warning', 'Kode unit tidak tersedia di API');
+        }
     }
 
     public function edit($id)
@@ -89,12 +91,16 @@ class StructureOrganizationController extends Controller
 
     public function update(StructureOrganizationRequest $request, $id)
     {
-        $this->service->update($request, $id);
+        $structure = $this->service->update($request, $id);
 
-        $redir = $this->redirectForm($request);
-        return $redir->with('success', __('alert.update_success', [
-            'attribute' => 'Structure Organization'
-        ]));
+        if ($structure == true) {
+            $redir = $this->redirectForm($request);
+            return $redir->with('success', __('alert.create_success', [
+                'attribute' => 'Structure Organization'
+            ]));
+        } else {
+            return back()->with('warning', 'Kode unit tidak tersedia di API');
+        }
     }
 
     public function position($id, $position)
@@ -136,39 +142,5 @@ class StructureOrganizationController extends Controller
         }
 
         return $redir;
-    }
-
-    /**
-     * frontend
-     */
-    public function readStructure(Request $request)
-    {
-        $slug = $request->route('slugStructure');
-
-        $data['read'] = $this->service->findBySlug($slug);
-        // $data['sidadu'] = $this->service->getSidaduApi($data['read']->kode_unit);
-
-        //check
-        if (empty($slug)) {
-            return abort(404);
-        }
-
-        // meta data
-        $data['meta_title'] = $data['read']->fieldLang('name');
-        $data['meta_description'] = $this->config->getValue('meta_description');
-        if (!empty($data['read']->fieldLang('description'))) {
-            $data['meta_description'] = Str::limit(strip_tags($data['read']->fieldLang('description')), 155);
-        }
-
-        //images
-        $data['creator'] = $data['read']->createBy->name;
-        $data['banner'] = $this->config->getFile('banner_default');
-
-        return view('frontend.structure.detail', compact('data'), [
-            'title' => $data['read']->fieldLang('name'),
-            'breadcrumbs' => [
-                $data['read']->fieldLang('name') => ''
-            ],
-        ]);
     }
 }

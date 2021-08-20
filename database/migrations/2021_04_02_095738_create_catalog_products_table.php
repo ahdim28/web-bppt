@@ -18,7 +18,8 @@ class CreateCatalogProductsTable extends Migration
             $table->unsignedBigInteger('catalog_type_id')->nullable();
             $table->unsignedBigInteger('catalog_category_id')->nullable();
             $table->json('title');
-            $table->string('slug');
+            // $table->string('slug');
+            $table->text('slug');
             $table->json('intro')->nullable();
             $table->json('content')->nullable();
             $table->integer('price')->nullable();

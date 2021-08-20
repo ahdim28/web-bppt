@@ -32,6 +32,7 @@
                         <div class="tab-pane fade {{ $lang->iso_codes == config('custom.language.default') ? 'active show' : '' }}" id="{{ $lang->iso_codes }}">
                             <div class="card-body pb-2">
                                 @if ($lang->iso_codes == config('custom.language.default'))
+                                @if ($data['photo']->flags == 0)
                                 <div class="form-group row" id="file">
                                     <div class="col-md-2 text-md-right">
                                         <label class="col-form-label text-sm-right">File</label>
@@ -49,6 +50,7 @@
                                     </div>
                                 </div>
                                 @endif
+                                @endif
                                 <div class="form-group row">
                                     <label class="col-form-label col-sm-2 text-sm-right">Title</label>
                                     <div class="col-sm-10">
@@ -64,6 +66,18 @@
                                     </div>
                                 </div>
                                 @if ($lang->iso_codes == config('custom.language.default'))
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2 text-sm-right">Status</label>
+                                    <div class="col-sm-10">
+                                        <select class="selectpicker show-tick" name="publish" data-style="btn-default">
+                                            @foreach (config('custom.label.publish') as $key => $publish)
+                                                <option value="{{ $key }}" {{ (old('publish', $data['photo']->publish) == ''.$key.'') ? 'selected' : '' }}>
+                                                    {{ __($publish['title']) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-sm-2 text-sm-right">Image ALT</label>
                                     <div class="col-sm-10">

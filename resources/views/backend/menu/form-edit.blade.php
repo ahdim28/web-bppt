@@ -264,54 +264,6 @@
             </option>
             @endforeach
         `);
-    } else if (nfm == 0 && module == 3) {
-        $("#mod_content").append(`
-            @foreach($data['posts'] as $post)
-            <option value="{{ $post->id }}" class="type-val" {{ $data['menu']->menuable_id == $post->id ? 'selected' : '' }}>
-                {!! $post->fieldLang('title') !!}
-            </option>
-            @endforeach
-        `);
-    } else if (nfm == 0 && module == 4) {
-        $("#mod_content").append(`
-            @foreach($data['cat_categories'] as $catCategory)
-            <option value="{{ $catCategory->id }}" class="type-val" {{ $data['menu']->menuable_id == $catCategory->id ? 'selected' : '' }}>
-                {!! $catCategory->fieldLang('name') !!}
-            </option>
-            @endforeach
-        `);
-    } else if (nfm == 0 && module == 5) {
-        $("#mod_content").append(`
-            @foreach($data['cat_products'] as $catProduct)
-            <option value="{{ $catProduct->id }}" class="type-val" {{ $data['menu']->menuable_id == $catProduct->id ? 'selected' : '' }}>
-                {!! $catProduct->fieldLang('title') !!}
-            </option>
-            @endforeach
-        `);
-    } else if (nfm == 0 && module == 6) {
-        $("#mod_content").append(`
-            @foreach($data['albums'] as $album)
-            <option value="{{ $album->id }}" class="type-val" {{ $data['menu']->menuable_id == $album->id ? 'selected' : '' }}>
-                {!! $album->fieldLang('name') !!}
-            </option>
-            @endforeach
-        `);
-    } else if (nfm == 0 && module == 7) {
-        $("#mod_content").append(`
-            @foreach($data['playlists'] as $playlist)
-            <option value="{{ $playlist->id }}" class="type-val" {{ $data['menu']->menuable_id == $playlist->id ? 'selected' : '' }}>
-                {!! $playlist->fieldLang('name') !!}
-            </option>
-            @endforeach
-        `);
-    } else if (nfm == 0 && module == 8) {
-        $("#mod_content").append(`
-            @foreach($data['links'] as $link)
-            <option value="{{ $link->id }}" class="type-val" {{ $data['menu']->menuable_id == $link->id ? 'selected' : '' }}>
-                {!! $link->fieldLang('name') !!}
-            </option>
-            @endforeach
-        `);
     } else if (nfm == 0 && module == 9) {
         $("#mod_content").append(`
             @foreach($data['inquiries'] as $inquiry)
@@ -347,54 +299,6 @@
                 @foreach($data['categories'] as $category)
                 <option value="{{ $category->id }}" class="type-val" {{ $data['menu']->menuable_id == $category->id ? 'selected' : '' }}>
                     {!! $category->fieldLang('name') !!}
-                </option>
-                @endforeach
-            `);
-        } else if (this.value == 3) {
-            $("#mod_content").append(`
-                @foreach($data['posts'] as $post)
-                <option value="{{ $post->id }}" class="type-val" {{ $data['menu']->menuable_id == $post->id ? 'selected' : '' }}>
-                    {!! $post->fieldLang('title') !!}
-                </option>
-                @endforeach
-            `);
-        } else if (this.value == 4) {
-            $("#mod_content").append(`
-                @foreach($data['cat_categories'] as $catCategory)
-                <option value="{{ $catCategory->id }}" class="type-val" {{ $data['menu']->menuable_id == $catCategory->id ? 'selected' : '' }}>
-                    {!! $catCategory->fieldLang('name') !!}
-                </option>
-                @endforeach
-            `);
-        } else if (this.value == 5) {
-            $("#mod_content").append(`
-                @foreach($data['cat_products'] as $catProduct)
-                <option value="{{ $catProduct->id }}" class="type-val" {{ $data['menu']->menuable_id == $catProduct->id ? 'selected' : '' }}>
-                    {!! $catProduct->fieldLang('title') !!}
-                </option>
-                @endforeach
-            `);
-        } else if (this.value == 6) {
-            $("#mod_content").append(`
-                @foreach($data['albums'] as $album)
-                <option value="{{ $album->id }}" class="type-val" {{ $data['menu']->menuable_id == $album->id ? 'selected' : '' }}>
-                    {!! $album->fieldLang('name') !!}
-                </option>
-                @endforeach
-            `);
-        } else if (this.value == 7) {
-            $("#mod_content").append(`
-                @foreach($data['playlists'] as $playlist)
-                <option value="{{ $playlist->id }}" class="type-val" {{ $data['menu']->menuable_id == $playlist->id ? 'selected' : '' }}>
-                    {!! $playlist->fieldLang('name') !!}
-                </option>
-                @endforeach
-            `);
-        } else if (this.value == 8) {
-            $("#mod_content").append(`
-                @foreach($data['links'] as $link)
-                <option value="{{ $link->id }}" class="type-val" {{ $data['menu']->menuable_id == $link->id ? 'selected' : '' }}>
-                    {!! $link->fieldLang('name') !!}
                 </option>
                 @endforeach
             `);

@@ -78,6 +78,7 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/module/link.php');
             require base_path('routes/module/inquiry.php');
             require base_path('routes/module/deputi.php');
+            require base_path('routes/module/document.php');
             require base_path('routes/module/setting.php');
         });
     }

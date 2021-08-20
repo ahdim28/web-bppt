@@ -27,7 +27,11 @@ class PhotoService
         $query = $this->model->query();
 
         $query->where('album_id', $albumId);
-        $query->when($request->q, function ($query, $q) {
+        $query->when($request, function ($query, $req) {
+            if ($req->s != '') {
+                $query->where('publish', $req->s);
+            }
+        })->when($request->q, function ($query, $q) {
             $query->where(function ($query) use ($q) {
                 $query->where('file', 'like', '%'.$q.'%')
                     ->orWhere('title->'.App::getLocale(), 'like', '%'.$q.'%')
@@ -45,18 +49,19 @@ class PhotoService
         return $result;
     }
 
-    public function getPhoto($request, $withPaginate = null, $limit = null, $categoryId = null, $albumId = null)
+    public function getPhoto($request = null, $withPaginate = false, $limit = null, $categoryId = null, $albumId = null)
     {
         $query = $this->model->query();
 
-        if (!empty($albumId)) {
-            $query->where('album_id', $albumId);
-        }
-
+        $query->publish();
         if (!empty($categoryId)) {
             $query->whereHas('album', function ($query) use ($categoryId) {
                 $query->where('category_id', $categoryId);
             });
+        }
+
+        if (!empty($albumId)) {
+            $query->where('album_id', $albumId);
         }
 
         $query->when($request->q, function ($query, $q) {
@@ -67,13 +72,14 @@ class PhotoService
             });
         });
 
-        if (!empty($withPaginate)) {
-            $result = $query->orderBy('position', 'ASC')->paginate($limit);
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('position', 'ASC')->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy('position', 'ASC')->get();
+                $result = $query->get();
             }
         }
 
@@ -84,6 +90,7 @@ class PhotoService
     {
         $query = $this->model->query();
 
+        $query->publish();
         $result = $query->count();
 
         return $result;
@@ -98,7 +105,10 @@ class PhotoService
     {
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $fileName = Str::random(3).'-'.str_replace(' ', '-', $file->getClientOriginalName());
+            $fileName = $file->getClientOriginalName();
+            if (file_exists(storage_path('app/public/gallery/photo/'.$albumId.'/'.$fileName))) {
+                $fileName = Str::random(3).'-'.$file->getClientOriginalName();
+            }
 
             Storage::put(config('custom.files.gallery.photo.path').$albumId.'/'.
                 $fileName, file_get_contents($file));
@@ -127,7 +137,10 @@ class PhotoService
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $fileName = Str::random(3).'-'.str_replace(' ', '-', $file->getClientOriginalName());
+            $fileName = $file->getClientOriginalName();
+            if (file_exists(storage_path('app/public/gallery/photo/'.$photo->album_id.'/'.$fileName))) {
+                $fileName = Str::random(3).'-'.$file->getClientOriginalName();
+            }
 
             Storage::delete(config('custom.files.gallery.photo.path').$photo->album_id.
                 '/'.$request->old_file);
@@ -159,6 +172,17 @@ class PhotoService
         $photo->title = $title;
         $photo->description = $description;
         $photo->alt = $request->alt ?? null;
+        $photo->publish = (bool)$request->publish;
+
+        return $photo;
+    }
+
+    public function publish(int $id)
+    {
+        $photo = $this->find($id);
+        $photo->publish = !$photo->publish;
+        $photo->updated_by = Auth::user()->id;
+        $photo->save();
 
         return $photo;
     }

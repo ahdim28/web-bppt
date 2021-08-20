@@ -46,8 +46,7 @@ class LinkMediaService
         return $result;
     }
 
-    public function getLinkMedia($request = null, $withPaginate = null, $limit = null, 
-        $linkId = null)
+    public function getLinkMedia($request = null, $withPaginate = false, $limit = null, $linkId = null)
     {
         $query = $this->model->query();
 
@@ -64,13 +63,14 @@ class LinkMediaService
             });
         }
 
-        if (!empty($withPaginate)) {
-            $result = $query->orderBy('position', 'ASC')->paginate($limit);
+        $query->orderBy('position', 'ASC');
+        if ($withPaginate == true) {
+            $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
-                $result = $query->orderBy('position', 'ASC')->limit($limit)->get();
+                $result = $query->limit($limit)->get();
             } else {
-                $result = $query->orderBy('position', 'ASC')->get();
+                $result = $query->get();
             }
         }
 

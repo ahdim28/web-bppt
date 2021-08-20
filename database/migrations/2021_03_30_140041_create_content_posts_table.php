@@ -18,7 +18,8 @@ class CreateContentPostsTable extends Migration
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('category_id');
             $table->json('title');
-            $table->string('slug');
+            // $table->string('slug');
+            $table->text('slug');
             $table->json('intro')->nullable();
             $table->json('content')->nullable();
             $table->json('cover')->nullable();

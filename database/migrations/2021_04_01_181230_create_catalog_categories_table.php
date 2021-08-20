@@ -16,7 +16,8 @@ class CreateCatalogCategoriesTable extends Migration
         Schema::create('catalog_categories', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->string('slug')->unique();
+            // $table->string('slug')->unique();
+            $table->text('slug');
             $table->json('description')->nullable();
             $table->json('cover')->nullable();
             $table->json('banner')->nullable();

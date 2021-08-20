@@ -7,6 +7,20 @@
         <span class="badge badge-primary">{{ $child->list_limit ?? 'Default Config' }}</span>
     </td>
     <td class="text-center">
+        @can ('content_category_update')
+        <a href="javascript:void(0);" onclick="$(this).find('form').submit();" class="badge badge-{{ $child->customConfig()['publish']['color'] }}"
+            title="Status">
+            {{ __($child->customConfig()['publish']['title']) }}
+            <form action="{{ route('category.publish', ['sectionId' => $child->section_id, 'id' => $child->id]) }}" method="POST">
+                @csrf
+                @method('PUT')
+            </form>
+        </a>
+        @else
+        <span class="badge badge-{{ $child->customConfig()['publish']['color'] }}">{{ __($child->customConfig()['publish']['title']) }}</span>
+        @endcan
+    </td>
+    <td class="text-center">
         <span class="badge badge-{{ $child->customConfig()['public']['color'] }}">{{ __($child->customConfig()['public']['title']) }}</span>
     </td>
     <td>

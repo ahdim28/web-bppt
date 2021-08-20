@@ -26,8 +26,10 @@ class InquiryRequest extends FormRequest
     {
         return [
             'name_'.config('custom.language.default') => 'required',
-            'slug' => $this->method() == 'POST' ? 'required|max:50|unique:index_urls,slug' : 
-                'required|max:50|unique:index_urls,slug,'.$this->url_id,
+            // 'slug' => $this->method() == 'POST' ? 'required|max:50|unique:index_urls,slug' : 
+            //     'required|max:50|unique:index_urls,slug,'.$this->url_id,
+            'slug' => $this->method() == 'POST' ? 'required|unique:index_urls,slug' : 
+                'required|unique:index_urls,slug,'.$this->url_id,
             'body_'.config('custom.language.default') => 'required',
         ];
     }

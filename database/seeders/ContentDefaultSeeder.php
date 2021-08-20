@@ -19,13 +19,12 @@ class ContentDefaultSeeder extends Seeder
         //-- structure --//
         $structures = [
             0 => [
-                'sidadu_id' => null,
                 'unit_code' => '4000000',
                 'name' => [
                     'id' => 'Kepala BPPT',
                     'en' => 'Kepala BPPT',
                 ],
-                'slug' => 'kepala-bppt',
+                'slug' => 'kepalabppt',
                 'description' => [
                     'id' => null,
                     'en' => null,
@@ -33,7 +32,6 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 1,
             ],
             1 => [
-                'sidadu_id' => null,
                 'unit_code' => '4100000',
                 'name' => [
                     'id' => 'Sekretariat Utama',
@@ -47,13 +45,12 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 2,
             ],
             2 => [
-                'sidadu_id' => null,
                 'unit_code' => '4200000',
                 'name' => [
                     'id' => 'Bidang Pengkajian Kebijakan Teknologi',
                     'en' => 'Bidang Pengkajian Kebijakan Teknologi',
                 ],
-                'slug' => 'bidang-pengkajian-kebijakan-teknologi',
+                'slug' => 'deputi-pkt',
                 'description' => [
                     'id' => null,
                     'en' => null,
@@ -61,13 +58,12 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 3,
             ],
             3 => [
-                'sidadu_id' => '4300000',
-                'unit_code' => null,
+                'unit_code' => '4300000',
                 'name' => [
                     'id' => 'Bidang Teknologi Pengembangan Sumber Daya Alam',
                     'en' => 'Bidang Teknologi Pengembangan Sumber Daya Alam',
                 ],
-                'slug' => 'bidang-teknologi-pengembangan-sumber-daya-alam',
+                'slug' => 'deputi-tpsa',
                 'description' => [
                     'id' => null,
                     'en' => null,
@@ -75,13 +71,12 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 4,
             ],
             4 => [
-                'sidadu_id' => '4400000',
-                'unit_code' => null,
+                'unit_code' => '4400000',
                 'name' => [
                     'id' => 'Bidang Teknologi Agroindustri dan Bioteknologi',
                     'en' => 'Bidang Teknologi Agroindustri dan Bioteknologi',
                 ],
-                'slug' => 'bidang-teknologi-agroindustri-dan-bioteknologi',
+                'slug' => 'deputi-tab',
                 'description' => [
                     'id' => null,
                     'en' => null,
@@ -89,13 +84,12 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 5,
             ],
             5 => [
-                'sidadu_id' => null,
                 'unit_code' => '4500000',
                 'name' => [
                     'id' => 'Bidang Teknologi Informasi, Energi, dan Material',
                     'en' => 'Bidang Teknologi Informasi, Energi, dan Material',
                 ],
-                'slug' => 'bidang-teknologi-informasi-energi-dan-material',
+                'slug' => 'deputi-tiem',
                 'description' => [
                     'id' => null,
                     'en' => null,
@@ -103,13 +97,12 @@ class ContentDefaultSeeder extends Seeder
                 'position' => 6,
             ],
             6 => [
-                'sidadu_id' => null,
                 'unit_code' => '4600000',
                 'name' => [
                     'id' => 'Bidang Teknologi Industri Rancang Bangun dan Rekayasa',
                     'en' => 'Bidang Teknologi Industri Rancang Bangun dan Rekayasa',
                 ],
-                'slug' => 'bidang-teknologi-industri-rancang-bangun-dan-rekayasa',
+                'slug' => 'deputi-tirbr',
                 'description' => [
                     'id' => null,
                     'en' => null,
@@ -121,7 +114,6 @@ class ContentDefaultSeeder extends Seeder
         foreach ($structures as $val) {
 
             StructureOrganization::create([
-                'sidadu_id' => $val['sidadu_id'],
                 'unit_code' => $val['unit_code'],
                 'name' => $val['name'],
                 'slug' => $val['slug'],
@@ -137,8 +129,8 @@ class ContentDefaultSeeder extends Seeder
         $inquiries = [
             0 => [
                 'name' => [
-                    'id' => 'Kontak',
-                    'en' => 'Contant'
+                    'id' => 'Kontak Kami',
+                    'en' => 'Contact Us'
                 ],
                 'slug' => 'kontak',
                 'body' => [

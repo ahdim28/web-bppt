@@ -27,7 +27,8 @@ class StructureOrganizationService
 
         $query->when($request->q, function ($query, $q) {
             $query->where(function ($query) use ($q) {
-                $query->where('name->'.App::getLocale(), 'like', '%'.$q.'%');
+                $query->where('unit_code', 'like', '%'.$q.'%')
+                    ->orWhere('name->'.App::getLocale(), 'like', '%'.$q.'%');
             });
         });
 
@@ -41,13 +42,12 @@ class StructureOrganizationService
         return $result;
     }
 
-    public function getStructure($request = null, $withPaginate = null, $limit = null)
+    public function getStructure($request = null, $withPaginate = false, $limit = null)
     {
         $query = $this->model->query();
 
         $query->orderBy('position', 'ASC');
-
-        if (!empty($withPaginate)) {
+        if ($withPaginate == true) {
             $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
@@ -83,6 +83,14 @@ class StructureOrganizationService
         $structure->created_by = Auth::user()->id;
         $structure->save();
 
+        $sidadu = $this->getSidaduApi($request->unit_code);
+
+        if (count($sidadu) == 1) {
+            return false;
+        } else {
+            return true;
+        }
+
         return $structure;
     }
 
@@ -92,6 +100,14 @@ class StructureOrganizationService
         $this->setField($request, $structure);
         $structure->updated_by = Auth::user()->id;
         $structure->save();
+
+        $sidadu = $this->getSidaduApi($request->unit_code);
+
+        if (count($sidadu) == 1) {
+            return false;
+        } else {
+            return true;
+        }
 
         return $structure;
     }
@@ -105,9 +121,9 @@ class StructureOrganizationService
                 $request->input('description_'.config('custom.language.default')) : $request->input('description_'.$value->iso_codes);
         }
 
-        $structure->sidadu_id = $request->sidadu_id ?? null;
         $structure->unit_code = $request->unit_code ?? null;
-        $structure->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $structure->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $structure->slug = Str::slug($request->slug, '-');
         $structure->name = $name;
         $structure->description = $description;
 

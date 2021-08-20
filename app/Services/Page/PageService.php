@@ -55,7 +55,7 @@ class PageService
         return $result;
     }
 
-    public function getPage($request = null, $withPaginate = null, $limit = null)
+    public function getPage($request = null, $withPaginate = false, $limit = null)
     {
         $query = $this->model->query();
 
@@ -69,7 +69,7 @@ class PageService
         }
 
         $query->orderBy('position', 'ASC');
-        if (!empty($withPaginate)) {
+        if ($withPaginate == true) {
             $result = $query->paginate($limit);
         } else {
             if (!empty($limit)) {
@@ -134,7 +134,8 @@ class PageService
         $page->created_by = Auth::user()->id;
         $page->save();
         
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->store($slug, $page);
 
         return $page;
@@ -147,7 +148,8 @@ class PageService
         $page->updated_by = Auth::user()->id;
         $page->save();
 
-        $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $slug = Str::slug($request->slug, '-');
         $this->index->update($request->url_id, $slug);
 
         return $page;
@@ -165,7 +167,8 @@ class PageService
                 $request->input('content_'.config('custom.language.default')) : $request->input('content_'.$value->iso_codes);
         }
 
-        $page->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        // $page->slug = Str::limit(Str::slug($request->slug, '-'), 50);
+        $page->slug = Str::slug($request->slug, '-');
         $page->title = $title;
         $page->intro = $intro;
         $page->content = $content;

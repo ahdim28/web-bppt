@@ -62,9 +62,23 @@ class AlbumPhoto extends Model
         $path = Storage::url(config('custom.files.gallery.photo.path').$this->album_id.'/'.
             $this->file);
         if ($this->flags == 1) {
-            $path = Storage::url('public/gallery/photo/'.$this->file);
+            $path = Storage::url(config('custom.files.gallery.photo.path').$this->file);
         }
 
         return $path;
+    }
+
+    public function scopePublish($query)
+    {
+        return $query->where('publish', 1);
+    }
+
+    public function customConfig()
+    {
+        $config = [
+            'publish' => config('custom.label.publish.'.$this->publish),
+        ];
+
+        return $config;
     }
 }

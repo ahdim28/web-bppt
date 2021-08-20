@@ -45,17 +45,6 @@ class BannerCategoryService
         return $result;
     }
 
-    public function getBannerCategory($id)
-    {
-        $query = $this->model->query();
-
-        $query->where('id', $id);
-
-        $result = $query->get();
-
-        return $result;
-    }
-
     public function find(int $id)
     {
         return $this->model->findOrFail($id);

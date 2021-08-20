@@ -96,6 +96,13 @@ class PhotoController extends Controller
         return $redir->with('success', 'photo successfully updated');
     }
 
+    public function publish($albumId, $id)
+    {
+        $this->service->publish($id);
+
+        return back()->with('success', 'photo update successfully');
+    }
+
     public function position($albumId, $id, $position)
     {
         $this->service->position($id, $position);

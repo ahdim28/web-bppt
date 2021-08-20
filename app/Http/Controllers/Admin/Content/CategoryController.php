@@ -132,6 +132,15 @@ class CategoryController extends Controller
         ]));
     }
 
+    public function publish($sectionId, $id)
+    {
+        $this->service->publish($id);
+
+        return back()->with('success', __('alert.update_success', [
+            'attribute' => 'Category'
+        ]));
+    }
+
     public function destroy($sectionId, $id)
     {
         $delete = $this->service->delete($id);

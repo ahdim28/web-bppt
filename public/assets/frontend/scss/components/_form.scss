@@ -17,12 +17,12 @@
         border-width: 2px;
 
         &::-webkit-input-placeholder, &::placeholder {
-            color: #d2d5d7;
+            color: #a1a1a1;
             text-overflow: ellipsis;
         }
 
         &::-webkit-input-placeholder{
-            color: #d2d5d7;
+            color: #a1a1a1;
             text-overflow: ellipsis;
         }
 
@@ -35,6 +35,26 @@
 
         &[type="search"] {
             padding-right: 40px;
+
+            &:valid, &:focus:not(:placeholder-shown) {
+                border-color: var(--c-blue);
+                
+                + .btn-submit {
+                    span {
+                        &:first-child {
+                            transform: translateY(-100%);
+                            opacity: 0;
+                            visibility: hidden;
+                        }
+
+                        &:last-child {
+                            transform: translate(-50%, -50%);
+                            opacity: 1;
+                            visibility: visible;
+                        }
+                    }
+                }
+            }
         }
 
         &.fit {
@@ -368,3 +388,4 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   -webkit-appearance:none;
 }
+

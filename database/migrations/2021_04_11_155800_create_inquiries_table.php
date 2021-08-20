@@ -16,7 +16,8 @@ class CreateInquiriesTable extends Migration
         Schema::create('inquiries', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->string('slug')->unique();
+            // $table->string('slug')->unique();
+            $table->text('slug');
             $table->json('body');
             $table->json('after_body')->nullable();
             $table->json('banner')->nullable();

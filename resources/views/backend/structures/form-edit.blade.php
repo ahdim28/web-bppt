@@ -33,14 +33,6 @@
                             <div class="card-body pb-2">
                                 @if ($lang->iso_codes == config('custom.language.default'))
                                 <div class="form-group row">
-                                    <label class="col-form-label col-sm-2 text-sm-right">Sidadu ID</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control mb-1 gen_slug @error('sidadu_id') is-invalid @enderror"
-                                            name="sidadu_id" value="{{ old('sidadu_id', $data['structure']->sidadu_id) }}" placeholder="Enter sidadu id...">
-                                        @include('components.field-error', ['field' => 'sidadu_id'])
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-form-label col-sm-2 text-sm-right">Unit Code</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control mb-1 gen_slug @error('unit_code') is-invalid @enderror"
@@ -63,7 +55,7 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><strong>{{ url('/').'/structure-organization/' }}</strong></span>
+                                                <span class="input-group-text"><strong>{{ url('/').'/organisasi/' }}</strong></span>
                                             </div>
                                             <input type="text" class="form-control slug_spot @error('slug') is-invalid @enderror" lang="{{ $lang->iso_codes }}" name="slug"
                                                 value="{{ old('slug', $data['structure']->slug) }}" placeholder="Enter slug...">
